@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton } from '@ionic/angular/standalone';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 @Component({
   selector: 'app-login',
@@ -36,6 +36,7 @@ password="";
   constructor(
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
+    private router: Router,
     private afAuth: AngularFireAuth,
     @Optional() private auth: Auth
   ) {
@@ -63,6 +64,7 @@ console.log("init login page")
       .then((data) => {
         console.log("login successfull")
         console.log(data);
+        this.router.navigate(['/home']);
         if (data) {
           this.error = false;
           this.errorMessage = '';

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, signInAnonymously, signOut, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Auth, authState, signInAnonymously, signOut, GoogleAuthProvider, signInWithPopup, getAuth } from '@angular/fire/auth';
 import { AuthService } from '../auth/auth.service';
 import { getDatabase, onValue, ref } from "firebase/database";
+import { UserModel } from 'src/app/models/userModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,24 +25,40 @@ export class UsersService {
   });
    }
 
-   getLoggedUser(){
-    this.MyAuth.getUser() .subscribe((user) => {
-  if(user){
-    console.log("user uid",user.uid);
-    this.getUserByUid(user.uid)
-  }
+   getLoggedUser():Promise<UserModel>{
+    console.log("getting logged user");
+    return new Promise((resolve, reject) => {
+      this.MyAuth.getUser().subscribe(async (user) => {
+        if (user) {
 
-   }
-  )
+         const loggedUser = await this.getUserByUid(user.uid)
+          resolve(loggedUser);
+        }
+      })
+
+    })
+}
+logout(){
+  console.log("loggong out")
+  const auth = getAuth();
+  console.log("auth",auth)
+  auth.signOut();
 }
 
-getUserByUid(uid:string){
-const UsewrRef = ref(this.db,`userProfile/uid` );
+getUserByUid(uid:string):Promise<UserModel>{
+const UsewrRef = ref(this.db,`userProfile/${uid}` );
+return new Promise((resolve, reject) =>{
 onValue(UsewrRef, (snapshot) => {
   if(snapshot.exists()){
     const data = snapshot.val();
     console.log("user data",data);
-  }else{console.log("no data found");}
+    const user = new UserModel(data)
+    resolve(user);
+  }else{console.log("No user found")
+    reject("no data found");
+  }
+})
+
 })
 }
 }
