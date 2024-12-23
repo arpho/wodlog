@@ -1,0 +1,11 @@
+{ 
+  "rules": {
+  
+        "userProfile":{
+          "$uid":{
+            ".read":"true",
+              ".write":"true"
+          }
+        },
+  }
+}
