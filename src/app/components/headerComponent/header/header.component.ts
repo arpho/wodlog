@@ -3,6 +3,8 @@ import { UsersService } from './../../../services/users/users.service';
 import { Component, OnInit } from '@angular/core';
 import { IonButton, IonIcon } from "@ionic/angular/standalone";
 import { logOutOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -21,7 +23,9 @@ this.users.logout();
 
   constructor(
     private users:UsersService
-  ) { }
+  ) {
+    addIcons({ logOutOutline });
+  }
   user = new UserModel()
 
   async ngOnInit() {
