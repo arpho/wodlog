@@ -32,6 +32,9 @@ this.users.logout();
     this.user = await this.users.getLoggedUser()
     console.log("user",this.user);
   }
+  makeTitle(){
+    return `pr di ${this.showName()}`
+  }
   showName(){
     return this.user.userName?this.user.userName:`${this.user.firstName} ${this.user.lastName}`
   }

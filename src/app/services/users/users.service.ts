@@ -52,7 +52,7 @@ onValue(UsewrRef, (snapshot) => {
   if(snapshot.exists()){
     const data = snapshot.val();
     console.log("user data",data);
-    const user = new UserModel(data)
+    const user = new UserModel(data).setKey(uid)
     resolve(user);
   }else{console.log("No user found")
     reject("no data found");
