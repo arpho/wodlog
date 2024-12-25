@@ -1,10 +1,17 @@
 export class PrModel{
 id = 0;
-unity:"kg"|"sec" = "kg";
+unity:" kg "|" sec " = " kg ";
 date = new Date().getTime();
-prestazione  = 0;
+$prestazione  = 0;
 note = "";
 
+
+set prestazione(prestazione:number){
+  this.$prestazione = prestazione
+}
+get prestazione(){
+  return this.$prestazione
+}
 constructor(args?:{}){
   this.build(args)
 }
@@ -13,7 +20,13 @@ build(args?:{}){
   return this
 }
 serialize(){
-  return {}
+  return {
+    prestazione: this.prestazione,
+    id:this.id,
+    date:this.date,
+    unity:this.unity,
+    note:this.note
+  }
 }
 
 }

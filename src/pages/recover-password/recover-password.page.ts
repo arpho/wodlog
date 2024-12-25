@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./recover-password.page.scss'],
   standalone: true,
   imports: [IonButton, IonInput, IonItem, IonContent,
-     IonHeader, 
+     IonHeader,
      IonTitle,
       IonToolbar,
        CommonModule,
@@ -25,12 +25,12 @@ email="";
 private fb:FormBuilder,
 private toaster:ToastController,
 private auth:AuthService
-  ) { 
+  ) {
     this.recoverForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
   })
   }  ngOnInit(): void {
-
+console.log("init recover password page")
   }
 
 
@@ -42,4 +42,4 @@ private auth:AuthService
       })
     }).catch(err=>{console.log("error",err)})
   }
-} 
+}
