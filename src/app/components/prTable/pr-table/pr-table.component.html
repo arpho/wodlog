@@ -13,8 +13,9 @@
 
             <ion-row *ngFor="let pr of prList">
               <ion-card>
+                {{showPr(pr)}}
               <ion-col><strong>{{pr.descrizione}}</strong></ion-col>
-              <ion-col>{{pr.getMaxPr()?.date | date:'dd/MM/yyyy' }}</ion-col>
+              <ion-col>{{pr.getMaxPr()?.getDate()| date:'dd/MM/yyyy' }}</ion-col>
               <ion-col>{{pr.getMaxPr()?.prestazione}}</ion-col>
               </ion-card>
             </ion-row>

@@ -18,6 +18,9 @@ import { CommonModule } from '@angular/common';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
+showPr(_t16: ActivityModel) {
+console.log("showing pr max ",_t16.getMaxPr())
+}
 @Input({required:true})  prList:ActivityModel[] = []
 
   constructor() { }

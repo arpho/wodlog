@@ -47,6 +47,61 @@ describe('activityModel ', () => {
 
 });
 
+
+
+it('should load data from server',()=>{
+
+  const test = new ActivityModel(
+    {
+      "descrizione": "1 RM deadlift",
+      "date": 1735142356681,
+      "id": "-LQVtqlSj34v0scWMxlV",
+      "girl": false,
+      "hero": false,
+      "typePr": "generic",
+      "unity": " Kg ",
+      "PrList": [
+          {
+              "date": "2018-11-01T23:00:00.000Z",
+              "id": 0,
+              "prestazione": 140,
+              "stringifiedDate": "2018-11-02 "
+          },
+          {
+              "date": "2019-04-18T22:00:00.000Z",
+              "id": 1,
+              "prestazione": 150,
+              "stringifiedDate": "2019-04-19 "
+          },
+          {
+              "date": "2022-10-12T22:00:00.000Z",
+              "id": 2,
+              "prestazione": 152.5,
+              "stringifiedDate": "2022-10-13 "
+          },
+          {
+              "date": "2024-03-22T00:00:00.000Z",
+              "id": 3,
+              "note": "",
+              "prestazione": "157.5",
+              "stringifiedDate": "2024-03-22 "
+          },
+          {
+              "date": "2024-07-20T00:00.000Z",
+              "id": 4,
+              "prestazione": 157.5,
+              "stringifiedDate": "2024-07-20"
+          }
+      ]
+  }
+
+  )
+
+  expect(test.PrList.length).toEqual(5);
+ expect(test.getMaxPr().prestazione).toEqual(157.5);
+})
+
+
 it('should find the max pr',()=>{
   const test = new ActivityModel(
     {
@@ -83,7 +138,7 @@ const test4sec = new ActivityModel(
     "unity": " sec ",
     "PrList": [
       {
-        "date": "2019-04-23T22:00:00.000Z",
+        "date": "2019-04-24T22:00:00.000Z",
         "id": 0,
         "prestazione": 60,
         "stringifiedDate": "2019-04-24 "
@@ -98,8 +153,7 @@ const test4sec = new ActivityModel(
 })
 expect(test4sec.getMaxPr()).toBeTruthy();
 expect(test4sec.getMaxPr().prestazione).toEqual(60);
+expect(test4sec.getMaxPr().date).toEqual(new Date("2019-04-24T22:00:00.000Z").getTime());
 
-
-})
-
+});
 });

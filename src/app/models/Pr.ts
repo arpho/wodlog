@@ -17,7 +17,13 @@ constructor(args?:{}){
 }
 build(args?:{}){
   Object.assign(this,args);
+  this.prestazione= Number (this.prestazione);
+  this.date = new Date(this.date).getTime();
+  console.log("** Pr", this)
   return this
+}
+getDate(){
+  return new Date(this.date).toLocaleDateString();
 }
 serialize(){
   return {
