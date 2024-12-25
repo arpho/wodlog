@@ -23,7 +23,7 @@ describe('activityModel ', () => {
         "stringifiedDate": "2019-04-24 ",
         "typePr": "regular",
         "unity": " kg ",
-        "PrList": [
+        "prList": [
           {
             "date": "2019-04-23T22:00:00.000Z",
             "id": 0,
@@ -40,10 +40,10 @@ describe('activityModel ', () => {
     })
     expect(test).toBeTruthy();
     expect(test.date).toEqual(new Date("2019-04-23T22:00:00.000Z").getTime());
-    expect(test.PrList[0]).toBeTruthy();
-    console.log("test.PrList[0]",test.PrList[0], typeof test.PrList[0]);
-    expect( test.PrList[0]).toBeInstanceOf(PrModel);
-    expect(test.PrList.length).toEqual(2);
+    expect(test.prList[0]).toBeTruthy();
+    console.log("test.prList[0]",test.prList[0], typeof test.prList[0]);
+    expect( test.prList[0]).toBeInstanceOf(PrModel);
+    expect(test.prList.length).toEqual(2);
 
 });
 
@@ -60,7 +60,7 @@ it('should load data from server',()=>{
       "hero": false,
       "typePr": "generic",
       "unity": " Kg ",
-      "PrList": [
+      "prList": [
           {
               "date": "2018-11-01T23:00:00.000Z",
               "id": 0,
@@ -97,7 +97,7 @@ it('should load data from server',()=>{
 
   )
 
-  expect(test.PrList.length).toEqual(5);
+  expect(test.prList.length).toEqual(5);
  expect(test.getMaxPr().prestazione).toEqual(157.5);
 })
 
@@ -111,7 +111,7 @@ it('should find the max pr',()=>{
       "stringifiedDate": "2019-04-24 ",
       "typePr": "regular",
       "unity": " kg ",
-      "PrList": [
+      "prList": [
         {
           "date": "2019-04-23T22:00:00.000Z",
           "id": 0,
@@ -136,7 +136,7 @@ const test4sec = new ActivityModel(
     "stringifiedDate": "2019-04-24 ",
     "typePr": "regular",
     "unity": " sec ",
-    "PrList": [
+    "prList": [
       {
         "date": "2019-04-24T22:00:00.000Z",
         "id": 0,

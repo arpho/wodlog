@@ -7,7 +7,7 @@ export class ActivityModel{
   girl = false
   hero = false
   typePr: "regular"|"benchmark" = "regular";
-  PrList:PrModel[] = [];
+  prList:PrModel[] = [];
   unity:" kg "|" sec " = " kg ";
   constructor(args?:{}){
 
@@ -17,7 +17,7 @@ export class ActivityModel{
   build(args?:{}){
    Object.assign(this, args);
    if(args){
-this.PrList = this.PrList?.map((pr)=>{
+this.prList = this.prList?.map((pr)=>{
   return new PrModel(pr)});
 
    }
@@ -29,11 +29,11 @@ this.PrList = this.PrList?.map((pr)=>{
   }
 
   getMax4Kg(){
-    return this.PrList.sort((a,b) => {
+    return this.prList.sort((a,b) => {
       return b.prestazione - a.prestazione})[0];
   }
   getMax4Sec(){
-    return this.PrList.sort((a,b) => a.prestazione - b.prestazione)[0];
+    return this.prList.sort((a,b) => a.prestazione - b.prestazione)[0];
   }
   getMaxPr(){
 
@@ -47,7 +47,9 @@ return this.unity==" sec " ? this.getMax4Sec() : this.getMax4Kg();
       girl: this.girl,
       hero:this.hero,
       unity: this.unity,
-      typePr:this.typePr
+      typePr:this.typePr,
+      prList: this.prList.map((pr) => pr.serialize()
+    )
     }
   }
   get stringifiedDate(){
