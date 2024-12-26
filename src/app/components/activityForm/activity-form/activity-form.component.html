@@ -1,0 +1,5 @@
+<form [formGroup]="myForm">
+  <ion-input label="Esercizio" formControlName="descrizione" [(ngModel)]="activity.descrizione"  labelPlacement="floating" ></ion-input>
+  <ion-toggle formControlName="hero" [(ngModel)]="activity.hero"> Hero</ion-toggle>
+  <ion-toggle formControlName="girl" [(ngModel)]="activity.hero"> Girl</ion-toggle>
+</form>

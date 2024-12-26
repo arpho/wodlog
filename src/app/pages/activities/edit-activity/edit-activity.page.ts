@@ -7,13 +7,14 @@ import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { ActivityModel } from 'src/app/models/activityModel';
+import { ActivityFormComponent } from "../../../components/activityForm/activity-form/activity-form.component";
 
 @Component({
   selector: 'app-edit-activity',
   templateUrl: './edit-activity.page.html',
   styleUrls: ['./edit-activity.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ActivityFormComponent]
 })
 export class EditActivityPage implements OnInit,OnDestroy {
 subscriptions= new Subscription()
