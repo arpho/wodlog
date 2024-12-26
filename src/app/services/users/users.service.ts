@@ -26,7 +26,7 @@ export class UsersService {
    }
 
    getLoggedUser():Promise<UserModel>{
-    console.log("getting logged user");
+
     return new Promise((resolve, reject) => {
       this.MyAuth.getUser().subscribe(async (user) => {
         if (user) {
@@ -39,7 +39,6 @@ export class UsersService {
     })
 }
 logout(){
-  console.log("loggong out")
   const auth = getAuth();
   console.log("auth",auth)
   auth.signOut();
@@ -51,7 +50,6 @@ return new Promise((resolve, reject) =>{
 onValue(UsewrRef, (snapshot) => {
   if(snapshot.exists()){
     const data = snapshot.val();
-    console.log("user data",data);
     const user = new UserModel(data).setKey(uid)
     resolve(user);
   }else{console.log("No user found")

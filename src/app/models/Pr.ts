@@ -2,16 +2,12 @@ export class PrModel{
 id = 0;
 unity:" kg "|" sec " = " kg ";
 date = new Date().getTime();
-$prestazione  = 0;
+prestazione  = 0;
 note = "";
+stringifiedDate=""
 
 
-set prestazione(prestazione:number){
-  this.$prestazione = prestazione
-}
-get prestazione(){
-  return this.$prestazione
-}
+
 constructor(args?:{}){
   this.build(args)
 }
@@ -19,7 +15,8 @@ build(args?:{}){
   Object.assign(this,args);
   this.prestazione= Number (this.prestazione);
   this.date = new Date(this.date).getTime();
-  console.log("** Pr", this)
+if(Number.isNaN(this.date))
+this.date = new Date(this.stringifiedDate).getTime();
   return this
 }
 getDate(){

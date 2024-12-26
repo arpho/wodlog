@@ -1,5 +1,5 @@
 <ion-grid>
-  <ion-row>
+  <ion-row class="headers">
     <ion-col>
       <h3>massimale di </h3>
       </ion-col>
@@ -11,12 +11,12 @@
           </ion-col>
           </ion-row>
 
-            <ion-row *ngFor="let pr of prList">
-              <ion-card>
+            <ion-row *ngFor="let pr of prList" text-center nowrap>
+              <ion-card class="pr">
                 {{showPr(pr)}}
               <ion-col><strong>{{pr.descrizione}}</strong></ion-col>
               <ion-col>{{pr.getMaxPr()?.getDate()}}</ion-col>
-              <ion-col>{{pr.getMaxPr()?.prestazione}}</ion-col>
+              <ion-col>{{pr.getMaxPr()?.prestazione}}{{pr.unity}}</ion-col>
               </ion-card>
             </ion-row>
 

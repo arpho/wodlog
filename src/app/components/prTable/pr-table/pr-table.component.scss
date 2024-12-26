@@ -1,0 +1,22 @@
+.pr{
+  font-size:larger
+}
+.headers {
+  color: #454f63;
+  font-family: "Open Sans";
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px;
+  word-wrap: break-word;
+  background-color: #f0f1f2;;
+
+// Fixed Header
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}

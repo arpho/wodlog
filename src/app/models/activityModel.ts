@@ -3,7 +3,7 @@ import { PrModel } from "./Pr"
 export class ActivityModel{
   descrizione = ""
   date: number = new Date().getTime()
-  id = ""
+  key = ""
   girl = false
   hero = false
   typePr: "regular"|"benchmark" = "regular";
@@ -13,6 +13,13 @@ export class ActivityModel{
 
     this.build(args);
 
+  }
+  set id(id:string){
+    this.key = id
+  }
+
+  get id(){
+    return this.key
   }
   build(args?:{}){
    Object.assign(this, args);
@@ -41,7 +48,7 @@ return this.unity==" sec " ? this.getMax4Sec() : this.getMax4Kg();
   }
   serialize(){
     return {
-      id: this.id,
+      key: this.id,
       descrizione:this.descrizione,
       date: this.date,
       girl: this.girl,

@@ -21,13 +21,10 @@ export class UserModel{
 
   build(args?:{}){
     Object.assign(this, args)
-    console.log("**prList", this.prList, typeof this.prList)
-    console.log("** keys", Object.keys(this.prList));
     const pr:ActivityModel[] = []
 Object.entries(this.prList).forEach(([key, value]) => {
   pr.push(new ActivityModel(value).setKey(key))
 })
-console.log("**prList array", pr);
 this.prList= pr
 
     return this

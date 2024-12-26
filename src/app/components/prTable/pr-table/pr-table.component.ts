@@ -19,20 +19,13 @@ import { CommonModule } from '@angular/common';
 })
 export class PrTableComponent  implements OnInit,OnChanges {
 showPr(_t16: ActivityModel) {
-console.log("showing pr max ",_t16.getMaxPr())
 }
 @Input({required:true})  prList:ActivityModel[] = []
 
   constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
-console.log("changes",changes)
 this.prList = changes['prList'].currentValue
-  console.log("We have a prList",this.prList)
   if(this.prList.length >0){
-    console.log("prList",this.prList)
-    this.prList.forEach((pr:ActivityModel) => {
-      console.log("max **",pr.getMaxPr())
-    })
   }
 }
 
