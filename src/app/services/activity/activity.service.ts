@@ -1,11 +1,18 @@
 import { ActivityModel } from './../../models/activityModel';
-import { getDatabase, ref, set,push, onValue } from 'firebase/database';
+import { getDatabase, ref, set,push, get,onValue } from 'firebase/database';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
+  async getActivityByKey(activityKey: string, userKey:string) {
+console.log ("getting activity by key",activityKey);
+const refActivity = ref(this.db,`activities/${userKey}/${activityKey}`);
+
+const snapshot = await get(refActivity);
+return new ActivityModel(snapshot.val()).setKey(activityKey)
+  }
   db = getDatabase()
 
   constructor() { }

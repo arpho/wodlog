@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row class="headers">
     <ion-col>
-      <h3>massimale di </h3>
+      <h3>massimale  </h3>
       </ion-col>
       <ion-col>
         <h3>data </h3>
@@ -9,14 +9,18 @@
         <ion-col>
           <h3>PR</h3>
           </ion-col>
+          <ion-col>
+            <h3>Action</h3>
+          </ion-col>
           </ion-row>
 
-            <ion-row *ngFor="let pr of prList" text-center nowrap>
+            <ion-row *ngFor="let pr of prList" >
               <ion-card class="pr">
                 {{showPr(pr)}}
-              <ion-col><strong>{{pr.descrizione}}</strong></ion-col>
+              <ion-col> <strong>{{pr.descrizione}}</strong></ion-col>
               <ion-col>{{pr.getMaxPr()?.getDate()}}</ion-col>
               <ion-col>{{pr.getMaxPr()?.prestazione}}{{pr.unity}}</ion-col>
+              <ion-col><ion-button (click)="editPr(pr)"><ion-icon name="create-outline"></ion-icon></ion-button><ion-button color="danger"><ion-icon name=trash-outline></ion-icon></ion-button></ion-col>
               </ion-card>
             </ion-row>
 

@@ -20,4 +20,9 @@ export const routes: Routes = [
     path: 'recover-password',
     loadComponent: () => import('../pages/recover-password/recover-password.page').then( m => m.RecoverPasswordPage)
   },
+  {
+    path: 'edit-activity',
+    loadComponent: () => import('./pages/activities/edit-activity/edit-activity.page').then( m => m.EditActivityPage),
+    canActivate:[authGuard]
+  },
 ];
