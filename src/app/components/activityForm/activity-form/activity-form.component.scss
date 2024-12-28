@@ -5,3 +5,13 @@ form {
   align-content: flex-start;
   align-items: flex-start;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+}
+ion-toggle {
+  padding: 10px;
+}

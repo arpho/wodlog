@@ -17,6 +17,9 @@ import { ActivityFormComponent } from "../../../components/activityForm/activity
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ActivityFormComponent]
 })
 export class EditActivityPage implements OnInit,OnDestroy {
+updateActivity($event: ActivityModel) {
+console.log("update activity",$event);
+}
 subscriptions= new Subscription()
 activity= signal(new ActivityModel())
   constructor(

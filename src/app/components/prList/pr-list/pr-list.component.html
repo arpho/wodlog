@@ -1,0 +1,22 @@
+<ion-grid>
+
+    <ion-row class="headers">
+      <ion-col><h3>Risultato</h3></ion-col>
+      <ion-col><h3>Data</h3></ion-col>
+      <ion-col><h3>Note</h3></ion-col>
+      </ion-row>
+      @for (item of  $prList(); track item.id) {
+      <ion-card> <ion-row (click)="editPr(item)">
+          <ion-col size="3">{{item.prestazione}}</ion-col>
+          <ion-col size="6">{{showDate(item.date)}}</ion-col>
+          <ion-col >{{item.note}}</ion-col>
+        </ion-row>
+        </ion-card>
+      }
+
+      <ion-button size="small" shape="round" color="success"  (click)="addPr()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+
+    </ion-grid>
+
