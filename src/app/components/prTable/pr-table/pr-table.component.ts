@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem } from "@ionic/angular/standalone";
+import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
@@ -10,7 +10,7 @@ import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
   templateUrl: './pr-table.component.html',
   styleUrls: ['./pr-table.component.scss'],
   standalone: true,
-  imports: [IonItem, IonFab, IonFabButton, IonIcon, IonButton, IonCard,
+  imports: [IonItemOption, IonItemOptions, IonItemSliding, IonItem, IonFab, IonFabButton, IonIcon, IonButton, IonCard,
     IonCol,
     IonRow,
     IonGrid,
