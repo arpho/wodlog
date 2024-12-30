@@ -1,11 +1,16 @@
 import { ActivityModel } from './../../models/activityModel';
-import { getDatabase, ref, set,push, get,onValue } from 'firebase/database';
+import { getDatabase, ref, set,push, get,onValue, remove } from 'firebase/database';
 import { Injectable } from '@angular/core';
+import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
+  delete(userKey:string, activity: ActivityModel) {
+const refActivity = ref(this.db,`activities/${userKey}/${activity.key}`);
+return remove(refActivity)
+  }
   async getActivityByKey(activityKey: string, userKey:string) {
 console.log ("getting activity by key",activityKey);
 const refActivity = ref(this.db,`activities/${userKey}/${activityKey}`);

@@ -1,9 +1,11 @@
+import { UsersService } from './../../../services/users/users.service';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/angular/standalone";
+import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
+import { ActivityService } from 'src/app/services/activity/activity.service';
 
 @Component({
   selector: 'app-pr-table',
@@ -20,16 +22,71 @@ import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
-deletePr(_t25: ActivityModel) {
-console.log("delete pr",_t25);
+  async deletePr(activity: ActivityModel) {
+console.log("delete pr",activity);
+const alert = await this.alertCtrl.create({
+  header: `conferma eliminazione di ${activity.descrizione}?`,
+  buttons: [
+    {
+      text: 'Annulla',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: () => {
+        console.log('Confirm Cancel');
+      },
+    },
+    {
+      text: 'Elimina',
+      handler: async () => {
+        console.log('Confirm Ok');
+        const loggedUser = await this.users.getLoggedUser()
+        this.service.delete(loggedUser.key, activity).then(res=>{
+          const toast = this.ToastController.create({
+            message: 'Pr eliminato',
+            duration: 2000
+          });
+          toast.then(res=>res.present())
+        }).catch(err=>{
+          const toast = this.ToastController.create({
+            message: 'Pr non eliminato',
+            duration: 2000
+          });
+          toast.then(res=>res.present())
+        })
+      },
+    },
+
+  ]
+})
+await alert.present()
 }
 createActivity() {
 console.log("create activity")
 this.router.navigateByUrl(`/create-activity`)
 }
-editPr(activity: ActivityModel) {
+  async editPr(activity: ActivityModel) {
 console.log("edit pr",activity)
-this.router.navigateByUrl(`/edit-activity?activityKey=${activity.key}`)
+const alert = await this.alertCtrl.create({
+  header: 'Scegli azione da eseguire',
+  buttons: [
+    {
+      text: 'Modifica',
+      handler: () => {
+        this.router.navigateByUrl(`/edit-activity?activityKey=${activity.key}`)
+      }
+    },
+    {
+      text: 'Elimina',
+      handler: () => {
+        this.deletePr(activity);
+      }
+    }
+  ],
+  backdropDismiss: false
+})
+await alert.present();
+
+//this.router.navigateByUrl(`/edit-activity?activityKey=${activity.key}`)
 }
 showPr(_t16: ActivityModel) {
 }
@@ -37,6 +94,10 @@ showPr(_t16: ActivityModel) {
 
   constructor(
     private router:Router,
+    private alertCtrl: AlertController,
+    private service:ActivityService,
+    private users:UsersService,
+    private ToastController: ToastController
 
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
