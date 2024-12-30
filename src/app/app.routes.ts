@@ -25,4 +25,8 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/activities/edit-activity/edit-activity.page').then( m => m.EditActivityPage),
     canActivate:[authGuard]
   },
+  {
+    path: 'create-activity',
+    loadComponent: () => import('./pages/activities/create-activity/create-activity/create-activity.page').then( m => m.CreateActivityPage)
+  },
 ];

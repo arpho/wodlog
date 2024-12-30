@@ -2,7 +2,9 @@
   <ion-input label="Specialità"   (ionInput)="setDescrizione($event)"  labelPlacement="floating" ></ion-input>
 <ion-toggle    [enableOnOffLabels]="true" [value]="hero()"  (ionChange)="setHero($event)"> Hero</ion-toggle>
 <ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
-<app-pr-list [prList]="prList()" (editedPrList)="setPrList($event)"></app-pr-list>
-<ion-button (click)="submit()" shape="round">Save<ion-icon name="save-outline"></ion-icon></ion-button>
+<ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
+<ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
+<app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
+<ion-button (click)="submit()" color="light"  shape="round">Save<ion-icon name="save-outline"></ion-icon></ion-button>
 </div>
 

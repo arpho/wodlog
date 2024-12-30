@@ -8,7 +8,7 @@ export class ActivityModel{
   hero = false
   typePr: "regular"|"benchmark" = "regular";
   prList:PrModel[] = [];
-  unity:" kg "|" sec " = " kg ";
+  unity:" Kg "|" sec " = " Kg ";
   constructor(args?:{}){
 
     this.build(args);
@@ -37,10 +37,10 @@ this.prList = this.prList?.map((pr)=>{
 
   getMax4Kg(){
     return this.prList.sort((a,b) => {
-      return b.prestazione - a.prestazione})[0];
+      return Number(b.prestazione) - Number(a.prestazione)})[0];
   }
   getMax4Sec(){
-    return this.prList.sort((a,b) => a.prestazione - b.prestazione)[0];
+    return this.prList.sort((a,b) => Number(a.prestazione) - Number(b.prestazione))[0];
   }
   getMaxPr(){
 

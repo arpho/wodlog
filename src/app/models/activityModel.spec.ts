@@ -22,7 +22,7 @@ describe('activityModel ', () => {
         "prestazione": 60,
         "stringifiedDate": "2019-04-24 ",
         "typePr": "regular",
-        "unity": " kg ",
+        "unity": " Kg ",
         "prList": [
           {
             "date": "2019-04-23T22:00:00.000Z",
@@ -110,7 +110,7 @@ it('should find the max pr',()=>{
       "prestazione": 60,
       "stringifiedDate": "2019-04-24 ",
       "typePr": "regular",
-      "unity": " kg ",
+      "unity": " Kg ",
       "prList": [
         {
           "date": "2019-04-23T22:00:00.000Z",

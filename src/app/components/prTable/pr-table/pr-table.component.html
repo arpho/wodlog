@@ -14,13 +14,18 @@
           </ion-col>
           </ion-row>
 
+  <ion-fab   >
+    <ion-fab-button (click)="createActivity()"    vertical="bottom" horizontal="end"    color="light">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
             <ion-row *ngFor="let pr of prList" >
-              <ion-card class="pr">
+              <ion-card class="pr" (click)="editPr(pr)">
                 {{showPr(pr)}}
-              <ion-col> <strong>{{pr.descrizione}}</strong></ion-col>
-              <ion-col>{{pr.getMaxPr()?.getDate()}}</ion-col>
-              <ion-col>{{pr.getMaxPr()?.prestazione}}{{pr.unity}}</ion-col>
-              <ion-col><ion-button (click)="editPr(pr)"><ion-icon name="create-outline"></ion-icon></ion-button><ion-button color="danger"><ion-icon name=trash-outline></ion-icon></ion-button></ion-col>
+              <ion-col size="4"> <strong>{{pr.descrizione}}</strong></ion-col>
+              <ion-col size="4">{{pr.getMaxPr()?.getDate()}}</ion-col>
+              <ion-col size="4">{{pr.getMaxPr()?.prestazione}}</ion-col>
+              <ion-col><ion-button color="danger" (click)="deletePr(pr)"><ion-icon name=trash-outline></ion-icon></ion-button></ion-col>
               </ion-card>
             </ion-row>
 

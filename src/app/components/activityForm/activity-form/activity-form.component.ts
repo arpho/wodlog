@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { PrModel } from 'src/app/models/Pr';
-import { IonInput, IonToggle, IonButton, IonIcon } from "@ionic/angular/standalone";
+import { IonInput, IonToggle, IonButton, IonIcon, ToggleChangeEventDetail } from "@ionic/angular/standalone";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { saveOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { PrListComponent } from "../../prList/pr-list/pr-list.component";
+import { IonToggleCustomEvent } from '@ionic/core';
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
@@ -22,6 +23,20 @@ import { PrListComponent } from "../../prList/pr-list/pr-list.component";
 ]
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
+setUnity($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
+console.log("unity",$event);
+this.unity.set($event.detail.checked?" sec ":" Kg ");
+}
+showUnity() {
+ return this.unity()
+}
+showPrType() {
+return this.typePr() === "benchmark"? "benchmark":"regular"
+}
+setTypePr($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
+console.log("typePr",$event);
+this.typePr.set($event.detail.checked?"benchmark":"regular")
+}
 setPrList($event: any) {
 console.log("prList",$event);
 this.prList.set($event);
@@ -82,7 +97,7 @@ setGirl($event: any) {
   hero = signal(false);
   girl = signal(false);
   prList = signal<PrModel[]>([]);
-  unity = signal(" kg ");
+  unity = signal(" Kg ");
   typePr = signal("regular");
   ngOnInit() {
     console.log("got activity",this.activity);

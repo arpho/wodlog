@@ -4,11 +4,11 @@
 .headers {
   color: #454f63;
   font-family: "Open Sans";
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 14px;
   margin-top: 10px;
   word-wrap: break-word;
-  background-color: #f0f1f2;;
+  background-color: #f4f5f8;
 
 // Fixed Header
   position: sticky;
@@ -19,4 +19,7 @@
 
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
+}
+ion-card{
+  width: 100%;
 }

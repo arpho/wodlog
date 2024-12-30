@@ -7,14 +7,15 @@
       </ion-row>
       @for (item of  $prList(); track item.id) {
       <ion-card> <ion-row (click)="editPr(item)">
-          <ion-col size="3">{{item.prestazione}}</ion-col>
+          <ion-col size="3">{{item.prestazione|prestazione:unity}}</ion-col>
           <ion-col size="6">{{showDate(item.date)}}</ion-col>
           <ion-col >{{item.note}}</ion-col>
         </ion-row>
         </ion-card>
       }
 
-      <ion-button size="small" shape="round" color="success"  (click)="addPr()">
+      <ion-button size="small" shape="round" color="light"  (click)="addPr()">
+        nuovo pr
         <ion-icon name="add"></ion-icon>
       </ion-button>
 

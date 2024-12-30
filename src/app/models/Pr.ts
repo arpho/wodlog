@@ -1,8 +1,8 @@
 export class PrModel{
 id = 0;
-unity:" kg "|" sec " = " kg ";
+unity:" Kg "|" sec " = " Kg ";
 date = new Date().getTime();
-prestazione  = 0;
+prestazione:number|string  = 0;
 note = "";
 stringifiedDate=""
 
