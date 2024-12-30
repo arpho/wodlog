@@ -1,23 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab } from "@ionic/angular/standalone";
+import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
 
 @Component({
   selector: 'app-pr-table',
   templateUrl: './pr-table.component.html',
   styleUrls: ['./pr-table.component.scss'],
   standalone: true,
-  imports: [IonFab, IonFabButton, IonIcon, IonButton, IonCard,
-     IonCol,
-      IonRow,
+  imports: [IonItem, IonFab, IonFabButton, IonIcon, IonButton, IonCard,
+    IonCol,
+    IonRow,
     IonGrid,
     CommonModule,
     IonFabButton,
-    IonFab
-
-  ],
+    IonFab, PrestazionePipe],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
