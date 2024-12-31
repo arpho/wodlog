@@ -1,11 +1,24 @@
-{ 
-  "rules": {
-  
-        "userProfile":{
-          "$uid":{
-            ".read":"true",
-              ".write":"true"
-          }
-        },
+{
+  "rules":{
+    "rules": {
+
+          "userProfile":{
+            "$uid":{
+              ".read":"true",
+                ".write":"true"
+            }
+          },"activities":{
+            "$uid":{
+              ".read":"true",
+                ".write":"true"
+            }
+          },
+            "wods":{
+
+                ".read":"true",
+                  ".write":"true"
+
+            }
+    }
   }
 }

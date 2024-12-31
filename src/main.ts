@@ -13,6 +13,7 @@ import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { DatePipe } from "@angular/common";
 if (environment.production) {
   enableProdMode();
 }
@@ -27,6 +28,7 @@ addIcons({
 });
 bootstrapApplication(AppComponent, {
   providers: [
+    DatePipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),

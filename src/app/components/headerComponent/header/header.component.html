@@ -1,6 +1,30 @@
 
 <p>
   ciao {{showName()}}
-  </p><ion-button shape="round" (click)="logout()" shape="round"> <ion-icon  slot="icon-only"  name="log-out-outline"></ion-icon></ion-button>
+  </p>
+
+
+  <ion-button  shape="round"   size="small" id="popover-button"><ion-icon name="menu"></ion-icon></ion-button>
+    <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+      <ng-template>
+        <ion-content>
+          <ion-list>
+            <ion-item ><ion-button shape="round" (click)="gotoPR()" shape="round"> Pr<ion-icon  slot="icon-only"  name="medal"></ion-icon></ion-button></ion-item>
+            <ion-item ><ion-button shape="round" (click)="gotoWod()" shape="round"> Wod<ion-icon  slot="icon-only"  name="fitness"></ion-icon></ion-button></ion-item>
+            <ion-item ><ion-button shape="round" (click)="logout()" shape="round"> <ion-icon  slot="icon-only"  name="log-out-outline"></ion-icon></ion-button></ion-item>
+
+            <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">
+              <ng-template>
+                <ion-content>
+                  <ion-list>
+                    <ion-item [button]="true" [detail]="false">Nested option</ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+            </ion-popover>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
 
 

@@ -29,14 +29,7 @@ export const routes: Routes = [
     path: 'create-activity',
     loadComponent: () => import('./pages/activities/create-activity/create-activity/create-activity.page').then( m => m.CreateActivityPage)
   },
-  {
-    path: 'list-wod',
-    loadComponent: () => import('./pages/wod/list-wod/list-wod.page').then( m => m.ListWodPage)
-  },
-  {
-    path: 'list-wod',
-    loadComponent: () => import('./pages/wod/lis/list-wod/list-wod.page').then( m => m.ListWodPage)
-  },
+
   {
     path: 'create-wod',
     loadComponent: () => import('./pages/wod/create/create-wod/create-wod.page').then( m => m.CreateWodPage)
@@ -44,5 +37,9 @@ export const routes: Routes = [
   {
     path: 'edit-wod',
     loadComponent: () => import('./pages/wod/edit/edit-wod/edit-wod.page').then( m => m.EditWodPage)
+  },
+  {
+    path: 'wods',
+    loadComponent: () => import('./pages/wod/list/list-wod/list-wod.page').then( m => m.ListWodPage)
   },
 ];

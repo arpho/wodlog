@@ -22,8 +22,8 @@
               <ion-item class="pr" (click)="editPr(pr)">
                 {{showPr(pr)}}
               <ion-col size="4"> <strong>{{pr.descrizione}}</strong></ion-col>
-              <ion-col size="4">{{pr.getMaxPr()?.getDate()}}</ion-col>
-              <ion-col size="4">{{pr.getMaxPr()?.prestazione|prestazione:pr.unity}}</ion-col><!--
+              <ion-col size="4">{{pr.getMaxPr().getDate()}}</ion-col>
+              <ion-col size="4">{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col><!--
               <ion-col><ion-button color="danger" (click)="deletePr(pr)"><ion-icon name=trash-outline></ion-icon></ion-button></ion-col> -->
               </ion-item>
             </ion-row>
