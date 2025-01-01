@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { WodModel } from 'src/app/models/wod';
 import { DatetimeChangeEventDetail, IonDatetime, IonInput, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonList, IonItem } from "@ionic/angular/standalone";
 import { InputChangeEventDetail, IonDatetimeCustomEvent, IonInputCustomEvent } from '@ionic/core';
@@ -15,7 +15,7 @@ import { saveOutline } from 'ionicons/icons';
 
   ]
 })
-export class WodFormComponent  implements OnInit {
+export class WodFormComponent  implements OnInit, OnChanges{
 wod2Input=signal("")
 updateWod($event: IonInputCustomEvent<InputChangeEventDetail>) {
 const exercises =this.wod();
@@ -43,6 +43,16 @@ console.log("force",this.force())
 
   constructor() {
     addIcons({saveOutline});
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+
+    this.date.set(new Date(this.Wod.date))
+    this.title.set(this.Wod.title);
+    this.note.set(this.Wod.note);
+    this.force.set(this.Wod.force);
+    this.wod.set(this.Wod.wod);
+    this.force.set(this.Wod.force);
+    this.wod.set(this.Wod.wod);
   }
 submit() {
   this.Wod = new WodModel({
