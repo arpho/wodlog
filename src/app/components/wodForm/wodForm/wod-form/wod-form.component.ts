@@ -41,7 +41,6 @@ console.log("force",this.force())
   force = signal<string[]>([]);
   title = signal("");
   note = signal("");
-  unity = signal(" Kg ");
 
   constructor() {
     addIcons({saveOutline});
@@ -54,7 +53,6 @@ console.log("force",this.force())
     this.force.set(this.Wod.force);
     this.wod.set(this.Wod.wod);
     this.force.set(this.Wod.force);
-    this.wod.set(this.Wod.wod);
   }
 submit() {
   this.Wod = new WodModel({

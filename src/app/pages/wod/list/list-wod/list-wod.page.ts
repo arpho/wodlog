@@ -31,7 +31,8 @@ return new Date( wod.date).toLocaleDateString();
 }
 editWod(wod: WodModel
 ) {
-throw new Error('Method not implemented.');
+console.log("edit wod",wod);
+this.router.navigateByUrl(`/edit-wod?wodKey=${wod.key}`);
 }
   wods = signal<WodModel[]>([]);
 

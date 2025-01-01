@@ -10,7 +10,8 @@
       <ion-title class="ion-text-center" size="large">editWod</ion-title>
     </ion-toolbar>
   </ion-header>
+  <app-result-handler [userKey]="loggedUser.key" [wodKey]="Wod.key"></app-result-handler>
 
   <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)"></app-wod-form>
-  <app-result-handler [userKey]="loggedUser.key" [wodKey]="Wod.key"></app-result-handler>
+  <ion-button (click)="deleteWod(Wod.key)">delete</ion-button>
 </ion-content>

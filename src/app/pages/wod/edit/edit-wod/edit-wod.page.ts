@@ -1,7 +1,8 @@
+import { alert } from 'ionicons/icons';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, AlertController, ToastController } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -16,11 +17,47 @@ import { UserModel } from '/home/giuseppe/Documenti/projects/wodLog/src/app/mode
   templateUrl: './edit-wod.page.html',
   styleUrls: ['./edit-wod.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, WodFormComponent,
+  imports: [IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, WodFormComponent,
     ResultHandlerComponent
   ]
 })
 export class EditWodPage implements OnInit {
+  async deleteWod(arg0: string) {
+  console.log("delete wod",arg0);
+  const alert = this.alertCtrl.create({
+    header: 'Attenzione',
+    message: 'Sei sicuro di voler cancellare il Wod?',
+    buttons: [
+      {
+        text: 'Annulla',
+        role: 'cancel'
+      },
+      {
+        text: 'Si, cancellalo',
+        handler: ()=>{
+          this.wods.deleteWod(this.Wod).then(()=>{
+            this.toaster.create({
+              message:"Wod cancellato",
+              duration:2000
+            }).then((toast)=>{
+              toast.present()
+            })
+
+          }).catch((err)=>{
+            this.toaster.create({
+              message:"Wod non cancellato",
+              duration:2000
+            }).then((toast)=>{
+              toast.present()
+            })
+          });
+        }
+      }
+    ]
+  })
+  await alert.then(res=>res.present());
+
+}
   loggedUser: import("/home/giuseppe/Documenti/projects/wodLog/src/app/models/userModel").UserModel = new UserModel()
 updateWod($event: WodModel) {
 throw new Error('Method not implemented.');
@@ -31,7 +68,9 @@ throw new Error('Method not implemented.');
   constructor(
     private route:ActivatedRoute,
     private users:UsersService,
-    private wods:WodService
+    private wods:WodService,
+    private alertCtrl:AlertController,
+    private toaster:ToastController
   ) { }
 
   async ngOnInit() {

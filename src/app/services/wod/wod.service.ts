@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { get, getDatabase, onValue, push, ref } from '@firebase/database';
+import { get, getDatabase, onValue, push, ref, remove } from '@firebase/database';
 import { WodModel } from 'src/app/models/wod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WodService {
+  deleteWod(Wod: WodModel) {
+const wodRef = ref(this.db, `${this.url}/${Wod.key}`);
+return remove(wodRef);
+  }
   async getWodByKey( key: string): Promise<WodModel> {
 const wodRef = ref(this.db, `${this.url}/${key}`);
 const snapshot = await get(wodRef);

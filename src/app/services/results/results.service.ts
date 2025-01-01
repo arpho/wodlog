@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { getDatabase, ref, orderByChild, equalTo, onValue, } from "firebase/database";
+import { getDatabase, ref, orderByChild, equalTo, onValue, push, } from "firebase/database";
 import { ResultsModel } from 'src/app/models/results';
 @Injectable({
   providedIn: 'root'
 })
 export class ResultsService {
+  setResult(userKey: string, wodKey: string, prestazione:  ResultsModel) {
+const refResults = ref(this.db, this.url);
+console.log("setting result",prestazione);
+return push(refResults, prestazione.serialize());
+  }
   url = "results"
 db = getDatabase()
   constructor() { }
@@ -17,7 +22,7 @@ db = getDatabase()
     onValue(resultsRef,(snapshot)=>{
       const out:ResultsModel[] = [];
       snapshot.forEach((childSnapshot) => {
-        if(childSnapshot.val().wodKey == wodKey){
+        if(childSnapshot.val().wodKey == wodKey && childSnapshot.val().userKey == userKey){
           const res = new ResultsModel(childSnapshot.val()).setKey(childSnapshot.key);
           out.push(res);
         }
