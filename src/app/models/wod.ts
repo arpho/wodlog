@@ -3,6 +3,7 @@ export class WodModel{
   force:string[] = []
   wod:string[] = []
   date:number = new Date().getTime()
+  unity:" Kg "|" sec " = " Kg "
   title = ""
   note = ""
   constructor(args?:{}){
@@ -31,7 +32,8 @@ export class WodModel{
       wod: this.wod,
       date: this.date,
       title: this.title,
-      note: this.note
+      note: this.note,
+      unity: this.unity
     }
   }
 }

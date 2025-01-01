@@ -28,5 +28,5 @@
 <ion-input type="text" label="nome wod" [value]="title()" (ionChange)="updateName($event)"[value]="title()" labelPlacement="floating"></ion-input>
 <ion-input type="text" label="note" [value]="note()"  (ionChange)="updateNote($event)" [value]="note()" labelPlacement="floating"></ion-input>
 <ion-datetime [value]="formatDate4Picker()" (ionChange)="updateDate($event)" presentation="date"></ion-datetime>
-<ion-button (click)="submit()" color="light"  shape="round">Save<ion-icon name="save-outline"></ion-icon></ion-button>
+<ion-button (click)="submit()" color="light" slot="end" shape="round">Save<ion-icon name="save-outline"></ion-icon></ion-button>
 

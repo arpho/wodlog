@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { WodModel } from 'src/app/models/wod';
 import { DatetimeChangeEventDetail, IonDatetime, IonInput, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonList, IonItem } from "@ionic/angular/standalone";
 import { InputChangeEventDetail, IonDatetimeCustomEvent, IonInputCustomEvent } from '@ionic/core';
@@ -13,7 +13,8 @@ import { saveOutline } from 'ionicons/icons';
   imports: [IonItem, IonList, IonCol, IonRow, IonGrid, IonIcon, IonButton, IonInput,
     IonDatetime,
 
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WodFormComponent  implements OnInit, OnChanges{
 wod2Input=signal("")
@@ -40,6 +41,7 @@ console.log("force",this.force())
   force = signal<string[]>([]);
   title = signal("");
   note = signal("");
+  unity = signal(" Kg ");
 
   constructor() {
     addIcons({saveOutline});
@@ -78,7 +80,6 @@ this.date.set(new Date(String( $event.detail.value)));
 }
 
   ngOnInit() {
-    console.log("init wod form");
     this.date.set(new Date(this.Wod.date))
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);

@@ -12,4 +12,5 @@
   </ion-header>
 
   <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)"></app-wod-form>
+  <app-result-handler [userKey]="loggedUser.key" [wodKey]="Wod.key"></app-result-handler>
 </ion-content>
