@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { getDatabase, onValue, push, ref } from '@firebase/database';
+import { get, getDatabase, onValue, push, ref } from '@firebase/database';
 import { WodModel } from 'src/app/models/wod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WodService {
+  async getWodByKey( key: string): Promise<WodModel> {
+const wodRef = ref(this.db, `${this.url}/${key}`);
+const snapshot = await get(wodRef);
+const wod = new WodModel(snapshot.val()).setKey(key);
+return wod;
+  }
   url = "wods"
 
   db = getDatabase()

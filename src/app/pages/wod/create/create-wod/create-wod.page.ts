@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController } from '@i
 import { WodFormComponent } from "../../../../components/wodForm/wodForm/wod-form/wod-form.component";
 import { WodModel } from 'src/app/models/wod';
 import { WodService } from 'src/app/services/wod/wod.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,12 +18,14 @@ import { WodService } from 'src/app/services/wod/wod.service';
 export class CreateWodPage implements OnInit {
 createWod(wod: WodModel) {
 console.log("submitted wod",wod)
-this.service.createWod(wod).then(async () => {
+this.service.createWod(wod).then(async (Wod) => {
+
 const toast = await  this.toaster.create({
     message:"Wod created",
     duration: 2000
   })
   toast.present();
+  this.router.navigateByUrl('/edit-wod?wodKey='+Wod.key)
 }).catch(async (err: any)=>{console.log("error",err);
 const toast = await this.toaster.create({
   message:"Wod not created",
@@ -37,7 +40,8 @@ wod = new WodModel();
 
   constructor(
     private service:WodService,
-    private toaster:ToastController
+    private toaster:ToastController,
+    private router:Router,
   ) { }
 
   ngOnInit() {

@@ -1,15 +1,21 @@
 export class WodModel{
   key = ""
   force:string[] = []
-  exercises:string[] = []
+  wod:string[] = []
   date:number = new Date().getTime()
   title = ""
   note = ""
   constructor(args?:{}){
     this.loadFields(args);
   }
-  loadFields(args?:{}){
+  loadFields(args?:any){
+    console.log("load fields",args);
     Object.assign(this, args)
+    if(args){
+    this.wod = args["wod"]
+    this.force = args["force"]
+  console.log("this is thw wod",this)
+  }
     return this
   }
 
@@ -22,7 +28,7 @@ export class WodModel{
     return{
       key: this.key,
       force: this.force,
-      exercises: this.exercises,
+      wod: this.wod,
       date: this.date,
       title: this.title,
       note: this.note

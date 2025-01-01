@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { WodModel } from 'src/app/models/wod';
-import { DatetimeChangeEventDetail, IonDatetime, IonInput, IonButton, IonIcon } from "@ionic/angular/standalone";
+import { DatetimeChangeEventDetail, IonDatetime, IonInput, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonList, IonItem } from "@ionic/angular/standalone";
 import { InputChangeEventDetail, IonDatetimeCustomEvent, IonInputCustomEvent } from '@ionic/core';
 import { addIcons } from 'ionicons';
 import { saveOutline } from 'ionicons/icons';
@@ -10,16 +10,33 @@ import { saveOutline } from 'ionicons/icons';
   templateUrl: './wod-form.component.html',
   styleUrls: ['./wod-form.component.scss'],
   standalone: true,
-  imports: [IonIcon, IonButton, IonInput,
+  imports: [IonItem, IonList, IonCol, IonRow, IonGrid, IonIcon, IonButton, IonInput,
     IonDatetime,
 
   ]
 })
 export class WodFormComponent  implements OnInit {
+wod2Input=signal("")
+updateWod($event: IonInputCustomEvent<InputChangeEventDetail>) {
+const exercises =this.wod();
+this.wod2Input.set("");
+exercises.push(String($event.detail.value));
+this.wod.set(exercises);
+console.log("wod",$event.detail.value);
+}
+force2Input =""
+updateForce($event: IonInputCustomEvent<InputChangeEventDetail>) {
+const forza =this.force()
+this.force2Input= "";
+forza.push(String($event.detail.value));
+this.force.set(forza);
+console.log("force",this.force())
+
+}
   @Output() submitWod = new EventEmitter<WodModel>()
-  @Input({required:true})  wod= new WodModel();
+  @Input({required:true})  Wod= new WodModel();
   date = signal(new Date());
-  exercises = signal<string[]>([]);
+  wod = signal<string[]>([]);
   force = signal<string[]>([]);
   title = signal("");
   note = signal("");
@@ -28,15 +45,15 @@ export class WodFormComponent  implements OnInit {
     addIcons({saveOutline});
   }
 submit() {
-  const wod = new WodModel({
+  this.Wod = new WodModel({
     date: this.date().getTime(),
     title: this.title(),
     note: this.note(),
     force: this.force(),
-    exercises: this.exercises()
+    wod: this.wod()
   })
-  this.submitWod.emit(wod);
-console.log("submit wod",wod);
+  this.submitWod.emit(this.Wod);
+console.log("submit wod",this.Wod);
 }
 updateNote($event: IonInputCustomEvent<InputChangeEventDetail>) {
 console.log("note",$event.detail.value);
@@ -52,7 +69,13 @@ this.date.set(new Date(String( $event.detail.value)));
 
   ngOnInit() {
     console.log("init wod form");
-    this.date.set(new Date(this.wod.date))
+    this.date.set(new Date(this.Wod.date))
+    this.title.set(this.Wod.title);
+    this.note.set(this.Wod.note);
+    this.force.set(this.Wod.force);
+    this.wod.set(this.Wod.wod);
+    this.force.set(this.Wod.force);
+    this.wod.set(this.Wod.wod);
   }
   formatDate4Picker() {
 
