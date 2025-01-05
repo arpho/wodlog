@@ -1,5 +1,5 @@
 <div class="container">
-  <ion-input label="Specialità"   (ionInput)="setDescrizione($event)"  labelPlacement="floating" ></ion-input>
+  <ion-input label="Specialità"   (ionInput)="setDescrizione($event)"  labelPlacement="floating" [value]="descrizione()"></ion-input>
 <ion-toggle    [enableOnOffLabels]="true" [value]="hero()"  (ionChange)="setHero($event)"> Hero</ion-toggle>
 <ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
 <ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
