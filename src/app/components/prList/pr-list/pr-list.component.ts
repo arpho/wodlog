@@ -162,49 +162,7 @@ const result = await alert.onDidDismiss();
 
   async editPr(pr: PrModel) {
 console.log("edit pr",pr);
-const alert = await this.alertCtrl.create({
-  header:` edit pr`,
-  inputs: [
-    {
-      name: 'prestazione',
-      type: 'number',
-      value: pr.prestazione,
-    },
-    {
-      name: 'data',
-      type: 'date',
-      value: new Date(pr.date).toISOString().split('T')[0],
-    },
-    {
-      name: 'note',
-      type: 'text',
-      value: pr.note,
-    },
-  ],
-  buttons: [
-    {
-      text: 'Cancel',
-      role: 'cancel',
-      cssClass: 'secondary',
-      handler: () => {
-        console.log('Confirm Cancel');
-      },
-    },
-    {
-      text: 'Ok',
-      handler: (data) => {
-        console.log('Confirm Ok', data);
-        pr.prestazione = data.prestazione
-        pr.note = data.note
-        pr.date = new Date(data.data).getTime()
-        console.log("edited list ",this.prList)
-        this.prList = [...this.prList]
-        this.$prList.set(this.prList);
-        this.editedPrList.emit(this.prList)
-    }
-    }
-  ]
-})
+const alert = await this.makeAlert(pr,"modifica pr");
 await alert.present();
 const result = await alert.onDidDismiss();
 console.log(result);
