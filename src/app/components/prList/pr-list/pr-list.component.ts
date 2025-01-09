@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonButtons } from "@ionic/angular/standalone";
 import { AlertController } from '@ionic/angular';
 import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
+import { CustomSorterPipe } from '../../pipes/customSorter.pipe';
 @Component({
   selector: 'app-pr-list',
   templateUrl: './pr-list.component.html',
@@ -17,12 +18,16 @@ import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
   IonRow,
 IonIcon,
   IonButton,
-  PrestazionePipe
+  PrestazionePipe,
+  CustomSorterPipe
 ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrListComponent  implements OnInit, OnChanges {
   pr = new PrModel()
+sorter =(a:PrModel,b:PrModel)=>{
+  return a.date-b.date
+}
 
 
 
