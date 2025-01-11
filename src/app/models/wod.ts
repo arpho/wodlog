@@ -9,12 +9,11 @@ export class WodModel{
     this.loadFields(args);
   }
   loadFields(args?:any){
-    console.log("load fields",args);
+
     Object.assign(this, args)
     if(args){
     this.wod = args["wod"]
     this.force = args["force"]
-  console.log("this is thw wod",this)
   }
     return this
   }

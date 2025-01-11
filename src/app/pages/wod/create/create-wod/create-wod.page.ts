@@ -25,6 +25,7 @@ const toast = await  this.toaster.create({
     duration: 2000
   })
   toast.present();
+  if(Wod)
   this.router.navigateByUrl('/edit-wod?wodKey='+Wod.key)
 }).catch(async (err: any)=>{console.log("error",err);
 const toast = await this.toaster.create({

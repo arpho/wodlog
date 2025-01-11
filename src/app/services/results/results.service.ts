@@ -5,14 +5,14 @@ import { ResultsModel } from 'src/app/models/results';
   providedIn: 'root'
 })
 export class ResultsService {
+  url = "results"
+db = getDatabase()
+  constructor() { }
   setResult(userKey: string, wodKey: string, prestazione:  ResultsModel) {
 const refResults = ref(this.db, this.url);
 console.log("setting result",prestazione);
 return push(refResults, prestazione.serialize());
   }
-  url = "results"
-db = getDatabase()
-  constructor() { }
 
   getResult(userKey:string,wodKey:string):Promise<ResultsModel[]>{
 

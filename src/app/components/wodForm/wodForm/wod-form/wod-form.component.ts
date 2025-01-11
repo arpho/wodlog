@@ -55,6 +55,7 @@ console.log("force",this.force())
     this.force.set(this.Wod.force);
   }
 submit() {
+  console.log("submit",this.title());
   this.Wod = new WodModel({
     date: this.date().getTime(),
     title: this.title(),
@@ -70,6 +71,7 @@ console.log("note",$event.detail.value);
 this.note.set(String($event.detail.value));
 }
 updateName($event: IonInputCustomEvent<InputChangeEventDetail>) {
+console.log("name",$event.detail.value);
 this.title.set(String($event.detail.value));
 }
 updateDate($event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) {

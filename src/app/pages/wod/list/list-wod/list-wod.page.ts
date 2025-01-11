@@ -26,7 +26,7 @@ console.log("fetching result");
 return  "result ?"
 }
 showDate(wod: WodModel) {
-console.log("show date",wod);
+
 return new Date( wod.date).toLocaleDateString();
 }
 editWod(wod: WodModel
@@ -45,6 +45,7 @@ this.router.navigateByUrl(`/edit-wod?wodKey=${wod.key}`);
 
   ngOnInit() {
 const callback = (data:{wods:WodModel[], total:number}) => {
+  console.log("data",data);
   this.wods.set(data.wods);
   console.log("wods",this.wods());
 

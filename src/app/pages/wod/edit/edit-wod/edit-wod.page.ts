@@ -1,5 +1,5 @@
 import { alert } from 'ionicons/icons';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, AlertController, ToastController } from '@ionic/angular/standalone';
@@ -22,6 +22,7 @@ import { UserModel } from '/home/giuseppe/Documenti/projects/wodLog/src/app/mode
   ]
 })
 export class EditWodPage implements OnInit {
+title = signal("Editing wod")
   async deleteWod(arg0: string) {
   console.log("delete wod",arg0);
   const alert = this.alertCtrl.create({
@@ -60,7 +61,21 @@ export class EditWodPage implements OnInit {
 }
   loggedUser: import("/home/giuseppe/Documenti/projects/wodLog/src/app/models/userModel").UserModel = new UserModel()
 updateWod($event: WodModel) {
-throw new Error('Method not implemented.');
+this.wods.updateWod($event).then(()=>{
+  this.toaster.create({
+    message:"Wod aggiornato",
+    duration:2000
+  }).then((toast)=>{
+    toast.present()
+  })
+}).catch((err)=>{
+  this.toaster.create({
+    message:"Wod non aggiornato",
+    duration:2000
+  }).then((toast)=>{
+    toast.present()
+  })
+})
 }
   subscriptions = new Subscription()
   Wod = new WodModel()
@@ -76,10 +91,9 @@ throw new Error('Method not implemented.');
   async ngOnInit() {
   this.loggedUser = await this.users.getLoggedUser()
     this.subscriptions.add(this.route.queryParams.subscribe(async params=>{
-      console.log("params", params);
-      const loggedUser = await this.users.getLoggedUser()
+      this.loggedUser = await this.users.getLoggedUser()
       this.Wod = await this.wods.getWodByKey(params["wodKey"]);
-      console.log("wod", this.Wod);
+      this.title.set(` editing "${this.Wod.title}"`);
 
       })
     )

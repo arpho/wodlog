@@ -1,5 +1,5 @@
 import { AlertController } from '@ionic/angular';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { alert } from 'ionicons/icons';
 import { ResultsModel } from 'src/app/models/results';
@@ -12,16 +12,14 @@ import { user } from '@angular/fire/auth';
   standalone: true
 })
 export class ResultHandlerComponent  implements OnInit, OnChanges {
-Result = new ResultsModel()
+Result =  signal<ResultsModel>(new ResultsModel())
   constructor(
     private service:ResultsService,
     private alertCtrl:AlertController,
     private toaster:ToastController
   ) { }
   async ngOnChanges(changes: SimpleChanges){
-    console.log("result handle for ",this.userKey,this.wodKey);
     const result =  await this.service.getResult(this.userKey,this.wodKey)
-    console.log("result",result);
     if(this.userKey && this.wodKey)
     if(result.length == 0){
       const alert = await this.alertCtrl.create({
@@ -48,8 +46,7 @@ Result = new ResultsModel()
       await alert.present();
           }
           else{
-            console.log("got results",result);
-            this.Result = result[0];
+            this.Result.set(result[0]);
           }
   }
 
@@ -61,7 +58,6 @@ Result = new ResultsModel()
     console.log("result handler",this.userKey,this.wodKey);
   }
    async setResult(){
-    console.log("set result");
     const  alert = await this.alertCtrl.create(
       {
         header: 'Nuovo risultato',
