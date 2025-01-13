@@ -26,7 +26,7 @@ IonIcon,
 export class PrListComponent  implements OnInit, OnChanges {
   pr = new PrModel()
 sorter =(a:PrModel,b:PrModel)=>{
-  return a.date-b.date
+  return b.date-a.date
 }
 
 
@@ -187,12 +187,13 @@ return new Date(arg0).toLocaleDateString()
   ngOnChanges(changes: SimpleChanges): void {
     this.$prList.set(this.prList);
 
+    console.log("sorted pr list",this.prList.sort(this.sorter));
+
 console.log("pr list changes",this.prList,this.unity)
   }
 
   ngOnInit() {
     this.$prList.set(this.prList);
-    console.log("pr list",this.prList) ;
   }
 
 }
