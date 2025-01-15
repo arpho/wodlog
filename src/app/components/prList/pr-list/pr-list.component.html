@@ -6,7 +6,7 @@
       <ion-col><h3>Note</h3></ion-col>
       </ion-row>
       @for (item of  $prList()|customSorter:sorter; track item.id) {
-      <ion-card> <ion-row (click)="editPr(item)" style="width: 100%;">
+      <ion-card> <ion-row (click)="editPr(item)">
           <ion-col size="3">{{item.prestazione|prestazione:unity}}</ion-col>
           <ion-col size="6">{{showDate(item.date)}}</ion-col>
           <ion-col >{{item.note}}</ion-col>
