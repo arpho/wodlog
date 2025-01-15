@@ -19,6 +19,9 @@ import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { WodModel } from 'src/app/models/wod';
+import { ResultsService } from 'src/app/services/results/results.service';
+import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-list-wod',
@@ -39,15 +42,19 @@ import { WodModel } from 'src/app/models/wod';
     IonToolbar,
     CommonModule,
     FormsModule,
-  ],
+    ResultHandlerComponent
+],
 })
 export class ListWodPage implements OnInit {
+user: any;
   createWod() {
     console.log('create wod');
     this.router.navigateByUrl(`/create-wod`);
   }
   fetchResult4wod(_t26: any) {
-    console.log('fetching result');
+    console.log('fetching result for ',_t26);
+
+
     return 'result ?';
   }
   showDate(wod: WodModel) {
@@ -59,11 +66,12 @@ export class ListWodPage implements OnInit {
   }
   wods = signal<WodModel[]>([]);
 
-  constructor(private service: WodService, private router: Router) {
+  constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService) {
     addIcons({ add });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await this.users.getLoggedUser()
     const callback = (data: { wods: WodModel[]; total: number }) => {
       console.log('data', data);
       this.wods.set(data.wods);
