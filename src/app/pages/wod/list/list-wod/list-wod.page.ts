@@ -47,6 +47,7 @@ import { UsersService } from 'src/app/services/users/users.service';
 })
 export class ListWodPage implements OnInit {
 user: any;
+title="";
   createWod() {
     console.log('create wod');
     this.router.navigateByUrl(`/create-wod`);
@@ -72,6 +73,7 @@ user: any;
 
   async ngOnInit() {
     this.user = await this.users.getLoggedUser()
+    this.title = `pr di ${this.user.name}`
     const callback = (data: { wods: WodModel[]; total: number }) => {
       console.log('data', data);
       this.wods.set(data.wods);

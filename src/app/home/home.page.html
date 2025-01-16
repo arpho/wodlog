@@ -1,3 +1,4 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <app-header></app-header>
@@ -23,5 +24,11 @@
 
   <div id="container">
   </div>
-<app-activities-list [userKey]="user.key"></app-activities-list>
+<!-- <app-activities-list [userKey]="user.key"></app-activities-list> -->
+ <ion-card>
+  <div class="redirect">
+  <ion-img src="assets/images/Pr.jpeg" style="width: 25rem" (click)="goToPrList()"></ion-img>
+  <ion-img src="assets/images/wod.jpeg" style="width: 25rem" (click)="goToWodList()"></ion-img>
+  </div>
+ </ion-card>
 </ion-content>

@@ -61,4 +61,8 @@ export const routes: Routes = [
         (m) => m.ListWodPage
       ),
   },
+  {
+    path: 'pr-list',
+    loadComponent: () => import('./pages/pr/pr-list/pr-list.page').then( m => m.PrListPage)
+  },
 ];
