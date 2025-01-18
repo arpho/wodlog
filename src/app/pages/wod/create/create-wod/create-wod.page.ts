@@ -78,6 +78,9 @@ export class CreateWodPage implements OnInit {
           duration: 2000,
         });
         toast.present();
+        toast.onDidDismiss().then(() => {
+         this.router.navigate(['/wods-list'])
+        })
       });
   }
   wod = new WodModel();
