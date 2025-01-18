@@ -55,7 +55,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'wods',
+    path: 'wods-list',
     loadComponent: () =>
       import('./pages/wod/list/list-wod/list-wod.page').then(
         (m) => m.ListWodPage

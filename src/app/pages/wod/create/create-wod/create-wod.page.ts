@@ -29,6 +29,36 @@ import { Router } from '@angular/router';
   ],
 })
 export class CreateWodPage implements OnInit {
+  weeksDays = [
+    'domenica',
+    'lunedi',
+    'martedi',
+    'mercoledi',
+    'giovedi',
+    'venerdi',
+    'sabato',
+  ];
+
+  constructor(
+    private service: WodService,
+    private toaster: ToastController,
+    private router: Router
+  ) {}
+  ngOnInit() {
+    console.log('init create wod page');
+  }
+  makeTitle(wod: WodModel) {
+    const d = new Date(wod.date);
+    return (
+      wod.title ||
+      `wod di ${this.weeksDays[d.getDay()]} ${d.toLocaleDateString()}`
+    );
+  }
+
+  createWodAndSetTitle(wod: WodModel) {
+    wod.title = this.makeTitle(wod);
+    this.createWod(wod);
+  }
   createWod(wod: WodModel) {
     console.log('submitted wod', wod);
     this.service
@@ -51,14 +81,4 @@ export class CreateWodPage implements OnInit {
       });
   }
   wod = new WodModel();
-
-  constructor(
-    private service: WodService,
-    private toaster: ToastController,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    console.log('init create wod page');
-  }
 }

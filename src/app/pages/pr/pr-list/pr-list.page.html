@@ -1,13 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-breadcrumbs>
+      <ion-breadcrumb href="#home">Home</ion-breadcrumb>
+      <ion-breadcrumb href="#pr-list">Pr</ion-breadcrumb>
+    </ion-breadcrumbs>
     <ion-title  class="ion-text-center" >      <h1><strong>{{title}}</strong></h1></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
+    <ion-buttons slot="start">
+      <ion-button text="Previous" icon="caret-back" (click)="goBack()"></ion-button>
+    </ion-buttons>
     <ion-toolbar>
-      <ion-title size="large">      <h1><strong>{{title}}</strong></h1></ion-title>
+      <ion-title size="large">
+
+      <h1><strong>{{title}}</strong></h1></ion-title>
 
     </ion-toolbar>
   </ion-header>

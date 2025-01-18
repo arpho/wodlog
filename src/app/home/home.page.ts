@@ -9,13 +9,14 @@ import { ActivitiesListComponent } from '../components/activitiesList/activities
 import { menu } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
+import { HomeSquareComponent } from '../components/home-square/home-square.component';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [IonLabel, IonImg, IonCard, IonList, IonItem, IonPopover, IonIcon,
-    ActivitiesListComponent,
+    ActivitiesListComponent,HomeSquareComponent,
     IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonList, HeaderComponent, PrTableComponent, ],
 })
 export class HomePage implements OnInit {

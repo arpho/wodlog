@@ -9,11 +9,11 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonBreadcrumbs,
   IonItem,
   IonFab,
   IonFabButton,
-  IonIcon,
-} from '@ionic/angular/standalone';
+  IonIcon, IonBreadcrumb } from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
@@ -28,7 +28,7 @@ import { UsersService } from 'src/app/services/users/users.service';
   templateUrl: './list-wod.page.html',
   styleUrls: ['./list-wod.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonBreadcrumb,
     IonIcon,
     IonFabButton,
     IonFab,
@@ -39,6 +39,8 @@ import { UsersService } from 'src/app/services/users/users.service';
     IonContent,
     IonHeader,
     IonTitle,
+    IonBreadcrumb,
+    IonBreadcrumbs,
     IonToolbar,
     CommonModule,
     FormsModule,
