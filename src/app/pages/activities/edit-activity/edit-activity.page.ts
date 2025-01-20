@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,ToastController } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
 import { ActivityService } from 'src/app/services/activity/activity.service';
@@ -43,6 +43,8 @@ toast.present()
     duration: 2000
   });
   toast.then(res=>res.present())
+}).finally(()=>{
+this.router.navigateByUrl('/pr-list')
 })
 
 
@@ -51,6 +53,7 @@ subscriptions= new Subscription()
 activity= signal(new ActivityModel())
   constructor(
     private route:ActivatedRoute,
+    private router:Router,
     private users:UsersService,
     private activities:ActivityService,
     private service:ActivityService,
