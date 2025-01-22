@@ -18,6 +18,7 @@ import {
   ToastController,
 } from '@ionic/angular/standalone';
 import { user } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-result-handler',
   templateUrl: './result-handler.component.html',
@@ -29,7 +30,8 @@ export class ResultHandlerComponent implements OnInit, OnChanges {
   constructor(
     private service: ResultsService,
     private alertCtrl: AlertController,
-    private toaster: ToastController
+    private toaster: ToastController,
+    private router: Router
   ) {}
   async ngOnChanges(changes: SimpleChanges) {
     const result = await this.service.getResult(this.userKey, this.wodKey);
@@ -128,6 +130,8 @@ export class ResultHandlerComponent implements OnInit, OnChanges {
                   .then((toast) => {
                     toast.present();
                   });
+              }).finally(() => {
+                this.router.navigateByUrl('/wods-list')
               });
           },
         },
