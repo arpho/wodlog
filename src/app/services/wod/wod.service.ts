@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { get, getDatabase, onValue, push, ref, remove, set } from '@firebase/database';
+import { get, getDatabase, onValue, push, ref, remove, set, update } from '@firebase/database';
 import { WodModel } from 'src/app/models/wod';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class WodService {
   constructor() { }
   updateWod($wod: WodModel) {
     const wodRef = ref(this.db, `${this.url}/${$wod.key}`);
-    return set(wodRef, $wod.serialize());
+    return update(wodRef, $wod.serialize());
 
   }
   deleteWod(Wod: WodModel) {
@@ -28,9 +28,15 @@ return wod;
   }
 
   db = getDatabase()
-  createWod(wod: WodModel) {
+  async createWod(wod: WodModel) {
     const wodRef = ref(this.db, this.url);
-    return push(wodRef, wod.serialize());
+
+    const newWodRef = await push(wodRef);
+    wod.setKey(newWodRef.key!);
+    update(newWodRef, wod.serialize());
+
+
+    return wod.key;
   }
   fetchWodsRealtime(callback: (data:{wods: WodModel[],total:number}) => void) {
     console.log("**fetching all wods");

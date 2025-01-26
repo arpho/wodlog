@@ -20,6 +20,7 @@ import {
   IonRow,
   IonCol,
   IonList,
+  AlertController,
   IonItem,
 } from '@ionic/angular/standalone';
 import {
@@ -49,9 +50,65 @@ import { saveOutline } from 'ionicons/icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
+index: any;
+  constructor(
+    private alertCtrl: AlertController
+  ) {
+    addIcons({ saveOutline });
+  }
+  async editWod(_t38: string, index:number) {
+ console.log("editing", _t38)
+ const alert = await this.alertCtrl.create({
+   header: 'edit activity',
+   inputs: [
+     {
+       type: 'text',
+       label: 'activity',
+       value: _t38,}
+   ],
+   buttons: [
+     {
+       text: 'change',
+     handler: (data) => {
+       const wodSet = this.wod();
+       console.log("wodSet", wodSet)
+       wodSet[index] = data[0]
+       this.wod.set([...wodSet])
+       console.log("updated wodset", this.wod())
+     }
+     }
+   ]
+ })
+ await alert.present()
+ }
+ async editForce(_t38: string, index:number) {
+console.log("editing", _t38)
+const alert = await this.alertCtrl.create({
+  header: 'edit force',
+  inputs: [
+    {
+      type: 'text',
+      label: 'activity',
+      value: _t38,}
+  ],
+  buttons: [
+    {
+      text: 'change',
+    handler: (data) => {
+      const forceSet = this.force();
+      console.log("wodSet", forceSet)
+      forceSet[index] = data[0]
+      this.force.set([...forceSet])
+      console.log("updated wodset", this.wod())
+    }
+    }
+  ]
+})
+await alert.present()
+}
   wod2Input = signal('');
   updateWod($event: IonInputCustomEvent<InputChangeEventDetail>) {
-    const exercises = this.wod();
+    const exercises = this.wod()||[];
     this.wod2Input.set('');
     exercises.push(String($event.detail.value));
     this.wod.set(exercises);
@@ -59,7 +116,7 @@ export class WodFormComponent implements OnInit, OnChanges {
   }
   force2Input = '';
   updateForce($event: IonInputCustomEvent<InputChangeEventDetail>) {
-    const forza = this.force();
+    const forza = this.force()||[];
     this.force2Input = '';
     forza.push(String($event.detail.value));
     this.force.set(forza);
@@ -73,9 +130,7 @@ export class WodFormComponent implements OnInit, OnChanges {
   title = signal('');
   note = signal('');
 
-  constructor() {
-    addIcons({ saveOutline });
-  }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.date.set(new Date(this.Wod.date));
     this.title.set(this.Wod.title);
@@ -114,8 +169,8 @@ export class WodFormComponent implements OnInit, OnChanges {
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);
     this.force.set(this.Wod.force);
-    this.wod.set(this.Wod.wod);
-    this.force.set(this.Wod.force);
+    this.wod.set(this.Wod.wod||[]);
+    this.force.set(this.Wod.force||[]);
     this.wod.set(this.Wod.wod);
   }
   formatDate4Picker() {

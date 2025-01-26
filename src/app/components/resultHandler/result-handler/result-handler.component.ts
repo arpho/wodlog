@@ -35,7 +35,7 @@ export class ResultHandlerComponent implements OnInit, OnChanges {
   ) {}
   async ngOnChanges(changes: SimpleChanges) {
     const result = await this.service.getResult(this.userKey, this.wodKey);
-    if (this.userKey && this.wodKey)
+    if (this.userKey && this.wodKey&& this.ask4newResult)
       if (result.length == 0) {
         const alert = await this.alertCtrl.create({
           header: 'Nuovo risultato',
@@ -66,9 +66,13 @@ export class ResultHandlerComponent implements OnInit, OnChanges {
 
   @Input({ required: true }) userKey: string = '';
   @Input({ required: true }) wodKey: string = '';
+  @Input() ask4newResult=false
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('result handler', this.userKey, this.wodKey);
+    const result = await this.service.getResult(this.userKey, this.wodKey);
+    console.log('result', result);
+    this.Result.set(result[0]);
   }
   async setResult() {
     const alert = await this.alertCtrl.create({

@@ -63,13 +63,13 @@ export class CreateWodPage implements OnInit {
     console.log('submitted wod', wod);
     this.service
       .createWod(wod)
-      .then(async (Wod) => {
+      .then(async (wodKey) => {
         const toast = await this.toaster.create({
           message: 'Wod created',
           duration: 2000,
         });
         toast.present();
-        if (Wod) this.router.navigateByUrl('/edit-wod?wodKey=' + Wod.key);
+        if (wodKey) this.router.navigateByUrl('/edit-wod?wodKey=' + wodKey);
       })
       .catch(async (err: any) => {
         console.log('error', err);

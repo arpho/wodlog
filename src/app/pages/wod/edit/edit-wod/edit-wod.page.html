@@ -13,6 +13,7 @@
   <app-result-handler
     [userKey]="loggedUser.key"
     [wodKey]="Wod.key"
+    [ask4newResult]="true"
   ></app-result-handler>
 
   <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)"></app-wod-form>

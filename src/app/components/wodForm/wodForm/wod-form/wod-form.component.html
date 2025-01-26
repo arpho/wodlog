@@ -15,9 +15,9 @@
             labelPlacement="floating"
           ></ion-input
         ></ion-item>
-        @for(item of force(); track item){
+        @for(item of force(); track item;let index =$index){
 
-        <ion-item>{{ item }}</ion-item>
+        <ion-item (click)="editForce(item,index)">{{ item }}</ion-item>
         }
       </ion-list>
     </ion-col>
@@ -32,8 +32,8 @@
             labelPlacement="floating"
           ></ion-input
         ></ion-item>
-        @for(item of wod(); track item){
-        <ion-item>{{ item }}</ion-item>
+        @for(item of wod(); track item; let index=$index){
+        <ion-item (click)="editWod(item,index)">{{ item }}</ion-item>
         }
       </ion-list>
     </ion-col>
