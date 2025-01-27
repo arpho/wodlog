@@ -76,7 +76,16 @@ index: any;
        this.wod.set([...wodSet])
        console.log("updated wodset", this.wod())
      }
-     }
+     },
+     {
+       text: 'Remove activity',
+       handler: (data) => {
+         const wodSet = this.wod();
+         console.log("wodSet", wodSet)
+         wodSet.splice(index,1)
+         this.wod.set([...wodSet])
+         console.log("remove index",index)
+       }}
    ]
  })
  await alert.present()
