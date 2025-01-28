@@ -49,12 +49,16 @@ const UsewrRef = ref(this.db,`userProfile/${uid}` );
 return new Promise((resolve, reject) =>{
 onValue(UsewrRef, (snapshot) => {
   if(snapshot.exists()){
+    console.log("snapshot",snapshot.val());
     const data = snapshot.val();
+    console.log("data",data);
     const user = new UserModel(data).setKey(uid)
     resolve(user);
   }else{console.log("No user found")
     reject("no data found");
   }
+},(error)=>{
+  console.log("error",error)
 })
 
 })

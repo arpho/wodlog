@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonPopover, IonItem, IonList, IonCard, IonImg, IonLabel } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonPopover, IonItem, IonList, IonCard, IonImg, IonLabel, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { HeaderComponent } from "../components/headerComponent/header/header.component";
 import { UsersService } from '../services/users/users.service';
 import { PrTableComponent } from "../components/prTable/pr-table/pr-table.component";
@@ -15,7 +15,7 @@ import { HomeSquareComponent } from '../components/home-square/home-square.compo
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonImg, IonCard, IonList, IonItem, IonPopover, IonIcon,
+  imports: [IonCol, IonRow, IonGrid, IonLabel, IonImg, IonCard, IonList, IonItem, IonPopover, IonIcon,
     ActivitiesListComponent,HomeSquareComponent,
     IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonList, HeaderComponent, PrTableComponent, ],
 })

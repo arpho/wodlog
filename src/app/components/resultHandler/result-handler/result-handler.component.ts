@@ -26,6 +26,9 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class ResultHandlerComponent implements OnInit, OnChanges {
+showResult() {
+return this.Result().result
+}
   Result = signal<ResultsModel>(new ResultsModel());
   constructor(
     private service: ResultsService,

@@ -74,8 +74,10 @@ title="";
   }
 
   async ngOnInit() {
+    console.log("loading wods")
     this.user = await this.users.getLoggedUser()
     this.title = `pr di ${this.user.name}`
+    console.log("user",this.user);
     const callback = (data: { wods: WodModel[]; total: number }) => {
       console.log('data', data);
       this.wods.set(data.wods);
