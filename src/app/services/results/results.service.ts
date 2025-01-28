@@ -6,6 +6,7 @@ import {
   equalTo,
   onValue,
   push,
+  update,
 } from 'firebase/database';
 import { ResultsModel } from 'src/app/models/results';
 @Injectable({
@@ -18,7 +19,8 @@ export class ResultsService {
   setResult(userKey: string, wodKey: string, prestazione: ResultsModel) {
     const refResults = ref(this.db, this.url);
     console.log('setting result', prestazione);
-    return push(refResults, prestazione.serialize());
+    const newResultRef = push(refResults, prestazione.serialize());
+    return update(newResultRef, prestazione.serialize());
   }
 
   getResult(userKey: string, wodKey: string): Promise<ResultsModel[]> {
