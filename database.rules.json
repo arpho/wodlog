@@ -1,24 +1,28 @@
 {
 
-    "rules": {
+  "rules": {
 
-          "userProfile":{
-            "$uid":{
+        "userProfile":{
+          "$uid":{
+            ".read":"true",
+              ".write":"true"
+          }
+        },"activities":{
+          "$uid":{
+            ".read":"true",
+              ".write":"true"
+          }
+        },
+          "wods":{
+
               ".read":"true",
                 ".write":"true"
-            }
-          },"activities":{
-            "$uid":{
-              ".read":"true",
-                ".write":"true"
-            }
+
           },
-            "wods":{
-
-                ".read":"true",
-                  ".write":"true"
-
+            "results":{
+              ".read":"true",
+                ".write":"true"
             }
-    }
+  }
 
 }

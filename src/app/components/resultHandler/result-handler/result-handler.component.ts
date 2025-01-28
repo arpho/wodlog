@@ -1,3 +1,4 @@
+import { get } from 'firebase/database';
 import { AlertController } from '@ionic/angular';
 import {
   Component,
@@ -18,7 +19,8 @@ import {
   ToastController,
 } from '@ionic/angular/standalone';
 import { user } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users/users.service';
 @Component({
   selector: 'app-result-handler',
   templateUrl: './result-handler.component.html',
@@ -27,17 +29,66 @@ import { Router } from '@angular/router';
 })
 export class ResultHandlerComponent implements OnInit, OnChanges {
 showResult() {
-return this.Result().result
+return this.Result()? this.Result().result:"no result";
 }
   Result = signal<ResultsModel>(new ResultsModel());
   constructor(
     private service: ResultsService,
     private alertCtrl: AlertController,
     private toaster: ToastController,
-    private router: Router
+    private users: UsersService,
+    private router: Router,
+     private activatedRoute: ActivatedRoute
   ) {}
   async ngOnChanges(changes: SimpleChanges) {
+    console.log("changes", changes);
+
+    console.log('ask for new result', this.ask4newResult);
+    if (this.userKey && this.wodKey&& this.ask4newResult )
+       {
+        const alert = await this.alertCtrl.create({
+          header: 'Nuovo risultato',
+          message: 'Vuoi aggiungere un nuovo risultato?',
+          buttons: [
+            {
+              text: 'No',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: () => {
+                console.log('Confirm Cancel');
+              },
+            },
+            {
+              text: 'Si',
+              handler: () => {
+                console.log('Confirm Ok');
+                this.setResult();
+              },
+            },
+          ],
+        });
+        await alert.present();
+      }
+  }
+
+  @Input({ required: true }) userKey: string = '';
+  @Input({ required: true }) wodKey: string = '';
+  @Input() ask4newResult=false
+
+  async ngOnInit() {
+    const paramGetter:Promise<Params> = new Promise((resolve, reject) => {
+      this.activatedRoute.params.subscribe((params) => {
+        resolve(params);
+      })
+    })
+    const params = await paramGetter;
+    const wodKey = params['wodKey'];
+    const user = await this.users.getLoggedUser();
+    this.userKey = user.key;
     const result = await this.service.getResult(this.userKey, this.wodKey);
+    this.Result.set(result[0]);
+    console.log('result', result);
+    console.log('ask for new result', this.ask4newResult);
     if (this.userKey && this.wodKey&& this.ask4newResult)
       if (result.length == 0) {
         const alert = await this.alertCtrl.create({
@@ -65,15 +116,6 @@ return this.Result().result
       } else {
         this.Result.set(result[0]);
       }
-  }
-
-  @Input({ required: true }) userKey: string = '';
-  @Input({ required: true }) wodKey: string = '';
-  @Input() ask4newResult=false
-
-  async ngOnInit() {
-    console.log('result handler', this.userKey, this.wodKey);
-    const result = await this.service.getResult(this.userKey, this.wodKey);
     console.log('result', result);
     this.Result.set(result[0]);
   }

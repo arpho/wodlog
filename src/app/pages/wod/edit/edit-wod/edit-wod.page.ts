@@ -39,6 +39,7 @@ import { UserModel } from '/home/giuseppe/Documenti/projects/wodLog/src/app/mode
 })
 export class EditWodPage implements OnInit {
   title = signal('Editing wod');
+setResult = true
   async deleteWod(arg0: string) {
     console.log('delete wod', arg0);
     const alert = this.alertCtrl.create({
