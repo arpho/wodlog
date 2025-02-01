@@ -32,6 +32,11 @@ showResult() {
 return this.Result()? this.Result().result:"no result";
 }
   Result = signal<ResultsModel>(new ResultsModel());
+
+  @Input({ required: true }) userKey: string = '';
+  @Input({ required: true }) wodKey: string = '';
+  @Input() ask4newResult=false
+
   constructor(
     private service: ResultsService,
     private alertCtrl: AlertController,
@@ -42,10 +47,12 @@ return this.Result()? this.Result().result:"no result";
   ) {}
   async ngOnChanges(changes: SimpleChanges) {
     console.log("changes", changes);
+    const result = await this.service.getResult(this.userKey, this.wodKey);
 
     console.log('ask for new result', this.ask4newResult);
-    if (this.userKey && this.wodKey&& this.ask4newResult )
+    if (this.userKey && this.wodKey&& this.ask4newResult && result.length == 0)
        {
+        console.log("asking new result for userKey", this.userKey);
         const alert = await this.alertCtrl.create({
           header: 'Nuovo risultato',
           message: 'Vuoi aggiungere un nuovo risultato?',
@@ -69,28 +76,33 @@ return this.Result()? this.Result().result:"no result";
         });
         await alert.present();
       }
+      else {
+        this.Result.set(result[0]);
+      }
   }
 
-  @Input({ required: true }) userKey: string = '';
-  @Input({ required: true }) wodKey: string = '';
-  @Input() ask4newResult=false
-
   async ngOnInit() {
-    const paramGetter:Promise<Params> = new Promise((resolve, reject) => {
-      this.activatedRoute.params.subscribe((params) => {
-        resolve(params);
-      })
-    })
-    const params = await paramGetter;
-    const wodKey = params['wodKey'];
+
+    console.log("wodKey", this.wodKey);
+    console.log("userKey", this.userKey);
+const queryParamGetter = new Promise((resolve, reject) => {
+  this.activatedRoute.queryParams.subscribe((params: Params) => {
+    resolve(params);
+  });
+})
+const wodKey = await queryParamGetter as Params;
+
+    console.log('wodKey', wodKey);
     const user = await this.users.getLoggedUser();
     this.userKey = user.key;
-    const result = await this.service.getResult(this.userKey, this.wodKey);
+     const result = await this.service.getResult(this.userKey, wodKey["wodKey"]!);
     this.Result.set(result[0]);
     console.log('result', result);
-    console.log('ask for new result', this.ask4newResult);
-    if (this.userKey && this.wodKey&& this.ask4newResult)
-      if (result.length == 0) {
+    if (this.userKey && this.wodKey&& this.ask4newResult &&result.length==0){
+console.log("userKey", this.userKey);
+console.log("wodKey", this.wodKey);
+console.log("ask4newResult", this.ask4newResult);
+console.log("result", result.length);
         const alert = await this.alertCtrl.create({
           header: 'Nuovo risultato',
           message: 'Vuoi aggiungere un nuovo risultato?',
