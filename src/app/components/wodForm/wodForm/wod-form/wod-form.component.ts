@@ -1,3 +1,4 @@
+import { IonFab } from '@ionic/angular/standalone';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,22 +22,21 @@ import {
   IonCol,
   IonList,
   AlertController,
-  IonItem,
-} from '@ionic/angular/standalone';
+  IonItem, IonFabButton } from '@ionic/angular/standalone';
 import {
   InputChangeEventDetail,
   IonDatetimeCustomEvent,
   IonInputCustomEvent,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline } from 'ionicons/icons';
+import { saveOutline, add, alert } from 'ionicons/icons';
 
 @Component({
   selector: 'app-wod-form',
   templateUrl: './wod-form.component.html',
   styleUrls: ['./wod-form.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonFabButton,
     IonItem,
     IonList,
     IonCol,
@@ -46,15 +46,66 @@ import { saveOutline } from 'ionicons/icons';
     IonButton,
     IonInput,
     IonDatetime,
+    IonFab
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
+async addActivity() {
+console.log("adding activity")
+const alert = await this.alertCtrl.create({
+  header: 'add activity',
+  inputs: [
+    {
+      type: 'text',
+      label: 'activity',
+      value: '',}
+  ],
+  buttons: [
+    {
+      text: 'add',
+    handler: (data) => {
+      const wodSet = this.wod();
+      console.log("wodSet", wodSet)
+      wodSet.push(data[0])
+      this.wod.set([...wodSet])
+      console.log("updated wodset", this.wod())
+    }
+    }
+  ]
+})
+await alert.present()
+}
+async addForce() {
+console.log("adding force")
+const alert = await this.alertCtrl.create({
+  header: 'add force',
+  inputs: [
+    {
+      type: 'text',
+      label: 'force',
+      value: '',}
+  ],
+  buttons: [
+    {
+      text: 'add',
+    handler: (data) => {
+      const forceSet = this.force();
+      console.log("wodSet", forceSet)
+      forceSet.push(data[0])
+      this.force.set([...forceSet])
+      console.log("updated wodset", this.wod())
+    }
+    }
+  ]
+})
+await alert.present()
+}
 index: any;
   constructor(
     private alertCtrl: AlertController
   ) {
-    addIcons({ saveOutline });
+    addIcons({add,saveOutline});
   }
   async editWod(_t38: string, index:number) {
  console.log("editing", _t38)
