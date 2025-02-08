@@ -9,8 +9,8 @@ import {
   IonToolbar,
   IonButton,
   AlertController,
-  ToastController,
-} from '@ionic/angular/standalone';
+  IonBackButton,
+  ToastController, IonButtons } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -25,13 +25,14 @@ import { UserModel } from '/home/giuseppe/Documenti/projects/wodLog/src/app/mode
   templateUrl: './edit-wod.page.html',
   styleUrls: ['./edit-wod.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButtons,
     IonButton,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
     CommonModule,
+    IonBackButton,
     FormsModule,
     WodFormComponent,
     ResultHandlerComponent,

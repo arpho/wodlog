@@ -82,20 +82,16 @@ return this.Result()? this.Result().result:"no result";
   }
 
   async ngOnInit() {
-
-    console.log("wodKey", this.wodKey);
-    console.log("userKey", this.userKey);
 const queryParamGetter = new Promise((resolve, reject) => {
   this.activatedRoute.queryParams.subscribe((params: Params) => {
     resolve(params);
   });
 })
-const wodKey = await queryParamGetter as Params;
 
-    console.log('wodKey', wodKey);
+
     const user = await this.users.getLoggedUser();
     this.userKey = user.key;
-     const result = await this.service.getResult(this.userKey, wodKey["wodKey"]!);
+     const result = await this.service.getResult(this.userKey, this.wodKey);
     this.Result.set(result[0]);
     console.log('result', result);
     if (this.userKey && this.wodKey&& this.ask4newResult &&result.length==0){
