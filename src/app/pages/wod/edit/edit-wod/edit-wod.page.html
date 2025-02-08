@@ -2,6 +2,11 @@
   <ion-toolbar><ion-buttons slot="start">
     <ion-back-button></ion-back-button>
   </ion-buttons>
+  <app-result-handler
+    [userKey]="loggedUser.key"
+    [wodKey]="Wod.key"
+    [ask4newResult]="setResult"
+  ></app-result-handler>
     <ion-title class="ion-text-center" size="large">{{title()}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,11 +17,6 @@
       <ion-title class="ion-text-center" size="large">editWod</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-result-handler
-    [userKey]="loggedUser.key"
-    [wodKey]="Wod.key"
-    [ask4newResult]="setResult"
-  ></app-result-handler>
 
   <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)"></app-wod-form>
   <ion-button (click)="deleteWod(Wod.key)">delete</ion-button>
