@@ -192,6 +192,7 @@ await alert.present()
 
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("wod in form changed", this.Wod)
     this.date.set(new Date(this.Wod.date));
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);
@@ -200,16 +201,15 @@ await alert.present()
     this.force.set(this.Wod.force);
   }
   submit() {
-    console.log('submit', this.title());
     this.Wod = new WodModel({
       date: this.date().getTime(),
+      key: this.Wod.key,
       title: this.title(),
       note: this.note(),
       force: this.force(),
       wod: this.wod(),
     });
     this.submitWod.emit(this.Wod);
-    console.log('submit wod', this.Wod);
   }
   updateNote($event: IonInputCustomEvent<InputChangeEventDetail>) {
     console.log('note', $event.detail.value);
@@ -225,6 +225,7 @@ await alert.present()
   }
 
   ngOnInit() {
+    console.log("wod on init form", this.Wod)
     this.date.set(new Date(this.Wod.date));
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);

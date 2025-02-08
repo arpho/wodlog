@@ -25,8 +25,8 @@ export class WodModel {
   serialize() {
     return {
       key: this.key,
-      force: this.force,
-      wod: this.wod,
+      force: this.force||[],
+      wod: this.wod||[],
       date: this.date,
       title: this.title,
       note: this.note,

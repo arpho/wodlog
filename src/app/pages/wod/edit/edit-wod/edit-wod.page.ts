@@ -83,9 +83,10 @@ setResult = true
   }
   loggedUser: import('/home/giuseppe/Documenti/projects/wodLog/src/app/models/userModel').UserModel =
     new UserModel();
-  updateWod($event: WodModel) {
+  updateWod(wod: WodModel) {
+    console.log('updating wod', wod);
     this.wods
-      .updateWod($event)
+      .updateWod(wod)
       .then(() => {
         this.toaster
           .create({
@@ -124,7 +125,7 @@ setResult = true
       this.route.queryParams.subscribe(async (params) => {
         this.loggedUser = await this.users.getLoggedUser();
         this.Wod = await this.wods.getWodByKey(params['wodKey']);
-        this.title.set(` editing "${this.Wod.title}"`);
+        this.title.set(`Editing ${this.Wod.title}`);
       })
     );
   }
