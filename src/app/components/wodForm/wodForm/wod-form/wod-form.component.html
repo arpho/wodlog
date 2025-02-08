@@ -71,6 +71,25 @@
   </ion-row>
 </ion-grid>
 
+<div class="switches">
+  <div id="hero">
+  <ion-toggle labelPlacement="start" [ngClass]="{'isAnHero':hero()}" [checked]="hero()" (ionChange)="updateHero($event)">Hero</ion-toggle> @if(hero()){
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+  </div>
+  <div id="girl">
+  <ion-toggle labelPlacement="start"  [ngClass]="{'isAGirl':girl()}" [checked]="girl()" (ionChange)="updateGirl($event)">Girl</ion-toggle>
+  @if (girl()) {
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+  </div>
+  <div id="benchmark">
+  <ion-toggle labelPlacement="start"  [ngClass]="{'isABenchmark':benchmark()}" [checked]="benchmark()" (ionChange)="updateBenchmark($event)">Bechmark</ion-toggle>@if (benchmark()) {
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+    </div>
+
+</div>
 <ion-input
   type="text"
   label="nome wod"

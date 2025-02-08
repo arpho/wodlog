@@ -1,4 +1,4 @@
-import { IonFab } from '@ionic/angular/standalone';
+import { IonFab, IonToggle, } from '@ionic/angular/standalone';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -27,30 +27,50 @@ import {
   InputChangeEventDetail,
   IonDatetimeCustomEvent,
   IonInputCustomEvent,
+IonToggleCustomEvent,
+ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, alert } from 'ionicons/icons';
+import { saveOutline, add, alert, checkmarkOutline } from 'ionicons/icons';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-wod-form',
   templateUrl: './wod-form.component.html',
   styleUrls: ['./wod-form.component.scss'],
   standalone: true,
-  imports: [IonFabButton,
+  imports: [IonToggle, IonFabButton,
     IonItem,
     IonList,
     IonCol,
     IonRow,
     IonGrid,
     IonIcon,
+    IonIcon,
     IonButton,
     IonInput,
+    CommonModule,
     IonDatetime,
     IonFab
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
+test= false
+updateHero(event:any){
+console.log("hero",event.detail.checked);
+this.hero.set(event.detail.checked)
+}
+updateGirl(event:any){
+console.log("girl",event.detail.checked);
+this.girl.set(event.detail.checked)
+}
+
+
+updateBenchmark(event:any){
+  console.log("benchmark",event.detail.checked);
+  this.benchmark.set(event.detail.checked)
+  }
 async addActivity() {
 console.log("adding activity")
 const alert = await this.alertCtrl.create({
@@ -105,7 +125,7 @@ index: any;
   constructor(
     private alertCtrl: AlertController
   ) {
-    addIcons({add,saveOutline});
+    addIcons({add,checkmarkOutline,saveOutline});
   }
   async editWod(_t38: string, index:number) {
  console.log("editing", _t38)
@@ -189,16 +209,22 @@ await alert.present()
   force = signal<string[]>([]);
   title = signal('');
   note = signal('');
+  hero = signal(false);
+  girl = signal(false);
+  benchmark = signal(false);
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("wod in form changed", this.Wod)
+
     this.date.set(new Date(this.Wod.date));
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);
     this.force.set(this.Wod.force);
     this.wod.set(this.Wod.wod);
     this.force.set(this.Wod.force);
+    this.hero.set(this.Wod.hero);
+    this.girl.set(this.Wod.girl);
+    this.benchmark.set(this.Wod.benchmark);
   }
   submit() {
     this.Wod = new WodModel({
@@ -208,6 +234,9 @@ await alert.present()
       note: this.note(),
       force: this.force(),
       wod: this.wod(),
+      girl: this.girl(),
+      hero: this.hero(),
+      benchmark: this.benchmark()
     });
     this.submitWod.emit(this.Wod);
   }
@@ -225,7 +254,6 @@ await alert.present()
   }
 
   ngOnInit() {
-    console.log("wod on init form", this.Wod)
     this.date.set(new Date(this.Wod.date));
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);
@@ -233,6 +261,9 @@ await alert.present()
     this.wod.set(this.Wod.wod||[]);
     this.force.set(this.Wod.force||[]);
     this.wod.set(this.Wod.wod);
+    this.hero.set(this.Wod.hero);
+    this.girl.set(this.Wod.girl);
+    this.benchmark.set(this.Wod.benchmark);
   }
   formatDate4Picker() {
     return this.date().toISOString().split('T')[0];

@@ -1,6 +1,9 @@
 export class WodModel {
   key = '';
   force: string[] = [];
+  girl= false
+  hero= false
+  benchmark= false
   wod: string[] = [];
   date: number = new Date().getTime();
   title = '';
@@ -30,6 +33,9 @@ export class WodModel {
       date: this.date,
       title: this.title,
       note: this.note,
+      hero: this.hero,
+      girl: this.girl,
+      benchmark: this.benchmark
     };
   }
 }
