@@ -21,7 +21,7 @@ import { ActivityFormComponent } from "../../../components/activityForm/activity
       IonToolbar,
        CommonModule,
         FormsModule,
-         ActivityFormComponent
+         ActivityFormComponent,
         ]
 })
 export class EditActivityPage implements OnInit,OnDestroy {

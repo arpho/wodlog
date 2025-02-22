@@ -1,3 +1,4 @@
+import { update } from '@firebase/database';
 import { get } from 'firebase/database';
 import { AlertController } from '@ionic/angular';
 import {
@@ -9,25 +10,109 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ResultsService } from 'src/app/services/results/results.service';
-import { alert } from 'ionicons/icons';
+import { alert, createOutline } from 'ionicons/icons';
 import { ResultsModel } from 'src/app/models/results';
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  ToastController,
-} from '@ionic/angular/standalone';
+  ToastController, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { user } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users/users.service';
+import { addIcons } from 'ionicons';
 @Component({
   selector: 'app-result-handler',
   templateUrl: './result-handler.component.html',
   styleUrls: ['./result-handler.component.scss'],
+  imports: [IonContent,
+    IonHeader,
+     IonTitle,
+     IonToolbar,
+      IonButton,
+      IonIcon],
   standalone: true,
 })
 export class ResultHandlerComponent implements OnInit, OnChanges {
+async updateResult() {
+console.log("update result", this.Result());
+const alert = await this.alertCtrl.create({
+  header: 'modifica risultato',
+    inputs: [
+    {
+      name: 'result',
+      type: 'text',
+      placeholder: 'risultato',
+      value: this.Result().result
+    },
+    {
+      name: 'date',
+      type: 'date',
+      value: new Date().toISOString().split('T')[0],
+      placeholder: 'data',
+    },
+    {
+      name: 'note',
+      type: 'textarea',
+      placeholder: 'note',
+    },
+  ],
+  buttons: [
+    {
+      text: 'Annulla',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: () => {
+        console.log('Confirm Cancel');
+      },
+    },
+    {
+      text: 'Ok',
+      handler: (data) => {
+        console.log('Confirm Ok', data);
+        console.log('result', this.Result());
+
+        data['userKey'] = this.userKey;
+        data['wodKey'] = this.wodKey;
+        const result = this.Result();
+        result.result = data.result;
+        result.date = data.date;
+        result.note = data.note;
+        result.key = this.Result().key
+        this.Result.set(result);
+        console.log('result', result);
+        this.service.updateResult(result).then((res) => {
+          console.log('res', res);
+          this.toaster.create({
+            message: 'risultato aggiornato',
+            duration: 3000,
+            position: 'bottom',
+            color: 'success',
+          }).then((toast) => {
+            toast.present();
+          });
+        }).catch((err) => {
+          this.toaster.create({
+            message: 'risultato non aggiornato',
+            duration: 3000,
+            position: 'bottom',
+            color: 'danger',
+          }).then((toast) => {
+            console.log('err', err);
+            toast.present();
+          });
+        }).finally(() => {
+          this.router.navigateByUrl('/home');
+        });
+
+      },
+    },
+  ],
+});
+await alert.present();
+
+}
 showResult() {
 return this.Result()? this.Result().result:"no result";
 }
@@ -44,7 +129,8 @@ return this.Result()? this.Result().result:"no result";
     private users: UsersService,
     private router: Router,
      private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+      addIcons({createOutline});}
   async ngOnChanges(changes: SimpleChanges) {
     console.log("changes", changes);
     const result = await this.service.getResult(this.userKey, this.wodKey);
@@ -78,6 +164,7 @@ return this.Result()? this.Result().result:"no result";
       }
       else {
         this.Result.set(result[0]);
+        console.log('result', result);
       }
   }
 

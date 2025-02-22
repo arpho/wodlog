@@ -5,6 +5,8 @@
       <ion-col><h3>Data</h3></ion-col>
       <ion-col><h3>Note</h3></ion-col>
       </ion-row>
+
+  <app-paginator [PaginationOptions]="paginationOptions"></app-paginator>
       @for (item of  $prList()|customSorter:sorter; track item.id) {
       <ion-card> <ion-row (click)="editPr(item)">
           <ion-col size="3">{{item.prestazione|prestazione:unity}}</ion-col>

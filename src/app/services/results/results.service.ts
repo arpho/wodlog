@@ -13,6 +13,10 @@ import { ResultsModel } from 'src/app/models/results';
   providedIn: 'root',
 })
 export class ResultsService {
+  updateResult(result: ResultsModel) {
+const refResults = ref(this.db, `${this.url}/${result.key}`);
+return update(refResults, result.serialize());
+  }
   url = 'results';
   db = getDatabase();
   constructor() {}

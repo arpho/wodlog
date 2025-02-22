@@ -25,6 +25,8 @@ import {
 import { AlertController } from '@ionic/angular';
 import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
 import { CustomSorterPipe } from '../../pipes/customSorter.pipe';
+import { PaginatorComponent } from '../../paginator/paginator.component';
+import { PaginationOptions } from 'src/app/models/paginationOptions';
 @Component({
   selector: 'app-pr-list',
   templateUrl: './pr-list.component.html',
@@ -41,15 +43,26 @@ import { CustomSorterPipe } from '../../pipes/customSorter.pipe';
     IonIcon,
     IonButton,
     PrestazionePipe,
+    PaginatorComponent,
     CustomSorterPipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrListComponent implements OnInit, OnChanges {
   pr = new PrModel();
+
   sorter = (a: PrModel, b: PrModel) => {
     return b.date - a.date;
   };
+  paginationOptions: PaginationOptions = {
+    page: 0,
+    limit: 10,
+    total: 0,
+  };
+  $prList = signal<PrModel[]>([]);
+  @Input() prList: PrModel[] = [];
+  @Input() unity: string = ' Kg ';
+  @Output() editedPrList = new EventEmitter<PrModel[]>();
 
   makeAlert4kg(pr: PrModel, title: string) {
     console.log('make alert for Kg', pr);
@@ -181,7 +194,7 @@ export class PrListComponent implements OnInit, OnChanges {
     await alert.present();
     const result = await alert.onDidDismiss();
   }
-  $prList = signal<PrModel[]>([]);
+
 
   async editPr(pr: PrModel) {
     console.log('edit pr', pr);
@@ -194,9 +207,7 @@ export class PrListComponent implements OnInit, OnChanges {
   showDate(arg0: number) {
     return new Date(arg0).toLocaleDateString();
   }
-  @Input({ required: true }) prList: PrModel[] = [];
-  @Input({ required: true }) unity: string = '';
-  @Output() editedPrList = new EventEmitter<PrModel[]>();
+
 
   constructor(private alertCtrl: AlertController) {}
   ngOnChanges(changes: SimpleChanges): void {

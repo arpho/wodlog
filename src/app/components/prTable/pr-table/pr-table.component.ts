@@ -6,13 +6,24 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
 import { ActivityService } from 'src/app/services/activity/activity.service';
+import { PaginatorComponent } from '../../paginator/paginator.component';
+import { PaginationOptions } from 'src/app/models/paginationOptions';
 
 @Component({
   selector: 'app-pr-table',
   templateUrl: './pr-table.component.html',
   styleUrls: ['./pr-table.component.scss'],
   standalone: true,
-  imports: [IonItemOption, IonItemOptions, IonItemSliding, IonItem, IonFab, IonFabButton, IonIcon, IonButton, IonCard,
+  imports: [IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
+    PaginatorComponent,
+    IonItem,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonButton,
+    IonCard,
     IonCol,
     IonRow,
     IonGrid,
@@ -22,6 +33,11 @@ import { ActivityService } from 'src/app/services/activity/activity.service';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
+  paginationOptions:PaginationOptions = {
+    page: 1,
+    limit: 10,
+    total: 0
+  }
   async deletePr(activity: ActivityModel) {
 console.log("delete pr",activity);
 const alert = await this.alertCtrl.create({

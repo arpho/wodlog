@@ -27,7 +27,29 @@
   </ion-row>
   @for (item of  wods(); track item.key) {
     <ion-item> <ion-row (click)="editWod(item)">
-      <ion-col >{{item.title}} </ion-col>
+      <ion-col >{{item.title}}
+        <div class="thumbs">
+      @if (item.benchmark) {
+        <ion-thumbnail  >
+          <ion-img src="assets/images/benchmark.png"/>
+        </ion-thumbnail>
+      }
+      @if(item.girl) {
+
+
+      <ion-thumbnail  >
+        <ion-img src="assets/images/girl.png"/>
+      </ion-thumbnail>
+    }
+    @if(item.hero) {
+
+
+      <ion-thumbnail  >
+        <ion-img src="assets/images/hero.png"/>
+      </ion-thumbnail>
+    }
+        </div>
+      </ion-col>
       <ion-col >{{showDate(item)}}</ion-col>
       <ion-col >{{item.note}}</ion-col>
       <ion-col  ><app-result-handler [userKey]="user.key" [wodKey]="item.key"></app-result-handler></ion-col>
@@ -36,4 +58,5 @@
 
   }
 </ion-grid>
+
 </ion-content>
