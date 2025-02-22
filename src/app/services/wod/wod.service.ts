@@ -45,10 +45,8 @@ return wod;
       console.log("snapshot", snapshot.val());
       if (snapshot.exists()) {
         const data = snapshot.val();
-        console.log("data", data);
         const wods: WodModel[] = [];
         Object.entries(data).forEach(([key, value]) => {
-console.log("value",value)
           if (value) {
             wods.push(new WodModel(value).setKey(key));
           }

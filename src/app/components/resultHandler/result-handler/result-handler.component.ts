@@ -135,10 +135,9 @@ return this.Result()? this.Result().result:"no result";
     console.log("changes", changes);
     const result = await this.service.getResult(this.userKey, this.wodKey);
 
-    console.log('ask for new result', this.ask4newResult);
     if (this.userKey && this.wodKey&& this.ask4newResult && result.length == 0)
        {
-        console.log("asking new result for userKey", this.userKey);
+
         const alert = await this.alertCtrl.create({
           header: 'Nuovo risultato',
           message: 'Vuoi aggiungere un nuovo risultato?',
@@ -164,7 +163,6 @@ return this.Result()? this.Result().result:"no result";
       }
       else {
         this.Result.set(result[0]);
-        console.log('result', result);
       }
   }
 
@@ -180,7 +178,6 @@ const queryParamGetter = new Promise((resolve, reject) => {
     this.userKey = user.key;
      const result = await this.service.getResult(this.userKey, this.wodKey);
     this.Result.set(result[0]);
-    console.log('result', result);
     if (this.userKey && this.wodKey&& this.ask4newResult &&result.length==0){
 console.log("userKey", this.userKey);
 console.log("wodKey", this.wodKey);
@@ -211,7 +208,6 @@ console.log("result", result.length);
       } else {
         this.Result.set(result[0]);
       }
-    console.log('result', result);
     this.Result.set(result[0]);
   }
   async setResult() {

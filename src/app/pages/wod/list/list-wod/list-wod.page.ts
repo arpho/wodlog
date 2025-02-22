@@ -24,6 +24,7 @@ import { WodModel } from 'src/app/models/wod';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
 import { UsersService } from 'src/app/services/users/users.service';
+import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
 
 @Component({
   selector: 'app-list-wod',
@@ -47,12 +48,17 @@ import { UsersService } from 'src/app/services/users/users.service';
     CommonModule,
     FormsModule,
     ResultHandlerComponent,
-    IonThumbnail
+    IonThumbnail,
+    CustomSorterPipe
 ],
 })
 export class ListWodPage implements OnInit {
 [x: string]: any;
 user: any;
+
+  sorter = (a: WodModel, b: WodModel) => {
+    return b.date -  a.date; //a.date - b.date;
+  };
 title="";
   createWod() {
     console.log('create wod');
@@ -86,6 +92,7 @@ title="";
       console.log('data', data);
       this.wods.set(data.wods);
       console.log('wods', this.wods());
+      console.log("sorted wods", this.wods().sort(this.sorter));
     };
     this.service.fetchWodsRealtime(callback);
   }

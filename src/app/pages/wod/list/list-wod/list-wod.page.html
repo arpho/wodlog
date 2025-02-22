@@ -25,7 +25,7 @@
     <ion-col><h3>note</h3></ion-col>
     <ion-col><h3>result</h3></ion-col>
   </ion-row>
-  @for (item of  wods(); track item.key) {
+  @for (item of  wods()|customSorter:sorter; track item.key) {
     <ion-item> <ion-row (click)="editWod(item)">
       <ion-col >{{item.title}}
         <div class="thumbs">
