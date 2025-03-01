@@ -1,4 +1,4 @@
-<ion-searchbar placeholder="Custom Placeholder" (ionInput)="search($event)"></ion-searchbar>
+<ion-searchbar placeholder="Custom Placeholder" show-clear-button="focus" (ionInput)="search($event)"></ion-searchbar>
 <ion-grid>
   <ion-row class="headers">
     <ion-col>
@@ -23,12 +23,12 @@
         @for( pr of prList|filterPipe:filter;track pr.key){
           <ion-row  >
 
-            <ion-item class="pr" (click)="editPr(pr)">
+            <ion-item class="pr">
               {{showPr(pr)}}
             <ion-col > <strong>{{pr.descrizione}}</strong></ion-col>
             <ion-col >{{pr.getMaxPr().getDate()}}</ion-col>
             <ion-col >{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col>
-            <ion-col><ion-button color="success" size="small" shape="round" (click)="deletePr(pr)"><ion-icon name=add></ion-icon></ion-button></ion-col>
+            <ion-col><ion-button color="light" size="small" shape="round" (click)="addPr(pr)"><ion-icon name=add></ion-icon></ion-button></ion-col>
             </ion-item>
           </ion-row>
         }

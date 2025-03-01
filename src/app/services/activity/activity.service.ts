@@ -7,6 +7,11 @@ import { user } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class ActivityService {
+  update(userKey:string, activity: ActivityModel) {
+   return new Promise((resolve, reject) => {
+    const refActivity = ref(this.db,`activities/${userKey}/${activity.key}`);
+   })
+  }
   delete(userKey:string, activity: ActivityModel) {
 const refActivity = ref(this.db,`activities/${userKey}/${activity.key}`);
 return remove(refActivity)
