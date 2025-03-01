@@ -7,17 +7,25 @@ import { UserModel } from 'src/app/models/userModel';
 import { UsersService } from 'src/app/services/users/users.service';
 import { HomePage } from 'src/app/home/home.page';
 import { Router } from '@angular/router';
+import { FilterPipe } from 'src/app/components/pipes/customFilter/filterPipe.pipe';
 
 @Component({
   selector: 'app-pr-list',
   templateUrl: './pr-list.page.html',
   styleUrls: ['./pr-list.page.scss'],
   standalone: true,
-  imports: [IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
+  imports: [IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
     IonBreadcrumb,
     IonBreadcrumbs,
-
-    IonButtons,  ActivitiesListComponent]
+    IonButtons,
+    ActivitiesListComponent]
 })
 export class PrListPage implements OnInit {
 goBack() {

@@ -1,3 +1,4 @@
+<ion-searchbar placeholder="Custom Placeholder" (ionInput)="search($event)"></ion-searchbar>
 <ion-grid>
   <ion-row class="headers">
     <ion-col>
@@ -9,6 +10,9 @@
         <ion-col>
           <h3>PR</h3>
           </ion-col>
+          <ion-col>
+            <h3>new pr</h3>
+            </ion-col>
 
           <ion-fab    vertical="bottom" horizontal="end"    >
             <ion-fab-button (click)="createActivity()" size="small"   color="light">
@@ -16,16 +20,19 @@
             </ion-fab-button>
           </ion-fab>
         </ion-row>
-            <ion-row *ngFor="let pr of prList" >
+        @for( pr of prList|filterPipe:filter;track pr.key){
+          <ion-row  >
 
-              <ion-item class="pr" (click)="editPr(pr)">
-                {{showPr(pr)}}
-              <ion-col size="4"> <strong>{{pr.descrizione}}</strong></ion-col>
-              <ion-col size="4">{{pr.getMaxPr().getDate()}}</ion-col>
-              <ion-col size="4">{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col><!--
-              <ion-col><ion-button color="danger" (click)="deletePr(pr)"><ion-icon name=trash-outline></ion-icon></ion-button></ion-col> -->
-              </ion-item>
-            </ion-row>
+            <ion-item class="pr" (click)="editPr(pr)">
+              {{showPr(pr)}}
+            <ion-col > <strong>{{pr.descrizione}}</strong></ion-col>
+            <ion-col >{{pr.getMaxPr().getDate()}}</ion-col>
+            <ion-col >{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col>
+            <ion-col><ion-button color="success" size="small" shape="round" (click)="deletePr(pr)"><ion-icon name=add></ion-icon></ion-button></ion-col>
+            </ion-item>
+          </ion-row>
+        }
+
 
   </ion-grid>
 

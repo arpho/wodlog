@@ -1,13 +1,15 @@
 import { UsersService } from './../../../services/users/users.service';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController } from "@ionic/angular/standalone";
+import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController,IonSearchbar, SearchbarChangeEventDetail } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PaginationOptions } from 'src/app/models/paginationOptions';
+import { IonSearchbarCustomEvent } from '@ionic/core';
+import { FilterPipe } from "../../pipes/customFilter/filterPipe.pipe";
 
 @Component({
   selector: 'app-pr-table',
@@ -19,6 +21,7 @@ import { PaginationOptions } from 'src/app/models/paginationOptions';
     IonItemSliding,
     PaginatorComponent,
     IonItem,
+    IonSearchbar,
     IonFab,
     IonFabButton,
     IonIcon,
@@ -29,10 +32,17 @@ import { PaginationOptions } from 'src/app/models/paginationOptions';
     IonGrid,
     CommonModule,
     IonFabButton,
-    IonFab, PrestazionePipe],
+    IonFab, PrestazionePipe, FilterPipe],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
+
+  filter= (pr:ActivityModel) => true
+search($event: any) {
+console.log("search", $event.detail.value);
+this.filter = (pr:ActivityModel) => pr.descrizione.toLowerCase().includes($event.detail.value.toLowerCase())
+console.log("filtered pr", this.prList.filter(this.filter))
+}
   paginationOptions:PaginationOptions = {
     page: 1,
     limit: 10,

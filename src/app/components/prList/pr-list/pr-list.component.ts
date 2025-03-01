@@ -1,3 +1,4 @@
+import { IonSearchbar } from '@ionic/angular/standalone';
 import {
   Component,
   OnInit,
@@ -27,6 +28,7 @@ import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
 import { CustomSorterPipe } from '../../pipes/customSorter.pipe';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PaginationOptions } from 'src/app/models/paginationOptions';
+import { FilterPipe } from "../../pipes/customFilter/filterPipe.pipe";
 @Component({
   selector: 'app-pr-list',
   templateUrl: './pr-list.component.html',
@@ -45,7 +47,9 @@ import { PaginationOptions } from 'src/app/models/paginationOptions';
     PrestazionePipe,
     PaginatorComponent,
     CustomSorterPipe,
-  ],
+    IonSearchbar,
+    FilterPipe
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrListComponent implements OnInit, OnChanges {
@@ -63,6 +67,7 @@ export class PrListComponent implements OnInit, OnChanges {
   @Input() prList: PrModel[] = [];
   @Input() unity: string = ' Kg ';
   @Output() editedPrList = new EventEmitter<PrModel[]>();
+filter: (pr:PrModel) => boolean = (pr:PrModel) => true
 
   makeAlert4kg(pr: PrModel, title: string) {
     console.log('make alert for Kg', pr);

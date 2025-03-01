@@ -9,7 +9,8 @@ import { PrTableComponent } from "../../prTable/pr-table/pr-table.component";
   styleUrls: ['./activities-list.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PrTableComponent]
+  imports: [
+    PrTableComponent]
 })
 export class ActivitiesListComponent  implements OnChanges {
   @Input({required:true})  userKey:string = ""
@@ -21,7 +22,6 @@ activities=   signal<{data:ActivityModel[],total:number}>({data:[],total:0})
 
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("activities list  change for ",this.userKey)
     const callback= (activities:{data:ActivityModel[],total:number}) =>{
       console.log("got activities",activities)
       this.activities.set(activities)}

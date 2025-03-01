@@ -35,7 +35,6 @@ return set(ref(this.db,`activities/${userKey}/${activity.key}`),activity.seriali
   }
 
   realtimeFetchAllActivities(userKey:string, callback:(data:{data:ActivityModel[],total:number})=>void){
-    console.log("**fetching all activities for ", userKey)
 const activitiesRef = ref(this.db,`activities/${userKey}`)
 onValue(activitiesRef, (snapshot) => {
   if(snapshot.exists()){

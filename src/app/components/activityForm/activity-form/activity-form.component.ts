@@ -19,7 +19,7 @@ import { IonToggleCustomEvent } from '@ionic/core';
     IonToggle,
     IonButton,
     IonIcon,
-    PrListComponent
+    PrListComponent,
 ]
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
