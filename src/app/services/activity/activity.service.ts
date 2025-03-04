@@ -10,6 +10,7 @@ export class ActivityService {
   update(userKey:string, activity: ActivityModel) {
    return new Promise((resolve, reject) => {
     const refActivity = ref(this.db,`activities/${userKey}/${activity.key}`);
+    return set(refActivity, activity.serialize());
    })
   }
   delete(userKey:string, activity: ActivityModel) {

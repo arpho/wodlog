@@ -2,7 +2,7 @@ import { update } from '@firebase/database';
 import { UsersService } from './../../../services/users/users.service';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController,IonSearchbar, SearchbarChangeEventDetail } from "@ionic/angular/standalone";
+import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonFabList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController,IonSearchbar, SearchbarChangeEventDetail } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
@@ -18,7 +18,10 @@ import { PrModel } from 'src/app/models/Pr';
   templateUrl: './pr-table.component.html',
   styleUrls: ['./pr-table.component.scss'],
   standalone: true,
-  imports: [IonItemOption,
+  imports:
+  // eslint-disable-next-line
+  [
+    IonItemOption,
     IonItemOptions,
     IonItemSliding,
     PaginatorComponent,
@@ -26,6 +29,9 @@ import { PrModel } from 'src/app/models/Pr';
     IonSearchbar,
     IonFab,
     IonFabButton,
+    IonFabButton,
+    IonFab,
+    IonFabList,
     IonIcon,
     IonButton,
     IonCard,
@@ -34,7 +40,10 @@ import { PrModel } from 'src/app/models/Pr';
     IonGrid,
     CommonModule,
     IonFabButton,
-    IonFab, PrestazionePipe, FilterPipe],
+    IonFab,
+     PrestazionePipe,
+      FilterPipe
+    ],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
@@ -168,11 +177,19 @@ console.log("filtered pr", this.prList.filter(this.filter))
             pr.date = new Date(data.data).getTime();
             pr.date = new Date(data.data).getTime();console.log("new pr",pr)
             activity.prList.push(pr)
-            this.updateActivity(activity)
+            this.updateActivity(activity).then(res=>{
+              const toast = this.ToastController.create({})
 
-          },
-        },
-      ],
+          }).catch(err=>{
+            const toast = this.ToastController.create({
+              message: 'Pr non aggiunto',
+              duration: 2000
+            });
+            toast.then(res=>res.present())
+          })
+        }
+      }
+      ]
     });
   }
 
