@@ -2,16 +2,17 @@ import { update } from '@firebase/database';
 import { UsersService } from './../../../services/users/users.service';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonFabList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController,IonSearchbar, SearchbarChangeEventDetail } from "@ionic/angular/standalone";
+import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonFabList, IonActionSheet,IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController,IonSearchbar, SearchbarChangeEventDetail } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PaginationOptions } from 'src/app/models/paginationOptions';
-import { IonSearchbarCustomEvent } from '@ionic/core';
+import { IonActionSheetCustomEvent, IonSearchbarCustomEvent, OverlayEventDetail } from '@ionic/core';
 import { FilterPipe } from "../../pipes/customFilter/filterPipe.pipe";
 import { PrModel } from 'src/app/models/Pr';
+import { text } from 'ionicons/icons';
 
 @Component({
   selector: 'app-pr-table',
@@ -40,6 +41,7 @@ import { PrModel } from 'src/app/models/Pr';
     IonGrid,
     CommonModule,
     IonFabButton,
+    IonActionSheet,
     IonFab,
      PrestazionePipe,
       FilterPipe
@@ -47,6 +49,78 @@ import { PrModel } from 'src/app/models/Pr';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class PrTableComponent  implements OnInit,OnChanges {
+
+  selectedActivity: ActivityModel = new ActivityModel();
+  constructor(
+    private router:Router,
+    private alertCtrl: AlertController,
+    private service:ActivityService,
+    private users:UsersService,
+    private ToastController: ToastController
+
+  ) { }
+actionSheetDidDismiss($event: IonActionSheetCustomEvent<OverlayEventDetail<any>>) {
+switch($event.detail.data.action){
+  case 'delete':
+    console.log("delete")
+    break;
+  case 'newPr':
+    console.log("newPr")
+    console.log("adding pr 2", this.selectedActivity)
+    this.addPr(this.selectedActivity)
+    break;
+  case 'cancel':
+    console.log("cancel")
+    break;
+    case 'edit':
+      console.log("edit")
+      this.editPr(this.selectedActivity)
+      break;
+  default:
+    console.log("default")
+    break
+}
+  this.setOpen(false)
+}
+
+  public actionSheetButtons:any[] = [];
+openActions(_t25: any) {
+console.log("opening actions 4",_t25)
+this.selectedActivity = _t25
+this.actionSheetButtons = [
+  {
+    text: `Elimina ${_t25.descrizione}`,
+    role: 'destructive',
+    icon:'trash-outline',
+    data: {
+      action: 'delete',
+    },
+  },
+  {
+    text: `Modifica ${_t25.descrizione}`,
+    icon:'eye',
+    data: {
+      action: 'edit',
+    },
+  },
+  {
+    text: `registra un nuovo pr per ${_t25.descrizione}`,
+    icon:'stats-chart',
+    data: {
+      action: 'newPr',
+    },
+  },
+  {
+    text: 'Cancel',
+    role: 'cancel',
+    data: {
+      action: 'cancel',
+    },
+  },
+];
+
+this.setOpen(true)
+}
 addPr(activity: ActivityModel) {
 console.log("add pr 2",activity)
 const pr = new PrModel()
@@ -69,7 +143,11 @@ console.log("filtered pr", this.prList.filter(this.filter))
     total: 0
   }
 
+  isActionSheetOpen = false;
 
+  setOpen(isOpen: boolean) {
+    this.isActionSheetOpen = isOpen;
+  }
 
   makeAlert4kg(pr: PrModel, title: string,activity: ActivityModel) {
     return this.alertCtrl.create({
@@ -257,25 +335,7 @@ this.router.navigateByUrl(`/create-activity`)
 }
   async editPr(activity: ActivityModel) {
 console.log("edit pr",activity)
-const alert = await this.alertCtrl.create({
-  header: 'Scegli azione da eseguire',
-  buttons: [
-    {
-      text: 'Modifica',
-      handler: () => {
-        this.router.navigateByUrl(`/edit-activity?activityKey=${activity.key}`)
-      }
-    },
-    {
-      text: 'Elimina',
-      handler: () => {
-        this.deletePr(activity);
-      }
-    }
-  ],
-  backdropDismiss: false
-})
-await alert.present();
+this.router.navigateByUrl(`/edit-activity?activityKey=${activity.key}`)
 
 //this.router.navigateByUrl(`/edit-activity?activityKey=${activity.key}`)
 }
@@ -284,14 +344,6 @@ showPr(_t16: ActivityModel) {
 @Input({required:true})  prList:ActivityModel[] = []
 userKey:string=""
 
-  constructor(
-    private router:Router,
-    private alertCtrl: AlertController,
-    private service:ActivityService,
-    private users:UsersService,
-    private ToastController: ToastController
-
-  ) { }
   ngOnChanges(changes: SimpleChanges): void {
 this.prList = changes['prList'].currentValue
   if(this.prList.length >0){

@@ -11,7 +11,7 @@
           <h3>PR</h3>
           </ion-col>
           <ion-col>
-            <h3>new pr</h3>
+            <h3>actions</h3>
             </ion-col>
 
           <ion-fab    vertical="bottom" horizontal="end"    >
@@ -28,12 +28,19 @@
             <ion-col > <strong>{{pr.descrizione}}</strong></ion-col>
             <ion-col >{{pr.getMaxPr().getDate()}}</ion-col>
             <ion-col >{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col>
-            <ion-col><ion-button color="light" size="small" shape="round" (click)="addPr(pr)"><ion-icon name=add></ion-icon></ion-button></ion-col>
-            <ion-col><ion-button color="light" size="small" shape="round" (click)="editPr(pr)"><ion-icon name=eye></ion-icon></ion-button></ion-col>
+
+            <ion-col><ion-button color="light" size="small" shape="round" (click)="openActions(pr)"><ion-icon name=ellipsis-horizontal></ion-icon></ion-button></ion-col>
+
             </ion-item>
           </ion-row>
         }
 
 
   </ion-grid>
+  <ion-action-sheet
+  [isOpen]="isActionSheetOpen"
+  header="Actions"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="actionSheetDidDismiss($event)"
+></ion-action-sheet>
 
