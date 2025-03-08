@@ -22,6 +22,14 @@ import {
   IonFabButton,
   IonFab,
   IonButtons,
+  IonContent,
+  IonHeader,
+  IonTab,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { AlertController } from '@ionic/angular';
 import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
@@ -29,6 +37,9 @@ import { CustomSorterPipe } from '../../pipes/customSorter.pipe';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PaginationOptions } from 'src/app/models/paginationOptions';
 import { FilterPipe } from "../../pipes/customFilter/filterPipe.pipe";
+import {
+
+} from '@ionic/angular/standalone';
 @Component({
   selector: 'app-pr-list',
   templateUrl: './pr-list.component.html',
@@ -48,7 +59,9 @@ import { FilterPipe } from "../../pipes/customFilter/filterPipe.pipe";
     PaginatorComponent,
     CustomSorterPipe,
     IonSearchbar,
-    FilterPipe
+    FilterPipe,
+    IonContent, IonHeader, IonIcon, IonTab, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar
+
 ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

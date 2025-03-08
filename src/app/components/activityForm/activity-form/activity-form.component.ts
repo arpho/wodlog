@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { PrModel } from 'src/app/models/Pr';
-import { IonInput, IonToggle, IonButton, IonIcon, ToggleChangeEventDetail } from "@ionic/angular/standalone";
+import { IonInput, IonToggle, IonButton, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList } from "@ionic/angular/standalone";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { saveOutline } from 'ionicons/icons';
+import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { PrListComponent } from "../../prList/pr-list/pr-list.component";
 import { IonToggleCustomEvent } from '@ionic/core';
@@ -12,7 +12,7 @@ import { IonToggleCustomEvent } from '@ionic/core';
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonHeader, IonTabs, IonTab,
     IonInput,
     ReactiveFormsModule,
     FormsModule,
@@ -20,9 +20,17 @@ import { IonToggleCustomEvent } from '@ionic/core';
     IonButton,
     IonIcon,
     PrListComponent,
-]
+    IonTitle,
+    IonToolbar,  IonFab,
+    IonFabButton,
+    IonFabList,
+    IonContent]
+
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
+save() {
+console.log("save");
+}
 setUnity($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
 console.log("unity",$event);
 this.unity.set($event.detail.checked?" sec ":" Kg ");
@@ -63,7 +71,7 @@ prDate = new Date().toISOString()
   )
   {
 
-    addIcons({ saveOutline });
+    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe});
    }
   ngOnChanges(changes: SimpleChanges): void {
     this.descrizione.set(this.activity.descrizione)

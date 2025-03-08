@@ -36,7 +36,7 @@ this.prList = this.prList?.map((pr)=>{
   }
 
   getMax4Kg(){
-    return this.prList.sort((a,b) => {
+    return this.prList.sort((a,b)=>b.date - a.date).sort((a,b) => {
       return Number(b.prestazione) - Number(a.prestazione)})[0];
   }
   getMax4Sec(){

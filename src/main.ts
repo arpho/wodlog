@@ -9,7 +9,7 @@ import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, trashOutline,eyeOutline, ellipsisHorizontal, statsChartOutline } from 'ionicons/icons';
+import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, trashOutline,eyeOutline, ellipsisHorizontal, statsChartOutline, recordingOutline, ribbonOutline } from 'ionicons/icons';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
@@ -20,6 +20,7 @@ if (environment.production) {
 addIcons({
   'add-circle': addCircle,
   'add-circle-outline': addCircleOutline,
+  'ribbon-outline': ribbonOutline,
   'add': add,
   'eye':eyeOutline,
   'ellipsis-horizontal':ellipsisHorizontal,
