@@ -10,5 +10,5 @@
       <ion-title size="large">editActivity</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-activity-form [activity]="activity()" (submitActivity)="updateActivity($event)"></app-activity-form>
+  <app-activity-form [activity]="activity()" (submitActivity)="updateActivity($event)" (editdActivity)="changedActivity($event)"></app-activity-form>
 </ion-content>

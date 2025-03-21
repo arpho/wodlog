@@ -1,7 +1,8 @@
+import { alert } from 'ionicons/icons';
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar,ToastController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,ToastController,AlertController } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -9,6 +10,7 @@ import { ActivityService } from 'src/app/services/activity/activity.service';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { ActivityFormComponent } from "../../../components/activityForm/activity-form/activity-form.component";
 import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
+
 
 @Component({
   selector: 'app-edit-activity',
@@ -27,6 +29,12 @@ import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
         ]
 })
 export class EditActivityPage implements OnInit,OnDestroy {
+
+  changed = false
+changedActivity($event: ActivityModel) {
+console.log("changed activity", $event);
+this.changed = true
+}
   async updateActivity(activity: ActivityModel) {
 console.log("update activity",activity);
 const loggedUser =await  this.users.getLoggedUser()
@@ -59,9 +67,37 @@ activity= signal(new ActivityModel())
     private users:UsersService,
     private activities:ActivityService,
     private service:ActivityService,
+    private alertCtrl:AlertController,
     private toater:ToastController
   ) { }
   ngOnDestroy(): void {
+    if(this.changed){
+      const alert = this.alertCtrl.create({
+        header: 'Modifiche non salvate',
+        message: 'Vuoi salvare le modifiche al pr?',
+        buttons: [
+          {
+            text: 'Annulla',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            },
+          },
+          {
+            text: 'Salva',
+            handler: () => {
+              console.log('Confirm Ok');
+              this.updateActivity(this.activity())
+            },
+          },
+        ],
+      });
+      alert.then(res=>{
+        res.present()
+
+      })
+    }
 this.subscriptions.unsubscribe()
   }
 
