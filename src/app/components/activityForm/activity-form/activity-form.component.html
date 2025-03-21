@@ -4,8 +4,14 @@
 <ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
 <ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
 <ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
-
+<ion-toggle [value]="showList" (ionChange)="switchView($event)" ></ion-toggle>
+@if(showList){
 <app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
+
+}
+@else {
+  <app-pr-graph [prList]="prList()" [unity]="unity()"></app-pr-graph>
+}
 <ion-fab slot="fixed" vertical="bottom" horizontal="end">
   <ion-fab-button color="light" (click)="submit()">
     <ion-icon name="save-outline" ></ion-icon>
@@ -14,4 +20,5 @@
 </ion-fab>
 
 </div>
+
 

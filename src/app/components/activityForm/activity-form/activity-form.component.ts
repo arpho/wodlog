@@ -7,6 +7,7 @@ import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevr
 import { addIcons } from 'ionicons';
 import { PrListComponent } from "../../prList/pr-list/pr-list.component";
 import { IonToggleCustomEvent } from '@ionic/core';
+import { PrGraphComponent } from "../../pr-graph/pr-graph.component";
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
@@ -21,13 +22,17 @@ import { IonToggleCustomEvent } from '@ionic/core';
     IonIcon,
     PrListComponent,
     IonTitle,
-    IonToolbar,  IonFab,
+    IonToolbar, IonFab,
     IonFabButton,
     IonFabList,
-    IonContent]
+    IonContent, PrGraphComponent]
 
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
+switchView($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
+this.showList= !this.showList
+}
+  showList = true;
 save() {
 console.log("save");
 }
