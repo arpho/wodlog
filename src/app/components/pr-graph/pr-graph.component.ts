@@ -6,7 +6,9 @@ import { ChartModule } from 'primeng/chart';
   templateUrl: './pr-graph.component.html',
   styleUrls: ['./pr-graph.component.scss'],
   standalone: true,
-  imports: [ChartModule]
+  //prettier-ignore
+  imports: [ChartModule
+  ]
 })
 export class PrGraphComponent  implements OnInit {
 
@@ -55,17 +57,20 @@ options = {
           },
           grid: {
               color: "blue",
-              drawBorder: false
+              drawBorder: true
           }
       }
   }
 };
 
-  constructor() { }
+  constructor(
+
+  ) { }
   @Input({required:true}) prList: PrModel[] = []
   @Input({required:true}) unity: string = ' Kg '
 
   ngOnInit() {
+
     console.log("pr list", this.prList)
     console.log("unity", this.unity)
     this.data.labels = this.prList.sort((a,b) => a.date - b.date).map((pr) => new Date(pr.date).toLocaleDateString())
@@ -73,10 +78,12 @@ options = {
     this.data.datasets =[
       {label:"pr", data: this.prList.sort((a,b) => a.date - b.date).map((pr) => pr.prestazione) as number[], fill: false, tension: 0.4},
     ]
-    else
+    else{
+      this.data.labels = this.prList.sort((a,b) => a.date - b.date).map((pr) => `${new Date(pr.date).toLocaleDateString()} ${Math.floor(Number(pr.prestazione)/60)} min ${Number(pr.prestazione)%60} sec`)
     this.data.datasets =[
+
       {label:"pr", data: this.prList.sort((a,b) => a.date - b.date).map((pr) => pr.prestazione) as number[], fill: false, tension: 0.4},
-    ]
+    ]}
   }
 
 }

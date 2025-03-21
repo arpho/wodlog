@@ -8,6 +8,7 @@ import { UsersService } from 'src/app/services/users/users.service';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { ActivityFormComponent } from "../../../components/activityForm/activity-form/activity-form.component";
+import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
 
 @Component({
   selector: 'app-edit-activity',
@@ -22,6 +23,7 @@ import { ActivityFormComponent } from "../../../components/activityForm/activity
        CommonModule,
         FormsModule,
          ActivityFormComponent,
+         PrestazionePipe
         ]
 })
 export class EditActivityPage implements OnInit,OnDestroy {
