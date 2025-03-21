@@ -69,6 +69,11 @@ options = {
     console.log("pr list", this.prList)
     console.log("unity", this.unity)
     this.data.labels = this.prList.sort((a,b) => a.date - b.date).map((pr) => new Date(pr.date).toLocaleDateString())
+    if (this.unity === ' Kg ')
+    this.data.datasets =[
+      {label:"pr", data: this.prList.sort((a,b) => a.date - b.date).map((pr) => pr.prestazione) as number[], fill: false, tension: 0.4},
+    ]
+    else
     this.data.datasets =[
       {label:"pr", data: this.prList.sort((a,b) => a.date - b.date).map((pr) => pr.prestazione) as number[], fill: false, tension: 0.4},
     ]
