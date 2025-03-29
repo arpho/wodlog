@@ -1,4 +1,4 @@
-import { alert } from 'ionicons/icons';
+import { alert, trashOutline } from 'ionicons/icons';
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,8 +10,12 @@ import {
   IonButton,
   AlertController,
   IonBackButton,
+<<<<<<< HEAD
   ToastController, IonButtons
 } from '@ionic/angular/standalone';
+=======
+  ToastController, IonButtons, IonIcon } from '@ionic/angular/standalone';
+>>>>>>> 30ea89a (pr's graph and refatoring, wip for reordering)
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -26,7 +30,7 @@ import { UserModel } from 'src/app/models/userModel';
   templateUrl: './edit-wod.page.html',
   styleUrls: ['./edit-wod.page.scss'],
   standalone: true,
-  imports: [IonButtons,
+  imports: [IonIcon, IonButtons,
     IonButton,
     IonContent,
     IonHeader,
@@ -118,7 +122,13 @@ export class EditWodPage implements OnInit {
     private wods: WodService,
     private alertCtrl: AlertController,
     private toaster: ToastController
+<<<<<<< HEAD
   ) { }
+=======
+  ) {
+
+   }
+>>>>>>> 30ea89a (pr's graph and refatoring, wip for reordering)
 
   async ngOnInit() {
     this.loggedUser = await this.users.getLoggedUser();

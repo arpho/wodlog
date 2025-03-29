@@ -73,13 +73,16 @@
 
         @for(item of force(); track item;let index =$index){
 
-        <ion-item (click)="editForce(item,index)">{{ item }}</ion-item>
+        <ion-item (click)="editForce(item,index)">{{ item }}
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
         }
 
       </ion-list>
     </ion-col>
     <ion-col>
       <ion-list>
+        <ion-reorder-group (ionItemReorder)="handleReorder($any($event))">
         <ion-item>
           <ion-input
             type="text"
@@ -90,8 +93,13 @@
           ></ion-input
         ></ion-item>
         @for(item of wod(); track item; let index=$index){
-        <ion-item (click)="editWod(item,index)">{{ item }}</ion-item>
+        <ion-item>{{ item }}
+          <ion-button (click)="editWod(item,index)" color="light"><ion-icon name="create-outline"></ion-icon></ion-button>
+          <ion-reorder  ></ion-reorder>
+        </ion-item>
+
         }
+      </ion-reorder-group>
       </ion-list>
     </ion-col>
   </ion-row>
@@ -113,8 +121,12 @@
   </ion-row>
 </ion-grid>
 
-
-
-<ion-button (click)="submit()" color="light" slot="end" shape="round"
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button (click)="submit()" color="calm" fill="outline" shape="round"
   >Save<ion-icon name="save-outline"></ion-icon
 ></ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+

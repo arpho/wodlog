@@ -2,6 +2,12 @@
   <ion-toolbar><ion-buttons slot="start">
     <ion-back-button></ion-back-button>
   </ion-buttons>
+
+  <ion-buttons slot="end">
+    <ion-button shape="round" color="danger"fill="outline" (click)="deleteWod(Wod.key)">delete
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
   <app-result-handler
     [userKey]="loggedUser.key"
     [wodKey]="Wod.key"
@@ -19,5 +25,5 @@
   </ion-header>
 
   <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)"></app-wod-form>
-  <ion-button (click)="deleteWod(Wod.key)">delete</ion-button>
+
 </ion-content>

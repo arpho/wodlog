@@ -1,4 +1,4 @@
-import { IonFab, IonToggle, } from '@ionic/angular/standalone';
+import { IonFab, IonToggle, IonButtons, IonToolbar } from '@ionic/angular/standalone';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,6 +21,9 @@ import {
   IonRow,
   IonCol,
   IonList,
+  ItemReorderEventDetail,
+  IonReorderGroup,
+  IonReorder,
   AlertController,
   IonItem, IonFabButton } from '@ionic/angular/standalone';
 import {
@@ -31,7 +34,7 @@ IonToggleCustomEvent,
 ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, alert, checkmarkOutline } from 'ionicons/icons';
+import { saveOutline, add, alert, checkmarkOutline, createOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -39,7 +42,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './wod-form.component.html',
   styleUrls: ['./wod-form.component.scss'],
   standalone: true,
-  imports: [IonToggle, IonFabButton,
+  imports: [IonToolbar, IonButtons, IonToggle, IonFabButton,
     IonItem,
     IonList,
     IonCol,
@@ -51,11 +54,16 @@ import { CommonModule } from '@angular/common';
     IonInput,
     CommonModule,
     IonDatetime,
+    IonReorder,
+    IonReorderGroup,
     IonFab
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
+handleReorder(arg0: any) {
+console.log("reorder", arg0)
+}
 test= false
 updateHero(event:any){
 console.log("hero",event.detail.checked);
@@ -125,7 +133,7 @@ index: any;
   constructor(
     private alertCtrl: AlertController
   ) {
-    addIcons({add,checkmarkOutline,saveOutline});
+    addIcons({checkmarkOutline,createOutline,add,saveOutline});
   }
   async editWod(_t38: string, index:number) {
  console.log("editing", _t38)
