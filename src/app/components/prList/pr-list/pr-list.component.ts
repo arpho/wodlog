@@ -230,10 +230,6 @@ filter: (pr:PrModel) => boolean = (pr:PrModel) => true
   constructor(private alertCtrl: AlertController) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.$prList.set(this.prList);
-
-    console.log('sorted pr list', this.prList.sort(this.sorter));
-
-    console.log('pr list changes', this.prList, this.unity);
   }
 
   ngOnInit() {

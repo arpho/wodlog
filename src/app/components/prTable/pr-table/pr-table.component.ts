@@ -2,7 +2,25 @@ import { update } from '@firebase/database';
 import { UsersService } from './../../../services/users/users.service';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
-import { IonGrid, IonRow, IonCol, IonCard, IonButton, IonIcon, IonFabButton, IonFab, IonFabList, IonActionSheet,IonItem, IonItemSliding, IonItemOptions, IonItemOption,AlertController,ToastController,IonSearchbar, SearchbarChangeEventDetail } from "@ionic/angular/standalone";
+import { IonGrid,
+   IonRow,
+    IonCol,
+     IonCard,
+      IonButton,
+       IonIcon,
+        IonFabButton,
+         IonFab,
+          IonFabList,
+           IonActionSheet,
+           IonItem,
+            IonItemSliding,
+             IonItemOptions,
+              IonItemOption,
+              AlertController,
+              ToastController,
+              IonSearchbar,
+               SearchbarChangeEventDetail,
+               } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PrestazionePipe } from "../../../pipes/prestazione/prestazione.pipe";
@@ -134,7 +152,10 @@ alert.then(alert => alert.present())
   filter= (pr:ActivityModel) => true
 search($event: any) {
 console.log("search", $event.detail.value);
-this.filter = (pr:ActivityModel) => pr.descrizione.toLowerCase().includes($event.detail.value.toLowerCase())
+this.filter = (pr:ActivityModel) => {
+  console.log("descrizione", pr.descrizione);
+  console.log("search", $event.detail.value);
+return pr.descrizione?.toLowerCase().includes($event.detail.value?.toLowerCase())}
 console.log("filtered pr", this.prList.filter(this.filter))
 }
   paginationOptions:PaginationOptions = {
