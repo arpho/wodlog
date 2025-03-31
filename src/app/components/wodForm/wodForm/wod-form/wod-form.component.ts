@@ -69,6 +69,18 @@ wod.splice(arg0.detail.to, 0, itemMoved);
 arg0.detail.complete();
 this.wod.set([...wod])
 console.log("wod", wod);
+ const Wod = new WodModel({
+  date: this.date().getTime(),
+  key: this.Wod.key,
+  title: this.title(),
+  note: this.note(),
+  force: this.force(),
+  wod: this.wod(),
+  girl: this.girl(),
+  hero: this.hero(),
+  benchmark: this.benchmark()
+});
+this.changedWod.emit(Wod);
 
 }
 test= false
@@ -218,6 +230,7 @@ await alert.present()
     console.log('force', this.force());
   }
   @Output() submitWod = new EventEmitter<WodModel>();
+  @Output() changedWod = new EventEmitter<WodModel>();
   @Input({ required: true }) Wod = new WodModel();
   date = signal(new Date());
   wod = signal<string[]>([]);
@@ -240,6 +253,18 @@ await alert.present()
     this.hero.set(this.Wod.hero);
     this.girl.set(this.Wod.girl);
     this.benchmark.set(this.Wod.benchmark);
+    this.Wod = new WodModel({
+      date: this.date().getTime(),
+      key: this.Wod.key,
+      title: this.title(),
+      note: this.note(),
+      force: this.force(),
+      wod: this.wod(),
+      girl: this.girl(),
+      hero: this.hero(),
+      benchmark: this.benchmark()
+    });
+    this.changedWod.emit(this.Wod);
   }
   submit() {
     this.Wod = new WodModel({

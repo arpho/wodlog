@@ -1,5 +1,5 @@
 import { alert, trashOutline } from 'ionicons/icons';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -10,12 +10,8 @@ import {
   IonButton,
   AlertController,
   IonBackButton,
-<<<<<<< HEAD
-  ToastController, IonButtons
+  ToastController, IonButtons, IonIcon
 } from '@ionic/angular/standalone';
-=======
-  ToastController, IonButtons, IonIcon } from '@ionic/angular/standalone';
->>>>>>> 30ea89a (pr's graph and refatoring, wip for reordering)
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -43,9 +39,17 @@ import { UserModel } from 'src/app/models/userModel';
     ResultHandlerComponent,
   ],
 })
-export class EditWodPage implements OnInit {
+export class EditWodPage implements OnInit, OnDestroy {
   title = signal('Editing wod');
   setResult = true
+  changed = false
+
+  changedWod($event: WodModel) {
+    console.log('changed wod', $event);
+    this.changed = true
+    this.Wod = $event
+  }
+
   async deleteWod(arg0: string) {
     console.log('delete wod', arg0);
     const alert = this.alertCtrl.create({
@@ -122,13 +126,37 @@ export class EditWodPage implements OnInit {
     private wods: WodService,
     private alertCtrl: AlertController,
     private toaster: ToastController
-<<<<<<< HEAD
   ) { }
-=======
-  ) {
 
-   }
->>>>>>> 30ea89a (pr's graph and refatoring, wip for reordering)
+  ngOnDestroy(): void {
+    if (this.changed) {
+      const alert = this.alertCtrl.create({
+        header: 'Modifiche non salvate',
+        message: 'Vuoi salvare le modifiche al wod?',
+        buttons: [
+          {
+            text: 'Annulla',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            },
+          },
+          {
+            text: 'Salva',
+            handler: () => {
+              console.log('Confirm Ok');
+              this.updateWod(this.Wod)
+            },
+          },
+        ],
+      });
+      alert.then(res => {
+        res.present()
+
+      })
+    }
+  }
 
   async ngOnInit() {
     this.loggedUser = await this.users.getLoggedUser();
