@@ -36,6 +36,9 @@ import { PrGraphComponent } from "../../pr-graph/pr-graph.component";
 
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
+showView() {
+return this.showList? "list":"graph"
+}
 switchView($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
 this.showList= !this.showList
 }
