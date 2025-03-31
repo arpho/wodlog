@@ -1,5 +1,5 @@
 import { alert, trashOutline } from 'ionicons/icons';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -38,10 +38,18 @@ import { UserModel } from '/home/giuseppe/Documenti/projects/wodLog/src/app/mode
     ResultHandlerComponent,
   ],
 })
-export class EditWodPage implements OnInit {
+export class EditWodPage implements OnInit, OnDestroy {
   title = signal('Editing wod');
 setResult = true
-  async deleteWod(arg0: string) {
+changed = false
+
+changedWod($event: WodModel) {
+    console.log('changed wod', $event);
+    this.changed = true
+    this.Wod = $event
+  }
+
+async deleteWod(arg0: string) {
     console.log('delete wod', arg0);
     const alert = this.alertCtrl.create({
       header: 'Attenzione',
@@ -120,7 +128,38 @@ setResult = true
     private toaster: ToastController
   ) {
 
+
+
    }
+  ngOnDestroy(): void {
+    if(this.changed){
+      const alert = this.alertCtrl.create({
+        header: 'Modifiche non salvate',
+        message: 'Vuoi salvare le modifiche al wod?',
+        buttons: [
+          {
+            text: 'Annulla',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            },
+          },
+          {
+            text: 'Salva',
+            handler: () => {
+              console.log('Confirm Ok');
+              this.updateWod(this.Wod)
+            },
+          },
+        ],
+      });
+      alert.then(res=>{
+        res.present()
+
+      })
+    }
+}
 
   async ngOnInit() {
     this.loggedUser = await this.users.getLoggedUser();

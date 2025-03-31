@@ -24,6 +24,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)"></app-wod-form>
+  <app-wod-form [Wod]="Wod" (submitWod)="updateWod($event)" (changedWod)="changedWod($event)"></app-wod-form>
 
 </ion-content>
