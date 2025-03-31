@@ -63,6 +63,13 @@ import { CommonModule } from '@angular/common';
 export class WodFormComponent implements OnInit, OnChanges {
 handleReorder(arg0: any) {
 console.log("reorder", arg0)
+const wod = this.wod();
+const itemMoved = wod.splice(arg0.detail.from, 1)[0];
+wod.splice(arg0.detail.to, 0, itemMoved);
+arg0.detail.complete();
+this.wod.set([...wod])
+console.log("wod", wod);
+
 }
 test= false
 updateHero(event:any){
