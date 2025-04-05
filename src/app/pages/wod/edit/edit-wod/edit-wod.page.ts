@@ -97,6 +97,7 @@ export class EditWodPage implements OnInit, OnDestroy {
     this.wods
       .updateWod(wod)
       .then(() => {
+        this.changed = false
         this.toaster
           .create({
             message: 'Wod aggiornato',
