@@ -97,6 +97,7 @@ async deleteWod(arg0: string) {
     this.wods
       .updateWod(wod)
       .then(() => {
+        this.changed = false
         this.toaster
           .create({
             message: 'Wod aggiornato',
