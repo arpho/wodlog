@@ -57,6 +57,7 @@ style="margin:3rem;"
   <ion-row>
     <ion-col>
       <ion-list>
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleForceReorder($any($event))">
 
         <ion-item>
 
@@ -79,9 +80,10 @@ style="margin:3rem;"
         @for(item of force(); track item;let index =$index){
 
         <ion-item (click)="editForce(item,index)">{{ item }}
-          <ion-reorder slot="end"></ion-reorder>
+          <ion-reorder  ></ion-reorder>
         </ion-item>
         }
+        </ion-reorder-group>
 
       </ion-list>
     </ion-col>

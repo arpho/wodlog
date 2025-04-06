@@ -61,6 +61,27 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
+handleForceReorder(arg0: any) {
+console.log("force reorder", arg0)
+const force = this.force();
+const itemMoved = force.splice(arg0.detail.from, 1)[0];
+force.splice(arg0.detail.to, 0, itemMoved);
+arg0.detail.complete();
+this.force.set([...force])
+console.log("force", force);
+ const Wod = new WodModel({
+  date: this.date().getTime(),
+  key: this.Wod.key,
+  title: this.title(),
+  note: this.note(),
+  force: this.force(),
+  wod: this.wod(),
+  girl: this.girl(),
+  hero: this.hero(),
+  benchmark: this.benchmark()
+});
+this.changedWod.emit(Wod);
+}
 handleReorder(arg0: any) {
 console.log("reorder", arg0)
 const wod = this.wod();
