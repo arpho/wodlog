@@ -243,7 +243,7 @@ await alert.present()
 
 
   ngOnChanges(changes: SimpleChanges): void {
-
+console.log("changes", changes)
     this.date.set(new Date(this.Wod.date));
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);
@@ -264,7 +264,7 @@ await alert.present()
       hero: this.hero(),
       benchmark: this.benchmark()
     });
-    this.changedWod.emit(this.Wod);
+    //this.changedWod.emit(this.Wod);
   }
   submit() {
     this.Wod = new WodModel({

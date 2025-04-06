@@ -134,6 +134,7 @@ async deleteWod(arg0: string) {
    }
   ngOnDestroy(): void {
     if(this.changed){
+      console.log("wod changed")
       const alert = this.alertCtrl.create({
         header: 'Modifiche non salvate',
         message: 'Vuoi salvare le modifiche al wod?',
