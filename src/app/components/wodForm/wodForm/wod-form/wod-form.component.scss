@@ -6,6 +6,7 @@ ion-grid.md {
     position: relative;
 display: flex;
 flex-direction: column;
+margin:3rem;
     left: 10rem;
     bottom: 27rem;
 }
@@ -17,4 +18,7 @@ flex-direction: column;
 }
 .isABenchmark {background-color: aliceblue;
   width: fit-content;
+}
+input#ion-input {
+  margin: 3rem;
 }
