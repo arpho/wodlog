@@ -9,7 +9,7 @@ import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, trashOutline,eyeOutline, ellipsisHorizontal, statsChartOutline, recordingOutline, ribbonOutline } from 'ionicons/icons';
+import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, trashOutline, eyeOutline, ellipsisHorizontal, statsChartOutline, recordingOutline, ribbonOutline } from 'ionicons/icons';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
@@ -23,8 +23,8 @@ addIcons({
   'add-circle-outline': addCircleOutline,
   'ribbon-outline': ribbonOutline,
   'add': add,
-  'eye':eyeOutline,
-  'ellipsis-horizontal':ellipsisHorizontal,
+  'eye': eyeOutline,
+  'ellipsis-horizontal': ellipsisHorizontal,
   'stats-chart': statsChartOutline,
   'remove-circle': removeCircle,
   'remove': remove,
@@ -41,10 +41,11 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(IonicModule.forRoot()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
 });
 defineCustomElements(window);
