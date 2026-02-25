@@ -21,18 +21,20 @@ import {
   IonRow,
   IonCol,
   IonList,
-  AlertController,
-  IonItem, IonFabButton } from '@ionic/angular/standalone';
+  ModalController,
+  IonItem, IonFabButton
+} from '@ionic/angular/standalone';
 import {
   InputChangeEventDetail,
   IonDatetimeCustomEvent,
   IonInputCustomEvent,
-IonToggleCustomEvent,
-ToggleChangeEventDetail,
+  IonToggleCustomEvent,
+  ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, alert, checkmarkOutline } from 'ionicons/icons';
+import { saveOutline, add, checkmarkOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
+import { ExerciseModalComponent } from '../../../../components/exerciseModal/exercise-modal/exercise-modal.component';
 
 @Component({
   selector: 'app-wod-form',
@@ -56,139 +58,124 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
-test= false
-updateHero(event:any){
-console.log("hero",event.detail.checked);
-this.hero.set(event.detail.checked)
-}
-updateGirl(event:any){
-console.log("girl",event.detail.checked);
-this.girl.set(event.detail.checked)
-}
-
-
-updateBenchmark(event:any){
-  console.log("benchmark",event.detail.checked);
-  this.benchmark.set(event.detail.checked)
+  test = false
+  updateHero(event: any) {
+    console.log("hero", event.detail.checked);
+    this.hero.set(event.detail.checked)
   }
-async addActivity() {
-console.log("adding activity")
-const alert = await this.alertCtrl.create({
-  header: 'add activity',
-  inputs: [
-    {
-      type: 'text',
-      label: 'activity',
-      value: '',}
-  ],
-  buttons: [
-    {
-      text: 'add',
-    handler: (data) => {
-      const wodSet = this.wod();
-      console.log("wodSet", wodSet)
-      wodSet.push(data[0])
-      this.wod.set([...wodSet])
-      console.log("updated wodset", this.wod())
+  updateGirl(event: any) {
+    console.log("girl", event.detail.checked);
+    this.girl.set(event.detail.checked)
+  }
+
+
+  updateBenchmark(event: any) {
+    console.log("benchmark", event.detail.checked);
+    this.benchmark.set(event.detail.checked)
+  }
+  async addActivity() {
+    console.log("adding activity")
+    const modal = await this.modalCtrl.create({
+      component: ExerciseModalComponent,
+      componentProps: {
+        title: 'Aggiungi attività',
+        exerciseName: '',
+        isEditing: false
+      }
+    });
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'save' && data) {
+      const wodSet = this.wod() || [];
+      wodSet.push(data);
+      this.wod.set([...wodSet]);
+      console.log("updated wodset", this.wod());
     }
+  }
+  async addForce() {
+    console.log("adding force")
+    const modal = await this.modalCtrl.create({
+      component: ExerciseModalComponent,
+      componentProps: {
+        title: 'Aggiungi forza',
+        exerciseName: '',
+        isEditing: false
+      }
+    });
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'save' && data) {
+      const forceSet = this.force() || [];
+      forceSet.push(data);
+      this.force.set([...forceSet]);
+      console.log("updated forceset", this.force());
     }
-  ]
-})
-await alert.present()
-}
-async addForce() {
-console.log("adding force")
-const alert = await this.alertCtrl.create({
-  header: 'add force',
-  inputs: [
-    {
-      type: 'text',
-      label: 'force',
-      value: '',}
-  ],
-  buttons: [
-    {
-      text: 'add',
-    handler: (data) => {
-      const forceSet = this.force();
-      console.log("wodSet", forceSet)
-      forceSet.push(data[0])
-      this.force.set([...forceSet])
-      console.log("updated wodset", this.wod())
-    }
-    }
-  ]
-})
-await alert.present()
-}
-index: any;
+  }
+  index: any;
   constructor(
-    private alertCtrl: AlertController
+    private modalCtrl: ModalController
   ) {
-    addIcons({add,checkmarkOutline,saveOutline});
+    addIcons({ add, checkmarkOutline, saveOutline });
   }
-  async editWod(_t38: string, index:number) {
- console.log("editing", _t38)
- const alert = await this.alertCtrl.create({
-   header: 'edit activity',
-   inputs: [
-     {
-       type: 'text',
-       label: 'activity',
-       value: _t38,}
-   ],
-   buttons: [
-     {
-       text: 'change',
-     handler: (data) => {
-       const wodSet = this.wod();
-       console.log("wodSet", wodSet)
-       wodSet[index] = data[0]
-       this.wod.set([...wodSet])
-       console.log("updated wodset", this.wod())
-     }
-     },
-     {
-       text: 'Remove activity',
-       handler: (data) => {
-         const wodSet = this.wod();
-         console.log("wodSet", wodSet)
-         wodSet.splice(index,1)
-         this.wod.set([...wodSet])
-         console.log("remove index",index)
-       }}
-   ]
- })
- await alert.present()
- }
- async editForce(_t38: string, index:number) {
-console.log("editing", _t38)
-const alert = await this.alertCtrl.create({
-  header: 'edit force',
-  inputs: [
-    {
-      type: 'text',
-      label: 'activity',
-      value: _t38,}
-  ],
-  buttons: [
-    {
-      text: 'change',
-    handler: (data) => {
-      const forceSet = this.force();
-      console.log("wodSet", forceSet)
-      forceSet[index] = data[0]
-      this.force.set([...forceSet])
-      console.log("updated wodset", this.wod())
+  async editWod(_t38: string, index: number) {
+    console.log("editing", _t38)
+    const modal = await this.modalCtrl.create({
+      component: ExerciseModalComponent,
+      componentProps: {
+        title: 'Modifica attività',
+        exerciseName: _t38,
+        isEditing: true
+      }
+    });
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'save' && data) {
+      const wodSet = this.wod() || [];
+      wodSet[index] = data;
+      this.wod.set([...wodSet]);
+      console.log("updated wodset", this.wod());
+    } else if (role === 'remove') {
+      const wodSet = this.wod() || [];
+      wodSet.splice(index, 1);
+      this.wod.set([...wodSet]);
+      console.log("remove index", index);
     }
+  }
+  async editForce(_t38: string, index: number) {
+    console.log("editing", _t38)
+    const modal = await this.modalCtrl.create({
+      component: ExerciseModalComponent,
+      componentProps: {
+        title: 'Modifica forza',
+        exerciseName: _t38,
+        isEditing: true
+      }
+    });
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'save' && data) {
+      const forceSet = this.force() || [];
+      forceSet[index] = data;
+      this.force.set([...forceSet]);
+      console.log("updated forceset", this.force());
+    } else if (role === 'remove') {
+      const forceSet = this.force() || [];
+      forceSet.splice(index, 1);
+      this.force.set([...forceSet]);
+      console.log("remove index", index);
     }
-  ]
-})
-await alert.present()
-}
+  }
   wod2Input = signal('');
   updateWod($event: IonInputCustomEvent<InputChangeEventDetail>) {
-    const exercises = this.wod()||[];
+    const exercises = this.wod() || [];
     this.wod2Input.set('');
     exercises.push(String($event.detail.value));
     this.wod.set(exercises);
@@ -196,7 +183,7 @@ await alert.present()
   }
   force2Input = '';
   updateForce($event: IonInputCustomEvent<InputChangeEventDetail>) {
-    const forza = this.force()||[];
+    const forza = this.force() || [];
     this.force2Input = '';
     forza.push(String($event.detail.value));
     this.force.set(forza);
@@ -258,8 +245,8 @@ await alert.present()
     this.title.set(this.Wod.title);
     this.note.set(this.Wod.note);
     this.force.set(this.Wod.force);
-    this.wod.set(this.Wod.wod||[]);
-    this.force.set(this.Wod.force||[]);
+    this.wod.set(this.Wod.wod || []);
+    this.force.set(this.Wod.force || []);
     this.wod.set(this.Wod.wod);
     this.hero.set(this.Wod.hero);
     this.girl.set(this.Wod.girl);
