@@ -3,6 +3,7 @@ export class WodModel {
   force: string[] = [];
   girl= false
   hero= false
+  open= false
   benchmark= false
   wod: string[] = [];
   date: number = new Date().getTime();
@@ -33,6 +34,7 @@ export class WodModel {
       date: this.date,
       title: this.title,
       note: this.note,
+      open: this.open,
       hero: this.hero,
       girl: this.girl,
       benchmark: this.benchmark
