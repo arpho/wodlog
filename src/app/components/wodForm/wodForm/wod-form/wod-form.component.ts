@@ -34,7 +34,7 @@ IonToggleCustomEvent,
 ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, alert, checkmarkOutline, createOutline } from 'ionicons/icons';
+import { saveOutline, add, alert, checkmarkOutline, createOutline, open } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -76,6 +76,7 @@ console.log("force", force);
   note: this.note(),
   force: this.force(),
   wod: this.wod(),
+  open:this.open(),
   girl: this.girl(),
   hero: this.hero(),
   benchmark: this.benchmark()
@@ -108,6 +109,11 @@ test= false
 updateHero(event:any){
 console.log("hero",event.detail.checked);
 this.hero.set(event.detail.checked)
+}
+updateOpen(event:any){
+  console.log("open",event)
+  this.open.set(event.detail.checked);
+  console.log("open", this.open())
 }
 updateGirl(event:any){
 console.log("girl",event.detail.checked);
@@ -260,6 +266,7 @@ await alert.present()
   note = signal('');
   hero = signal(false);
   girl = signal(false);
+  open= signal(false)
   benchmark = signal(false);
 
 
@@ -273,6 +280,7 @@ console.log("changes", changes)
     this.force.set(this.Wod.force);
     this.hero.set(this.Wod.hero);
     this.girl.set(this.Wod.girl);
+    this.open.set(this.Wod.open);
     this.benchmark.set(this.Wod.benchmark);
     this.Wod = new WodModel({
       date: this.date().getTime(),
@@ -282,6 +290,7 @@ console.log("changes", changes)
       force: this.force(),
       wod: this.wod(),
       girl: this.girl(),
+      open:this.open(),
       hero: this.hero(),
       benchmark: this.benchmark()
     });
@@ -295,6 +304,7 @@ console.log("changes", changes)
       note: this.note(),
       force: this.force(),
       wod: this.wod(),
+      open:this.open(),
       girl: this.girl(),
       hero: this.hero(),
       benchmark: this.benchmark()

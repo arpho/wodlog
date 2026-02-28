@@ -1,24 +1,36 @@
-
 ion-grid.md {
   padding: 30px;
 }
+
 .switches {
-    position: relative;
-display: flex;
-flex-direction: column;
-margin:3rem;
-    left: 10rem;
-    bottom: 27rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 3rem;
+  left: 10rem;
+  bottom: 27rem;
 }
-.isAnHero {background-color: aliceblue;
+
+.isAnHero {
+  background-color: aliceblue;
   width: fit-content;
 }
-.isAGirl {background-color: aliceblue;
+
+.isAnOpen {
+  background-color: aliceblue;
   width: fit-content;
 }
-.isABenchmark {background-color: aliceblue;
+
+.isAGirl {
+  background-color: aliceblue;
   width: fit-content;
 }
+
+.isABenchmark {
+  background-color: aliceblue;
+  width: fit-content;
+}
+
 input#ion-input {
   margin: 3rem;
 }

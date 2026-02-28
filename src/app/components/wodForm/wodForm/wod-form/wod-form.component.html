@@ -31,6 +31,11 @@ style="margin:3rem;"
     <ion-icon name="checkmark-outline"></ion-icon>
   }
   </div>
+  <div id="open">
+  <ion-toggle labelPlacement="start" [ngClass]="{'isAnOpen':open()}" [checked]="hero()" (ionChange)="updateOpen($event)">Open</ion-toggle> @if(hero()){
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+  </div>
   <div id="girl">
   <ion-toggle labelPlacement="start"  [ngClass]="{'isAGirl':girl()}" [checked]="girl()" (ionChange)="updateGirl($event)">Girl</ion-toggle>
   @if (girl()) {
