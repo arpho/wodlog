@@ -1,4 +1,18 @@
 <div class="form-wrapper">
+  
+  <!-- Add a toolbar/header that acts as a close button when used in a modal -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="close()">Chiudi</ion-button>
+      </ion-buttons>
+      <ion-title>Attività</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)="delete()">Elimina</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-card class="activity-card">
     <ion-card-header>
       <ion-card-title>Dettagli Attività</ion-card-title>
@@ -14,12 +28,12 @@
           <ion-row>
             <ion-col size="6">
               <ion-item class="toggle-item">
-                <ion-toggle [enableOnOffLabels]="true" [value]="hero()" (ionChange)="setHero($event)">Hero</ion-toggle>
+                <ion-toggle [checked]="hero()" [enableOnOffLabels]="true" (ionChange)="setHero($event)">Hero</ion-toggle>
               </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="toggle-item">
-                <ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
+                <ion-toggle [checked]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -27,20 +41,12 @@
           <ion-row>
             <ion-col size="6">
               <ion-item class="toggle-item">
-                <ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
+                <ion-toggle [checked]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
               </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="toggle-item">
-                <ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="12">
-              <ion-item class="toggle-item view-toggle">
-                <ion-toggle [value]="showList" (ionChange)="switchView($event)">Vista: {{showView()}}</ion-toggle>
+                <ion-toggle [checked]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -49,6 +55,15 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
+
+  <ion-segment class="view-segment sticky-segment" [value]="showList ? 'list' : 'graph'" (ionChange)="switchViewSegment($event)">
+    <ion-segment-button value="list">
+      <ion-label>Lista</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="graph">
+      <ion-label>Grafico</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
   <div class="data-view-container">
     @if(showList){

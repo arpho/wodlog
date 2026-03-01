@@ -40,6 +40,9 @@ toast.present()
 
 })
 }
+closeActivity() {
+  this.router.navigateByUrl('/home')
+}
 activity = signal(new ActivityModel())
 
   constructor(
