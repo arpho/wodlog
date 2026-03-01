@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton, ToastController } from '@ionic/angular/standalone';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
@@ -38,7 +38,8 @@ password="";
     private fb: FormBuilder,
     private router: Router,
     private afAuth: AngularFireAuth,
-    @Optional() private auth: Auth
+    @Optional() private auth: Auth,
+    private toastController: ToastController
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -55,10 +56,23 @@ console.log("init login page")
 
     this.afAuth
       .signInWithEmailAndPassword(this.email, this.password)
-      .catch((error) => {
+      .catch(async (error) => {
         console.log(error.message);
-        this.error = true;
-        this.errorMessage = error.message;
+        console.log('Error code:', error.code);
+
+        if (error.code === 'auth/network-request-failed' || !navigator.onLine) {
+          const toast = await this.toastController.create({
+            message: 'Connessione di rete assente. Controlla la tua connessione e riprova.',
+            duration: 3000,
+            color: 'danger',
+            position: 'bottom',
+          });
+          await toast.present();
+        } else {
+          this.error = true;
+          this.errorMessage = error.message;
+        }
+        
         this.cdr.detectChanges();
       })
       .then((data) => {

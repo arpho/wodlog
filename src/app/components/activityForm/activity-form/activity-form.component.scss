@@ -1,17 +1,55 @@
-form {
+.form-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: flex-start;
+  height: 100%;
+  padding-bottom: 80px;
+  /* Space for the floating action button */
 }
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
 
+.activity-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  ion-card-header {
+    padding-bottom: 0;
+  }
 }
-ion-toggle {
-  padding: 10px;
+
+.input-item {
+  margin-bottom: 12px;
+  --background: transparent;
+
+  ion-input {
+    --padding-start: 0;
+  }
+}
+
+.toggles-grid {
+  padding: 0;
+
+  ion-col {
+    padding: 0;
+  }
+}
+
+.toggle-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+
+  ion-toggle {
+    width: 100%;
+    padding: 10px 0;
+  }
+}
+
+.view-toggle {
+  margin-top: 8px;
+  border-top: 1px solid var(--ion-color-step-150, #e0e0e0);
+}
+
+.data-view-container {
+  margin-top: 8px;
+  flex: 1;
 }

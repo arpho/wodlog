@@ -1,24 +1,67 @@
-<div class="container">
-  <ion-input label="Specialità"   (ionInput)="setDescrizione($event)"  labelPlacement="floating" [value]="descrizione()"></ion-input>
-<ion-toggle    [enableOnOffLabels]="true" [value]="hero()"  (ionChange)="setHero($event)"> Hero</ion-toggle>
-<ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
-<ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
-<ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
-<ion-toggle [value]="showList" (ionChange)="switchView($event)" >{{showView()}}</ion-toggle>
-@if(showList){
-<app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
+<div class="form-wrapper">
+  <ion-card class="activity-card">
+    <ion-card-header>
+      <ion-card-title>Dettagli Attività</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        
+        <ion-item class="input-item">
+          <ion-input label="Specialità" (ionInput)="setDescrizione($event)" labelPlacement="floating" [value]="descrizione()"></ion-input>
+        </ion-item>
 
-}
-@else {
-  <app-pr-graph [prList]="prList()" [unity]="unity()"></app-pr-graph>
-}
-<ion-fab slot="fixed" vertical="bottom" horizontal="end">
-  <ion-fab-button color="light" (click)="submit()">
-    <ion-icon name="save-outline" ></ion-icon>
-  </ion-fab-button>
+        <ion-grid class="toggles-grid">
+          <ion-row>
+            <ion-col size="6">
+              <ion-item class="toggle-item">
+                <ion-toggle [enableOnOffLabels]="true" [value]="hero()" (ionChange)="setHero($event)">Hero</ion-toggle>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="toggle-item">
+                <ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-</ion-fab>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item class="toggle-item">
+                <ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="toggle-item">
+                <ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="toggle-item view-toggle">
+                <ion-toggle [value]="showList" (ionChange)="switchView($event)">Vista: {{showView()}}</ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="data-view-container">
+    @if(showList){
+      <app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
+    }
+    @else {
+      <app-pr-graph [prList]="prList()" [unity]="unity()"></app-pr-graph>
+    }
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button color="light" (click)="submit()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>
-
-
