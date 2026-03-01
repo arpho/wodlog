@@ -1,0 +1,53 @@
+ion-content {
+    --background: var(--ion-color-step-50, #f4f5f8);
+}
+
+.simple-input-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    margin: 16px;
+}
+
+.input-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+
+    ion-label {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        color: var(--ion-color-primary, #3880ff);
+    }
+}
+
+.custom-input {
+    --background: var(--ion-color-step-100, #f0f0f0);
+    --padding-start: 16px !important;
+    --padding-end: 16px !important;
+    --padding-top: 14px !important;
+    --padding-bottom: 14px !important;
+    --border-radius: 12px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    margin-top: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+.custom-input.ion-focused {
+    --background: #fff;
+    box-shadow: 0 0 0 2px var(--ion-color-primary-tint, #5f9aff);
+}
+
+ion-toolbar {
+    --padding-start: 8px;
+    --padding-end: 8px;
+}
+
+.save-button {
+    margin: 16px;
+    height: 48px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    --border-radius: 12px;
+}

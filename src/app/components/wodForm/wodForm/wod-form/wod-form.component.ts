@@ -25,6 +25,7 @@ import {
   IonReorderGroup,
   IonReorder,
   AlertController,
+  ModalController,
   IonItem, IonFabButton } from '@ionic/angular/standalone';
 import {
   InputChangeEventDetail,
@@ -36,6 +37,8 @@ ToggleChangeEventDetail,
 import { addIcons } from 'ionicons';
 import { saveOutline, add, alert, checkmarkOutline, createOutline, open } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
+import { SimpleInputComponent } from '../../../simpleInput/simple-input/simple-input.component';
+import { ActivityModel } from 'src/app/models/activityModel';
 
 @Component({
   selector: 'app-wod-form',
@@ -126,120 +129,111 @@ updateBenchmark(event:any){
   this.benchmark.set(event.detail.checked)
   }
 async addActivity() {
-console.log("adding activity")
-const alert = await this.alertCtrl.create({
-  header: 'add activity',
-  inputs: [
-    {
-      type: 'text',
-      label: 'activity',
-      value: '',}
-  ],
-  buttons: [
-    {
-      text: 'add',
-    handler: (data) => {
-      const wodSet = this.wod();
-      console.log("wodSet", wodSet)
-      wodSet.push(data[0])
-      this.wod.set([...wodSet])
-      console.log("updated wodset", this.wod())
-    }
-    }
-  ]
-})
-await alert.present()
+console.log("adding activity via modal");
+const modal = await this.modalCtrl.create({
+  component: SimpleInputComponent,
+  componentProps: {
+    title: 'Aggiungi Attività',
+    value: '',
+    isEditing: false
+  }
+});
+
+await modal.present();
+
+const { data, role } = await modal.onDidDismiss();
+
+if (role === 'confirm' && data) {
+  const wodSet = this.wod() || [];
+  wodSet.push(data);
+  this.wod.set([...wodSet]);
+  console.log("updated wodset", this.wod());
+}
 }
 async addForce() {
 console.log("adding force")
-const alert = await this.alertCtrl.create({
-  header: 'add force',
-  inputs: [
-    {
-      type: 'text',
-      label: 'force',
-      value: '',}
-  ],
-  buttons: [
-    {
-      text: 'add',
-    handler: (data) => {
-      const forceSet = this.force();
-      console.log("wodSet", forceSet)
-      forceSet.push(data[0])
-      this.force.set([...forceSet])
-      console.log("updated wodset", this.wod())
-    }
-    }
-  ]
-})
-await alert.present()
+const modal = await this.modalCtrl.create({
+  component: SimpleInputComponent,
+  componentProps: {
+    title: 'Aggiungi Forza',
+    value: '',
+    isEditing: false
+  }
+});
+
+await modal.present();
+
+const { data, role } = await modal.onDidDismiss();
+
+if (role === 'confirm' && data) {
+  const forceSet = this.force() || [];
+  forceSet.push(data);
+  this.force.set([...forceSet]);
+  console.log("updated forceset", this.force());
+}
 }
 index: any;
   constructor(
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) {
     addIcons({checkmarkOutline,createOutline,add,saveOutline});
   }
   async editWod(_t38: string, index:number) {
  console.log("editing", _t38)
- const alert = await this.alertCtrl.create({
-   header: 'edit activity',
-   inputs: [
-     {
-       type: 'text',
-       label: 'activity',
-       value: _t38,}
-   ],
-   buttons: [
-     {
-       text: 'change',
-     handler: (data) => {
-       const wodSet = this.wod();
-       console.log("wodSet", wodSet)
-       wodSet[index] = data[0]
-       this.wod.set([...wodSet])
-       console.log("updated wodset", this.wod())
-     }
-     },
-     {
-       text: 'Remove activity',
-       handler: (data) => {
-         const wodSet = this.wod();
-         console.log("wodSet", wodSet)
-         wodSet.splice(index,1)
-         this.wod.set([...wodSet])
-         console.log("remove index",index)
-       }}
-   ]
- })
- await alert.present()
+ 
+ const modal = await this.modalCtrl.create({
+   component: SimpleInputComponent,
+   componentProps: {
+     title: 'Modifica Attività',
+     value: _t38,
+     isEditing: true
+   }
+ });
+
+ await modal.present();
+
+ const { data, role } = await modal.onDidDismiss();
+
+ if (role === 'delete') {
+   const wodSet = this.wod() || [];
+   wodSet.splice(index, 1);
+   this.wod.set([...wodSet]);
+   console.log("removed index", index);
+ } else if (role === 'confirm' && data) {
+   const wodSet = this.wod() || [];
+   wodSet[index] = data;
+   this.wod.set([...wodSet]);
+   console.log("updated wodset", this.wod());
+ }
  }
  async editForce(_t38: string, index:number) {
-console.log("editing", _t38)
-const alert = await this.alertCtrl.create({
-  header: 'edit force',
-  inputs: [
-    {
-      type: 'text',
-      label: 'activity',
-      value: _t38,}
-  ],
-  buttons: [
-    {
-      text: 'change',
-    handler: (data) => {
-      const forceSet = this.force();
-      console.log("wodSet", forceSet)
-      forceSet[index] = data[0]
-      this.force.set([...forceSet])
-      console.log("updated wodset", this.wod())
-    }
-    }
-  ]
-})
-await alert.present()
-}
+ console.log("editing", _t38)
+ const modal = await this.modalCtrl.create({
+   component: SimpleInputComponent,
+   componentProps: {
+     title: 'Modifica Forza',
+     value: _t38,
+     isEditing: true
+   }
+ });
+
+ await modal.present();
+
+ const { data, role } = await modal.onDidDismiss();
+
+ if (role === 'delete') {
+   const forceSet = this.force() || [];
+   forceSet.splice(index, 1);
+   this.force.set([...forceSet]);
+   console.log("removed force index", index);
+ } else if (role === 'confirm' && data) {
+   const forceSet = this.force() || [];
+   forceSet[index] = data;
+   this.force.set([...forceSet]);
+   console.log("updated forceset", this.force());
+ }
+ }
   wod2Input = signal('');
   updateWod($event: IonInputCustomEvent<InputChangeEventDetail>) {
     const exercises = this.wod()||[];

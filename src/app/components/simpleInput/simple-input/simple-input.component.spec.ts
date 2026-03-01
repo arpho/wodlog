@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { WodFormComponent } from './wod-form.component';
+import { SimpleInputComponent } from './simple-input.component';
 import { ModalController } from '@ionic/angular/standalone';
 
-describe('WodFormComponent', () => {
-  let component: WodFormComponent;
-  let fixture: ComponentFixture<WodFormComponent>;
+describe('SimpleInputComponent', () => {
+  let component: SimpleInputComponent;
+  let fixture: ComponentFixture<SimpleInputComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [WodFormComponent],
+      imports: [SimpleInputComponent],
       providers: [
         { provide: ModalController, useValue: { create: () => ({ present: () => {}, onDidDismiss: () => ({ data: null }) }) } }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WodFormComponent);
+    fixture = TestBed.createComponent(SimpleInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

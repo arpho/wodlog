@@ -10,5 +10,5 @@
       <ion-title  class="ion-text-center" size="large">createActivity</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-activity-form [activity]="activity()" (submitActivity)="createActivity($event)"></app-activity-form>
+  <app-activity-form [activity]="activity()" (submitActivity)="createActivity($event)" (closeActivity)="closeActivity()"></app-activity-form>
 </ion-content>

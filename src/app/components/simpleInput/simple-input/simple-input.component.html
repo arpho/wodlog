@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="close()">Annulla</ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      @if (isEditing) {
+        <ion-button color="danger" (click)="delete()">Elimina</ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="simple-input-card">
+    <ion-card-content>
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Descrizione / Valore</ion-label>
+        <ion-input 
+          [(ngModel)]="value" 
+          placeholder="Inserisci..." 
+          class="custom-input"
+          clearInput="true">
+        </ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-button expand="block" color="primary" class="save-button" (click)="save()">Salva</ion-button>
+  </ion-toolbar>
+</ion-footer>

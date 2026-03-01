@@ -49,6 +49,16 @@
   border-top: 1px solid var(--ion-color-step-150, #e0e0e0);
 }
 
+.sticky-segment {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ion-background-color, #fff);
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 0 16px;
+}
+
 .data-view-container {
   margin-top: 8px;
   flex: 1;
