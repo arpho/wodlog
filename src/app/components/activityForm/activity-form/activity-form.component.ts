@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { PrModel } from 'src/app/models/Pr';
-import { IonInput, IonToggle, IonButton, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList } from "@ionic/angular/standalone";
+import { IonInput, IonToggle, IonButton, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonGrid, IonRow, IonCol } from "@ionic/angular/standalone";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
@@ -15,22 +15,23 @@ import { PrGraphComponent } from "../../pr-graph/pr-graph.component";
   standalone: true,
   //preserveWhitespaces: false
   imports: [
-    IonHeader,
-     IonTabs,
-      IonTab,
     IonInput,
     ReactiveFormsModule,
     FormsModule,
     IonToggle,
-    IonButton,
     IonIcon,
     PrListComponent,
-    IonTitle,
-    IonToolbar,
     IonFab,
     IonFabButton,
-    IonFabList,
-    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonList,
+    IonItem,
+    IonGrid,
+    IonRow,
+    IonCol,
     PrGraphComponent
   ]
 
