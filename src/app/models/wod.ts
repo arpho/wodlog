@@ -9,6 +9,7 @@ export class WodModel {
   date: number = new Date().getTime();
   title = '';
   note = '';
+  QF = false;
   constructor(args?: {}) {
     this.loadFields(args);
   }
@@ -17,6 +18,7 @@ export class WodModel {
     if (args) {
       this.wod = args['wod'];
       this.force = args['force'];
+      this.QF = args['QF']||false;
     }
     return this;
   }
@@ -37,7 +39,8 @@ export class WodModel {
       open: this.open,
       hero: this.hero,
       girl: this.girl,
-      benchmark: this.benchmark
+      benchmark: this.benchmark,
+      QF: this.QF
     };
   }
 }

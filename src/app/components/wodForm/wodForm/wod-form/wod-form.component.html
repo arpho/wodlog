@@ -47,6 +47,11 @@ style="margin:3rem;"
     <ion-icon name="checkmark-outline"></ion-icon>
   }
     </div>
+  <div id="QF">
+  <ion-toggle labelPlacement="start"  [checked]="QF()" (ionChange)="updateQF($event)">QF</ion-toggle>@if (QF()) {
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+    </div>
 
 </div>
 </div>
