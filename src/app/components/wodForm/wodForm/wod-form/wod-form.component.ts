@@ -82,7 +82,8 @@ console.log("force", force);
   open:this.open(),
   girl: this.girl(),
   hero: this.hero(),
-  benchmark: this.benchmark()
+  benchmark: this.benchmark(),
+  QF: this.QF()
 });
 this.changedWod.emit(Wod);
 }
@@ -103,7 +104,8 @@ console.log("wod", wod);
   wod: this.wod(),
   girl: this.girl(),
   hero: this.hero(),
-  benchmark: this.benchmark()
+  benchmark: this.benchmark(),
+  QF: this.QF()
 });
 this.changedWod.emit(Wod);
 
@@ -121,6 +123,10 @@ updateOpen(event:any){
 updateGirl(event:any){
 console.log("girl",event.detail.checked);
 this.girl.set(event.detail.checked)
+}
+updateQF(event:any){
+  console.log("QF",event.detail.checked);
+  this.QF.set(event.detail.checked)
 }
 
 
@@ -262,6 +268,7 @@ index: any;
   girl = signal(false);
   open= signal(false)
   benchmark = signal(false);
+  QF = signal(false);
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -276,6 +283,7 @@ console.log("changes", changes)
     this.girl.set(this.Wod.girl);
     this.open.set(this.Wod.open);
     this.benchmark.set(this.Wod.benchmark);
+    this.QF.set(this.Wod.QF);
     this.Wod = new WodModel({
       date: this.date().getTime(),
       key: this.Wod.key,
@@ -286,7 +294,8 @@ console.log("changes", changes)
       girl: this.girl(),
       open:this.open(),
       hero: this.hero(),
-      benchmark: this.benchmark()
+      benchmark: this.benchmark(),
+      QF: this.QF()
     });
     //this.changedWod.emit(this.Wod);
   }
@@ -301,7 +310,8 @@ console.log("changes", changes)
       open:this.open(),
       girl: this.girl(),
       hero: this.hero(),
-      benchmark: this.benchmark()
+      benchmark: this.benchmark(),
+      QF: this.QF()
     });
     this.submitWod.emit(this.Wod);
   }
@@ -329,6 +339,7 @@ console.log("changes", changes)
     this.hero.set(this.Wod.hero);
     this.girl.set(this.Wod.girl);
     this.benchmark.set(this.Wod.benchmark);
+    this.QF.set(this.Wod.QF);
   }
   formatDate4Picker() {
     return this.date().toISOString().split('T')[0];
