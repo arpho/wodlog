@@ -2,23 +2,19 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonButtons,
+  IonButton,
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonBreadcrumbs,
-  IonItem,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-   IonBreadcrumb,
-  IonThumbnail, IonImg } from '@ionic/angular/standalone';
+} from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
+import { add, addOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { WodModel } from 'src/app/models/wod';
 import { ResultsService } from 'src/app/services/results/results.service';
@@ -31,26 +27,21 @@ import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
   templateUrl: './list-wod.page.html',
   styleUrls: ['./list-wod.page.scss'],
   standalone: true,
-  imports: [IonImg, IonBreadcrumb,
+  imports: [
     IonIcon,
     IonFabButton,
     IonFab,
-    IonItem,
-    IonCol,
-    IonRow,
-    IonGrid,
     IonContent,
     IonHeader,
     IonTitle,
-    IonBreadcrumb,
-    IonBreadcrumbs,
     IonToolbar,
+    IonButtons,
+    IonButton,
     CommonModule,
     FormsModule,
     ResultHandlerComponent,
-    IonThumbnail,
     CustomSorterPipe
-],
+  ],
 })
 export class ListWodPage implements OnInit {
 [x: string]: any;
@@ -80,7 +71,7 @@ title="";
   wods = signal<WodModel[]>([]);
 
   constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService) {
-    addIcons({ add });
+    addIcons({ add, addOutline });
   }
 
   async ngOnInit() {
