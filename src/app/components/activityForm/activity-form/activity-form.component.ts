@@ -3,7 +3,7 @@ import { ActivityModel } from 'src/app/models/activityModel';
 import { PrModel } from 'src/app/models/Pr';
 import { IonInput, IonToggle, IonButton, IonButtons, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonGrid, IonRow, IonCol, ModalController, IonSegment, IonSegmentButton, IonLabel } from "@ionic/angular/standalone";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add } from 'ionicons/icons';
+import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add, trashOutline, checkmark } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { PrListComponent } from "../../prList/pr-list/pr-list.component";
 import { IonToggleCustomEvent, SegmentChangeEventDetail } from '@ionic/core';
@@ -118,7 +118,7 @@ prDate = new Date().toISOString()
   )
   {
 
-    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe});
+    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe, trashOutline, checkmark});
    }
   ngOnChanges(changes: SimpleChanges): void {
     this.descrizione.set(this.activity.descrizione)
