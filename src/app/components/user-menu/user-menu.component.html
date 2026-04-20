@@ -1,0 +1,34 @@
+<ion-button id="user-menu-trigger" fill="clear">
+  <div class="user-info">
+    @if (loggedUser().email) {
+      <ion-text class="user-email ion-hide-md-down">{{ loggedUser().email }}</ion-text>
+    }
+    @if (gravatarUrl()) {
+      <ion-avatar slot="start" class="user-avatar">
+        <img [src]="gravatarUrl()" alt="User Avatar" />
+      </ion-avatar>
+    } @else {
+      <ion-icon name="person-circle-outline" size="large" color="medium"></ion-icon>
+    }
+  </div>
+</ion-button>
+
+<ion-popover trigger="user-menu-trigger" dismissOnSelect="true" mode="ios">
+  <ng-template>
+    <ion-content>
+      <ion-list lines="none">
+        
+        <ion-item button (click)="openProfile()" detail="false">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>Profilo</ion-label>
+        </ion-item>
+
+        <ion-item button (click)="logout()" detail="false" lines="none" color="danger">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
