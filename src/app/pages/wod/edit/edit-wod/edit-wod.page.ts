@@ -10,8 +10,7 @@ import {
   IonButton,
   AlertController,
   IonBackButton,
-  ToastController, IonButtons, IonIcon
-} from '@ionic/angular/standalone';
+  ToastController, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -41,16 +40,16 @@ import { UserModel } from 'src/app/models/userModel';
 })
 export class EditWodPage implements OnInit, OnDestroy {
   title = signal('Editing wod');
-  setResult = true
-  changed = false
+setResult = true
+changed = false
 
-  changedWod($event: WodModel) {
+changedWod($event: WodModel) {
     console.log('changed wod', $event);
     this.changed = true
     this.Wod = $event
   }
 
-  async deleteWod(arg0: string) {
+async deleteWod(arg0: string) {
     console.log('delete wod', arg0);
     const alert = this.alertCtrl.create({
       header: 'Attenzione',
@@ -127,10 +126,13 @@ export class EditWodPage implements OnInit, OnDestroy {
     private wods: WodService,
     private alertCtrl: AlertController,
     private toaster: ToastController
-  ) { }
+  ) {
 
+
+
+   }
   ngOnDestroy(): void {
-    if (this.changed) {
+    if(this.changed){
       console.log("wod changed")
       const alert = this.alertCtrl.create({
         header: 'Modifiche non salvate',
@@ -153,12 +155,12 @@ export class EditWodPage implements OnInit, OnDestroy {
           },
         ],
       });
-      alert.then(res => {
+      alert.then(res=>{
         res.present()
 
       })
     }
-  }
+}
 
   async ngOnInit() {
     this.loggedUser = await this.users.getLoggedUser();
