@@ -2,18 +2,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListWodPage } from './list-wod.page';
 import { Auth } from '@angular/fire/auth';
 import { UsersService } from 'src/app/services/users/users.service';
+import { WodService } from 'src/app/services/wod/wod.service';
 
 describe('ListWodPage', () => {
   let component: ListWodPage;
   let fixture: ComponentFixture<ListWodPage>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ListWodPage],
       providers: [
         { provide: Auth, useValue: {} },
-        { provide: UsersService, useValue: { getLoggedUser: () => {} } }
+        { provide: UsersService, useValue: { getLoggedUser: () => Promise.resolve({ name: 'Test User', key: 'test-key' }) } },
+        { provide: WodService, useValue: { fetchWodsRealtime: () => {} } }
       ]
-    });
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ListWodPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
