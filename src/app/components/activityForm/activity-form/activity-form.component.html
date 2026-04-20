@@ -1,82 +1,69 @@
-<div class="form-wrapper">
+<div class="form-wrapper glass-effect">
   
-  <!-- Add a toolbar/header that acts as a close button when used in a modal -->
-  <ion-header>
-    <ion-toolbar>
+  <ion-header class="ion-no-border">
+    <ion-toolbar transparent>
       <ion-buttons slot="start">
-        <ion-button (click)="close()">Chiudi</ion-button>
+        <ion-button (click)="close()" color="medium">Chiudi</ion-button>
       </ion-buttons>
-      <ion-title>Attività</ion-title>
+      <ion-title>Dettagli Attività</ion-title>
       <ion-buttons slot="end">
-        <ion-button color="danger" (click)="delete()">Elimina</ion-button>
+        <ion-button color="danger" fill="clear" (click)="delete()">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-card class="activity-card">
-    <ion-card-header>
-      <ion-card-title>Dettagli Attività</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list lines="none">
-        
-        <ion-item class="input-item">
-          <ion-input label="Specialità" (ionInput)="setDescrizione($event)" labelPlacement="floating" [value]="descrizione()"></ion-input>
-        </ion-item>
+  <div class="scroll-container">
+    <div class="input-section">
+      <div class="modern-input-wrapper">
+        <ion-input label="Specialità" (ionInput)="setDescrizione($event)" labelPlacement="stacked" [value]="descrizione()" class="modern-input" placeholder="Es. Thrusters, Burpees..."></ion-input>
+      </div>
 
-        <ion-grid class="toggles-grid">
-          <ion-row>
-            <ion-col size="6">
-              <ion-item class="toggle-item">
-                <ion-toggle [checked]="hero()" [enableOnOffLabels]="true" (ionChange)="setHero($event)">Hero</ion-toggle>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="toggle-item">
-                <ion-toggle [checked]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+      <div class="toggles-container">
+        <div class="toggle-card glass-effect">
+          <ion-label>Hero</ion-label>
+          <ion-toggle [checked]="hero()" (ionChange)="setHero($event)"></ion-toggle>
+        </div>
+        <div class="toggle-card glass-effect">
+          <ion-label>Girl</ion-label>
+          <ion-toggle [checked]="girl()" (ionChange)="setGirl($event)"></ion-toggle>
+        </div>
+        <div class="toggle-card glass-effect">
+          <ion-label>{{showPrType()}}</ion-label>
+          <ion-toggle [checked]="typePr()==='benchmark'" (ionChange)="setTypePr($event)"></ion-toggle>
+        </div>
+        <div class="toggle-card glass-effect">
+          <ion-label>{{showUnity()}}</ion-label>
+          <ion-toggle [checked]="unity().includes('sec')" (ionChange)="setUnity($event)"></ion-toggle>
+        </div>
+      </div>
+    </div>
 
-          <ion-row>
-            <ion-col size="6">
-              <ion-item class="toggle-item">
-                <ion-toggle [checked]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="toggle-item">
-                <ion-toggle [checked]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+    <div class="view-selector">
+      <ion-segment [value]="showList ? 'list' : 'graph'" (ionChange)="switchViewSegment($event)" mode="ios">
+        <ion-segment-button value="list">
+          <ion-label>Lista</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="graph">
+          <ion-label>Grafico</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-segment class="view-segment sticky-segment" [value]="showList ? 'list' : 'graph'" (ionChange)="switchViewSegment($event)">
-    <ion-segment-button value="list">
-      <ion-label>Lista</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="graph">
-      <ion-label>Grafico</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-
-  <div class="data-view-container">
-    @if(showList){
-      <app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
-    }
-    @else {
-      <app-pr-graph [prList]="prList()" [unity]="unity()"></app-pr-graph>
-    }
+    <div class="data-view-container">
+      @if(showList){
+        <app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
+      }
+      @else {
+        <app-pr-graph [prList]="prList()" [unity]="unity()"></app-pr-graph>
+      }
+    </div>
   </div>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button color="light" (click)="submit()">
-      <ion-icon name="save-outline"></ion-icon>
+    <ion-fab-button class="save-fab" (click)="submit()">
+      <ion-icon name="checkmark"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </div>
