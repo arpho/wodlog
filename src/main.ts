@@ -15,7 +15,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { DatePipe } from "@angular/common";
-import { provideServiceWorker } from '@angular/service-worker';
+
 if (environment.production) {
   enableProdMode();
 }
