@@ -23,19 +23,19 @@
       <div class="toggles-container">
         <div class="toggle-card glass-effect">
           <ion-label>Hero</ion-label>
-          <ion-toggle [checked]="hero()" (ionChange)="setHero($event)"></ion-toggle>
+          <ion-toggle [checked]="hero()" [enableOnOffLabels]="true" (ionChange)="setHero($event)"></ion-toggle>
         </div>
         <div class="toggle-card glass-effect">
           <ion-label>Girl</ion-label>
-          <ion-toggle [checked]="girl()" (ionChange)="setGirl($event)"></ion-toggle>
+          <ion-toggle [checked]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)"></ion-toggle>
         </div>
         <div class="toggle-card glass-effect">
           <ion-label>{{showPrType()}}</ion-label>
-          <ion-toggle [checked]="typePr()==='benchmark'" (ionChange)="setTypePr($event)"></ion-toggle>
+          <ion-toggle [checked]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)"></ion-toggle>
         </div>
         <div class="toggle-card glass-effect">
           <ion-label>{{showUnity()}}</ion-label>
-          <ion-toggle [checked]="unity().includes('sec')" (ionChange)="setUnity($event)"></ion-toggle>
+          <ion-toggle [checked]="unity().includes('sec')" [enableOnOffLabels]="true" (ionChange)="setUnity($event)"></ion-toggle>
         </div>
       </div>
     </div>
