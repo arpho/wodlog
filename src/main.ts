@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
@@ -7,6 +7,7 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { provideServiceWorker } from '@angular/service-worker';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, trashOutline,eyeOutline, ellipsisHorizontal, statsChartOutline, recordingOutline, ribbonOutline } from 'ionicons/icons';
@@ -41,6 +42,10 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
 });
 defineCustomElements(window);
