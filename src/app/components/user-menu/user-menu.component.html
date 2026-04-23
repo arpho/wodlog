@@ -1,4 +1,4 @@
-<ion-button id="user-menu-trigger" fill="clear">
+<ion-button [id]="triggerId" fill="clear">
   <div class="user-info">
     @if (loggedUser().email) {
       <ion-text class="user-email ion-hide-md-down">{{ loggedUser().email }}</ion-text>
@@ -13,7 +13,7 @@
   </div>
 </ion-button>
 
-<ion-popover trigger="user-menu-trigger" dismissOnSelect="true" mode="ios">
+<ion-popover [trigger]="triggerId" dismissOnSelect="true" mode="ios">
   <ng-template>
     <ion-content>
       <ion-list lines="none">

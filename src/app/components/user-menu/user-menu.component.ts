@@ -52,6 +52,7 @@ export class UserMenuComponent implements OnInit {
 
   loggedUser = signal<UserModel>(new UserModel());
   gravatarUrl = signal<string>('');
+  triggerId = `user-menu-trigger-${Math.random().toString(36).substring(2, 9)}`;
 
   constructor() {
     addIcons({
