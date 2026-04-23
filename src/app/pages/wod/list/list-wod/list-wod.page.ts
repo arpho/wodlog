@@ -21,6 +21,7 @@ import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
 import { UsersService } from 'src/app/services/users/users.service';
 import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
+import { UserMenuComponent } from 'src/app/components/user-menu/user-menu.component';
 
 @Component({
   selector: 'app-list-wod',
@@ -40,7 +41,8 @@ import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
     CommonModule,
     FormsModule,
     ResultHandlerComponent,
-    CustomSorterPipe
+    CustomSorterPipe,
+    UserMenuComponent
   ],
 })
 export class ListWodPage implements OnInit {
