@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonPopover, IonItem, IonList, IonCard, IonImg, IonLabel, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonPopover, IonItem, IonList,IonButtons, IonCard, IonImg, IonLabel, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { HeaderComponent } from "../components/headerComponent/header/header.component";
+import { UserMenuComponent } from '../components/user-menu/user-menu.component';
 import { UsersService } from '../services/users/users.service';
 import { PrTableComponent } from "../components/prTable/pr-table/pr-table.component";
 import { UserModel } from '../models/userModel';
@@ -16,8 +17,9 @@ import { HomeSquareComponent } from '../components/home-square/home-square.compo
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [IonCol, IonRow, IonGrid, IonLabel, IonImg, IonCard, IonList, IonItem, IonPopover, IonIcon,
+    IonButtons,
     ActivitiesListComponent,HomeSquareComponent,
-    IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonList, HeaderComponent, PrTableComponent, ],
+    IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonList, UserMenuComponent, PrTableComponent, ],
 })
 export class HomePage implements OnInit {
 goToWodList() {
