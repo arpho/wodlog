@@ -10,7 +10,9 @@ import {
   IonItem,
   IonLabel,
   IonAvatar,
-  IonText
+  IonText,
+  IonThumbnail,
+  IonImg
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -43,7 +45,9 @@ import { Md5 } from 'ts-md5';
     IonItem,
     IonLabel,
     IonAvatar,
-    IonText
+    IonText,
+    IonThumbnail,
+    IonImg
   ]
 })
 export class UserMenuComponent implements OnInit {
@@ -87,6 +91,14 @@ export class UserMenuComponent implements OnInit {
       // Note: profile route might not exist in wodLog yet
       this.router.navigate(['/home']); 
     }
+  }
+
+  goToPrList() {
+    this.router.navigate(['/pr-list']);
+  }
+
+  goToWodsList() {
+    this.router.navigate(['/wods-list']);
   }
 
   async logout() {

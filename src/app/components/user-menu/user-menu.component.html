@@ -23,6 +23,20 @@
           <ion-label>Profilo</ion-label>
         </ion-item>
 
+        <ion-item button (click)="goToPrList()" detail="false">
+          <ion-thumbnail slot="start">
+            <ion-img src="assets/images/Pr.jpeg" alt="PR List"></ion-img>
+          </ion-thumbnail>
+          <ion-label>Lista PR</ion-label>
+        </ion-item>
+
+        <ion-item button (click)="goToWodsList()" detail="false">
+          <ion-thumbnail slot="start">
+            <ion-img src="assets/images/wod.jpeg" alt="WOD List"></ion-img>
+          </ion-thumbnail>
+          <ion-label>Lista WOD</ion-label>
+        </ion-item>
+
         <ion-item button (click)="logout()" detail="false" lines="none" color="danger">
           <ion-icon name="log-out-outline" slot="start"></ion-icon>
           <ion-label>Logout</ion-label>
