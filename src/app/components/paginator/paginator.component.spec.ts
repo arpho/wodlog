@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { PaginatorComponent } from './paginator.component';
+import { IonicModule } from '@ionic/angular';
 
 describe('PaginatorComponent', () => {
   let component: PaginatorComponent;
@@ -11,7 +12,7 @@ describe('PaginatorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PaginatorComponent ]
+      imports: [IonicModule.forRoot(), PaginatorComponent]
     })
     .compileComponents();
   }));

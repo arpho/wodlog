@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { ResultHandlerComponent } from './result-handler.component';
+import { UsersService } from 'src/app/services/users/users.service';
+import { ResultsService } from 'src/app/services/results/results.service';
+import { provideRouter } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular/standalone';
 
 describe('ResultHandlerComponent', () => {
   let component: ResultHandlerComponent;
@@ -9,8 +12,13 @@ describe('ResultHandlerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResultHandlerComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), ResultHandlerComponent],
+      providers: [
+        provideRouter([]),
+        provideIonicAngular(),
+        { provide: UsersService, useValue: { getLoggedUser: () => Promise.resolve({ key: 'test' }) } },
+        { provide: ResultsService, useValue: { getResult: () => Promise.resolve([]) } }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResultHandlerComponent);

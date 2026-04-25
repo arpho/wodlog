@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { provideIonicAngular } from '@ionic/angular/standalone';
 import { ExerciseModalComponent } from './exercise-modal.component';
 
 describe('ExerciseModalComponent', () => {
@@ -9,6 +9,7 @@ describe('ExerciseModalComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ExerciseModalComponent],
+      providers: [provideIonicAngular()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExerciseModalComponent);
