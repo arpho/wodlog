@@ -12,7 +12,6 @@
 @import '@ionic/angular/css/palettes/dark.system.css';
 
 :root {
-<<<<<<< HEAD
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
@@ -21,6 +20,7 @@
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --secondary-gradient: linear-gradient(135deg, #2af598 0%, #009efd 100%);
   --accent-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  --ion-font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -54,6 +54,18 @@ ion-content {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Premium Card Style */
+.premium-card {
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -67,52 +79,6 @@ ion-content {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
-=======
-  --ion-font-family: 'Inter', sans-serif;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--ion-background-color);
-}
-
-/* Glassmorphism Utility */
-.glass-effect {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--premium-card-shadow);
-}
-
-/* Premium Card Style */
-.premium-card {
-  border-radius: 20px;
-  overflow: hidden;
-  margin: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-/* Elegant Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Custom Page Transitions */
@@ -128,5 +94,4 @@ h1, h2, h3, h4, h5, h6 {
 ion-title {
   font-weight: 800;
   letter-spacing: -1px;
->>>>>>> origin/reorder
 }

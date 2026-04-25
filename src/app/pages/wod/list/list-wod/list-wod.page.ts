@@ -10,15 +10,7 @@ import {
   IonContent,
   IonHeader,
   IonTitle,
-  IonToolbar,
-<<<<<<< HEAD
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonButtons,
-  IonButton
-=======
->>>>>>> origin/reorder
+  IonToolbar
 } from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
@@ -29,11 +21,7 @@ import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
 import { UsersService } from 'src/app/services/users/users.service';
 import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
-<<<<<<< HEAD
 import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.component';
-=======
-import { UserMenuComponent } from 'src/app/components/user-menu/user-menu.component';
->>>>>>> origin/reorder
 
 @Component({
   selector: 'app-list-wod',
@@ -58,21 +46,18 @@ import { UserMenuComponent } from 'src/app/components/user-menu/user-menu.compon
   ],
 })
 export class ListWodPage implements OnInit {
-[x: string]: any;
-user: any;
+  user: any;
 
   sorter = (a: WodModel, b: WodModel) => {
-    return b.date -  a.date; //a.date - b.date;
+    return b.date -  a.date;
   };
-title="";
+  title="";
   createWod() {
     console.log('create wod');
     this.router.navigateByUrl(`/create-wod`);
   }
   fetchResult4wod(_t26: any) {
     console.log('fetching result for ',_t26);
-
-
     return 'result ?';
   }
   showDate(wod: WodModel) {
@@ -92,12 +77,8 @@ title="";
     console.log("loading wods")
     this.user = await this.users.getLoggedUser()
     this.title = `pr di ${this.user.firstName}`
-    console.log("user",this.user);
     const callback = (data: { wods: WodModel[]; total: number }) => {
-      console.log('data', data);
       this.wods.set(data.wods);
-      console.log('wods', this.wods());
-      console.log("sorted wods", this.wods().sort(this.sorter));
     };
     this.service.fetchWodsRealtime(callback);
   }

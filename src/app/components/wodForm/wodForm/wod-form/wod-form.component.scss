@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .form-container {
   padding: 16px;
   display: flex;
@@ -85,25 +84,21 @@
 }
 
 .exercise-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 300px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.exercise-item {
-  padding: 12px 16px;
-  font-size: 0.95rem;
-  color: white;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  --background: transparent;
+  padding: 0;
   
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateX(5px);
+  .exercise-item {
+    --background: rgba(255, 255, 255, 0.05);
+    --border-radius: 12px;
+    margin-bottom: 8px;
+    --padding-start: 16px;
+    --padding-end: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
   }
 }
 
@@ -118,41 +113,4 @@
   font-weight: 700;
   height: 56px;
   --box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-=======
-ion-grid.md {
-  padding: 30px;
-}
-
-.switches {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 3rem;
-  left: 10rem;
-  bottom: 27rem;
-}
-
-.isAnHero {
-  background-color: aliceblue;
-  width: fit-content;
-}
-
-.isAnOpen {
-  background-color: aliceblue;
-  width: fit-content;
-}
-
-.isAGirl {
-  background-color: aliceblue;
-  width: fit-content;
->>>>>>> origin/reorder
-}
-
-.isABenchmark {
-  background-color: aliceblue;
-  width: fit-content;
-}
-
-input#ion-input {
-  margin: 3rem;
 }
