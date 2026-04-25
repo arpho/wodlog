@@ -1,6 +1,9 @@
-<div class="square">
-
-<h1>{{title}}</h1>
-<ion-img src="{{image}}" style="width: 25rem" (click)="goTo()"></ion-img>
-
+<div class="square-card glass-effect" (click)="goTo()">
+  <div class="image-wrapper">
+    <img [src]="image" [alt]="title" class="card-image">
+  </div>
+  <div class="card-footer">
+    <h2 class="card-title">{{title}}</h2>
+    <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
+  </div>
 </div>

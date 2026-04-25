@@ -1,120 +1,109 @@
+<div class="form-container">
+  <div class="glass-effect form-section">
+    <h2 class="section-title">Informazioni Generali</h2>
+    <ion-item class="glass-input-item">
+      <ion-input
+        type="text"
+        label="Nome WOD"
+        [value]="title()"
+        (ionChange)="updateName($event)"
+        labelPlacement="floating"
+      ></ion-input>
+    </ion-item>
+    
+    <ion-item class="glass-input-item">
+      <ion-input
+        type="text"
+        label="Note"
+        [value]="note()"
+        (ionChange)="updateNote($event)"
+        labelPlacement="floating"
+      ></ion-input>
+    </ion-item>
 
-<ion-input
-  type="text"
-  label="nome wod"
-  [value]="title()"
-  (ionChange)="updateName($event)"
-  [value]="title()"
-  labelPlacement="floating"
-></ion-input>
-<ion-input
-  type="text"
-  label="note"
-  [value]="note()"
-  (ionChange)="updateNote($event)"
-  [value]="note()"
-  labelPlacement="floating"
-></ion-input>
-<ion-datetime
-  [value]="formatDate4Picker()"
-  (ionChange)="updateDate($event)"
-  presentation="date"
-></ion-datetime>
-
-<div class="switches">
-  <div id="hero">
-  <ion-toggle labelPlacement="start" [ngClass]="{'isAnHero':hero()}" [checked]="hero()" (ionChange)="updateHero($event)">Hero</ion-toggle> @if(hero()){
-    <ion-icon name="checkmark-outline"></ion-icon>
-  }
-  </div>
-  <div id="girl">
-  <ion-toggle labelPlacement="start"  [ngClass]="{'isAGirl':girl()}" [checked]="girl()" (ionChange)="updateGirl($event)">Girl</ion-toggle>
-  @if (girl()) {
-    <ion-icon name="checkmark-outline"></ion-icon>
-  }
-  </div>
-  <div id="benchmark">
-  <ion-toggle labelPlacement="start"  [ngClass]="{'isABenchmark':benchmark()}" [checked]="benchmark()" (ionChange)="updateBenchmark($event)">Bechmark</ion-toggle>@if (benchmark()) {
-    <ion-icon name="checkmark-outline"></ion-icon>
-  }
+    <div class="date-picker-wrapper">
+      <ion-datetime
+        [value]="formatDate4Picker()"
+        (ionChange)="updateDate($event)"
+        presentation="date"
+        class="glass-datetime"
+      ></ion-datetime>
     </div>
+  </div>
 
-</div>
-<ion-grid>
+  <div class="glass-effect form-section">
+    <h2 class="section-title">Categorie</h2>
+    <div class="toggles-grid">
+      <div class="toggle-wrapper" [class.active]="hero()">
+        <ion-toggle [checked]="hero()" (ionChange)="updateHero($event)">Hero</ion-toggle>
+      </div>
+      <div class="toggle-wrapper" [class.active]="girl()">
+        <ion-toggle [checked]="girl()" (ionChange)="updateGirl($event)">Girl</ion-toggle>
+      </div>
+      <div class="toggle-wrapper" [class.active]="benchmark()">
+        <ion-toggle [checked]="benchmark()" (ionChange)="updateBenchmark($event)">Benchmark</ion-toggle>
+      </div>
+    </div>
+  </div>
 
-
-  <ion-row>
-    <ion-col><h2>forza</h2>
-
-    </ion-col>
-    <ion-col><h2>wod</h2></ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-list>
-
-        <ion-item>
-
-
-          <ion-input
-            type="text"
-            label="esercizio di forza"
-            (ionChange)="updateForce($event)"
-            [value]="force2Input"
-            labelPlacement="floating"
-          >
-
-          </ion-input
-        >
-
-
-
+  <div class="exercises-grid">
+    <div class="glass-effect form-section exercise-column">
+      <div class="section-header">
+        <h2 class="section-title">Forza</h2>
+        <ion-button fill="clear" size="small" (click)="addForce()">
+          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <ion-item class="glass-input-item mini-input">
+        <ion-input
+          type="text"
+          placeholder="Aggiungi esercizio..."
+          (ionChange)="updateForce($event)"
+          [value]="force2Input"
+        ></ion-input>
       </ion-item>
 
-        @for(item of force(); track item;let index =$index){
-
-        <ion-item (click)="editForce(item,index)">{{ item }}</ion-item>
+      <div class="exercise-list">
+        @for(item of force(); track item; let index =$index){
+          <div class="exercise-item glass-effect" (click)="editForce(item,index)">
+            {{ item }}
+          </div>
         }
+      </div>
+    </div>
 
-      </ion-list>
-    </ion-col>
-    <ion-col>
-      <ion-list>
-        <ion-item>
-          <ion-input
-            type="text"
-            label="esercizio di wod"
-            (ionChange)="updateWod($event)"
-            [value]="wod2Input()"
-            labelPlacement="floating"
-          ></ion-input
-        ></ion-item>
+    <div class="glass-effect form-section exercise-column">
+      <div class="section-header">
+        <h2 class="section-title">WOD</h2>
+        <ion-button fill="clear" size="small" (click)="addActivity()">
+          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <ion-item class="glass-input-item mini-input">
+        <ion-input
+          type="text"
+          placeholder="Aggiungi esercizio..."
+          (ionChange)="updateWod($event)"
+          [value]="wod2Input()"
+        ></ion-input>
+      </ion-item>
+
+      <div class="exercise-list">
         @for(item of wod(); track item; let index=$index){
-        <ion-item (click)="editWod(item,index)">{{ item }}</ion-item>
+          <div class="exercise-item glass-effect" (click)="editWod(item,index)">
+            {{ item }}
+          </div>
         }
-      </ion-list>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-fab>
-        <ion-fab-button size="small"  color="light" (click)="addForce()" >
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-col>
-    <ion-col>
-      <ion-fab>
-        <ion-fab-button size="small"  color="light" (click)="addActivity()" >
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+      </div>
+    </div>
+  </div>
 
-
-
-<ion-button (click)="submit()" color="light" slot="end" shape="round"
-  >Save<ion-icon name="save-outline"></ion-icon
-></ion-button>
+  <div class="actions-footer">
+    <ion-button (click)="submit()" class="save-button" expand="block">
+      Salva Allenamento
+      <ion-icon slot="end" name="checkmark-done-outline"></ion-icon>
+    </ion-button>
+  </div>
+</div>

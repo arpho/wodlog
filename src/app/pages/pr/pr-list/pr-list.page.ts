@@ -9,23 +9,26 @@ import { HomePage } from 'src/app/home/home.page';
 import { Router } from '@angular/router';
 import { FilterPipe } from 'src/app/components/pipes/customFilter/filterPipe.pipe';
 
+import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.component';
+
 @Component({
   selector: 'app-pr-list',
   templateUrl: './pr-list.page.html',
   styleUrls: ['./pr-list.page.scss'],
   standalone: true,
-  imports: [IonButton,
+  imports: [
+    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
+    IonBackButton,
     CommonModule,
     FormsModule,
-    IonBreadcrumb,
-    IonBreadcrumbs,
-    IonButtons,
-    ActivitiesListComponent]
+    ActivitiesListComponent,
+    UserMenuComponent
+  ]
 })
 export class PrListPage implements OnInit {
 goBack() {

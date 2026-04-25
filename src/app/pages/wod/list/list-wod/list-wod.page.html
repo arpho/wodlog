@@ -1,62 +1,55 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-breadcrumbs>
-      <ion-breadcrumb href="#home">Home</ion-breadcrumb>
-      <ion-breadcrumb href="#wod-list">Wods</ion-breadcrumb>
-    </ion-breadcrumbs>
-    <ion-title  class="ion-text-center" size="large" >Wods</ion-title>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="glass-header">
+    <ion-title size="large">Wods</ion-title>
+    <ion-buttons slot="end">
+      <app-user-menu></app-user-menu>
+      <ion-button (click)="createWod()" class="add-button">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-fab  vertical="bottom" horizontal="end">
-  <ion-fab-button  size="small" color="light" (click)="createWod()"><ion-icon name="add"></ion-icon></ion-fab-button>
-  </ion-fab>
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <h1><strong>{{title}}</strong></h1>
+    <ion-toolbar transparent>
+      <ion-title size="large">{{title}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
-<ion-grid>
-  <ion-row>
-    <ion-col><h3>wod</h3></ion-col>
-    <ion-col><h3>data</h3></ion-col>
-    <ion-col><h3>note</h3></ion-col>
-    <ion-col><h3>result</h3></ion-col>
-  </ion-row>
-  @for (item of  wods()|customSorter:sorter; track item.key) {
-    <ion-item> <ion-row (click)="editWod(item)">
-      <ion-col >{{item.title}}
-        <div class="thumbs">
-      @if (item.benchmark) {
-        <ion-thumbnail  >
-          <ion-img src="assets/images/benchmark.png"/>
-        </ion-thumbnail>
-      }
-      @if(item.girl) {
+  <div class="list-container">
+    @for (item of wods() | customSorter:sorter; track item.key) {
+      <div class="wod-card glass-effect" (click)="editWod(item)">
+        <div class="card-content">
+          <div class="card-header-row">
+            <h2 class="wod-title">{{item.title}}</h2>
+            <span class="wod-date">{{showDate(item)}}</span>
+          </div>
+          
+          <div class="wod-note" *ngIf="item.note">
+            {{item.note}}
+          </div>
 
-
-      <ion-thumbnail  >
-        <ion-img src="assets/images/girl.png"/>
-      </ion-thumbnail>
-    }
-    @if(item.hero) {
-
-
-      <ion-thumbnail  >
-        <ion-img src="assets/images/hero.png"/>
-      </ion-thumbnail>
-    }
+          <div class="card-footer-row">
+            <div class="thumbs-container">
+              <img *ngIf="item.benchmark" src="assets/images/benchmark.png" class="badge-icon" alt="benchmark">
+              <img *ngIf="item.girl" src="assets/images/girl.png" class="badge-icon" alt="girl">
+              <img *ngIf="item.hero" src="assets/images/hero.png" class="badge-icon" alt="hero">
+              <img *ngIf="item.open" src="assets/images/open.png" class="badge-icon" alt="open">
+              <img *ngIf="item.QF" src="assets/images/QF.png" class="badge-icon" alt="QF">
+            </div>
+            <div class="result-box">
+              <app-result-handler [userKey]="user.key" [wodKey]="item.key"></app-result-handler>
+            </div>
+          </div>
         </div>
-      </ion-col>
-      <ion-col >{{showDate(item)}}</ion-col>
-      <ion-col >{{item.note}}</ion-col>
-      <ion-col  ><app-result-handler [userKey]="user.key" [wodKey]="item.key"></app-result-handler></ion-col>
-      </ion-row>
-      </ion-item>
+      </div>
+    }
+  </div>
 
-  }
-</ion-grid>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="main-fab" (click)="createWod()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

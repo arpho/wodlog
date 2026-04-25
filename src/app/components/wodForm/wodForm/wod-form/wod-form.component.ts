@@ -32,7 +32,7 @@ import {
   ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, checkmarkOutline } from 'ionicons/icons';
+import { saveOutline, add, checkmarkOutline, addCircleOutline, checkmarkDoneOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ExerciseModalComponent } from '../../../../components/exerciseModal/exercise-modal/exercise-modal.component';
 
@@ -119,7 +119,7 @@ export class WodFormComponent implements OnInit, OnChanges {
   constructor(
     private modalCtrl: ModalController
   ) {
-    addIcons({ add, checkmarkOutline, saveOutline });
+    addIcons({ add, checkmarkOutline, saveOutline, addCircleOutline, checkmarkDoneOutline });
   }
   async editWod(_t38: string, index: number) {
     console.log("editing", _t38)

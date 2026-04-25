@@ -6,51 +6,44 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonBreadcrumbs,
-  IonItem,
   IonFab,
   IonFabButton,
   IonIcon,
-   IonBreadcrumb,
-  IonThumbnail, IonImg } from '@ionic/angular/standalone';
+  IonButtons,
+  IonButton
+} from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
+import { add, addOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { WodModel } from 'src/app/models/wod';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
 import { UsersService } from 'src/app/services/users/users.service';
 import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
+import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.component';
 
 @Component({
   selector: 'app-list-wod',
   templateUrl: './list-wod.page.html',
   styleUrls: ['./list-wod.page.scss'],
   standalone: true,
-  imports: [IonImg, IonBreadcrumb,
+  imports: [
     IonIcon,
     IonFabButton,
     IonFab,
-    IonItem,
-    IonCol,
-    IonRow,
-    IonGrid,
     IonContent,
     IonHeader,
     IonTitle,
-    IonBreadcrumb,
-    IonBreadcrumbs,
     IonToolbar,
+    IonButtons,
+    IonButton,
     CommonModule,
     FormsModule,
     ResultHandlerComponent,
-    IonThumbnail,
-    CustomSorterPipe
-],
+    CustomSorterPipe,
+    UserMenuComponent
+  ],
 })
 export class ListWodPage implements OnInit {
 [x: string]: any;
@@ -80,13 +73,13 @@ title="";
   wods = signal<WodModel[]>([]);
 
   constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService) {
-    addIcons({ add });
+    addIcons({ add, addOutline });
   }
 
   async ngOnInit() {
     console.log("loading wods")
     this.user = await this.users.getLoggedUser()
-    this.title = `pr di ${this.user.name}`
+    this.title = `pr di ${this.user.firstName}`
     console.log("user",this.user);
     const callback = (data: { wods: WodModel[]; total: number }) => {
       console.log('data', data);
