@@ -30,7 +30,8 @@ import { PaginationOptions } from 'src/app/models/paginationOptions';
 import { IonActionSheetCustomEvent, IonSearchbarCustomEvent, OverlayEventDetail } from '@ionic/core';
 import { FilterPipe } from "../../pipes/customFilter/filterPipe.pipe";
 import { PrModel } from 'src/app/models/Pr';
-import { text } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
+import { add, ellipsisHorizontalOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-pr-table',
@@ -76,7 +77,9 @@ export class PrTableComponent  implements OnInit,OnChanges {
     private users:UsersService,
     private ToastController: ToastController
 
-  ) { }
+  ) { 
+    addIcons({ add, 'ellipsis-horizontal-outline': ellipsisHorizontalOutline });
+  }
 actionSheetDidDismiss($event: IonActionSheetCustomEvent<OverlayEventDetail<any>>) {
 switch($event.detail.data.action){
   case 'delete':

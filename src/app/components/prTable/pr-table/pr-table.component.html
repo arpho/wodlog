@@ -1,46 +1,47 @@
-<ion-searchbar placeholder="esercizio" show-clear-button="focus" (ionInput)="search($event)"></ion-searchbar>
-<ion-grid>
-  <ion-row class="headers">
-    <ion-col>
-      <h3>massimale  </h3>
-      </ion-col>
-      <ion-col>
-        <h3>data </h3>
-        </ion-col>
-        <ion-col>
-          <h3>PR</h3>
-          </ion-col>
-          <ion-col>
-            <h3>actions</h3>
-            </ion-col>
+<div class="search-container">
+  <ion-searchbar 
+    placeholder="Cerca esercizio..." 
+    show-clear-button="focus" 
+    (ionInput)="search($event)"
+    class="glass-searchbar">
+  </ion-searchbar>
+</div>
 
-          <ion-fab    vertical="bottom" horizontal="end"    >
-            <ion-fab-button (click)="createActivity()" size="small"   color="light">
-              <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
-        </ion-row>
-        @for( pr of prList|filterPipe:filter;track pr.key){
-          <ion-row  >
+<div class="pr-list-container">
+  @for (pr of prList | filterPipe:filter; track pr.key) {
+    <div class="pr-card glass-effect" (click)="openActions(pr)">
+      <div class="card-content">
+        <div class="card-header-row">
+          <h3 class="pr-title">{{pr.descrizione}}</h3>
+          <span class="pr-date">{{pr.getMaxPr().getDate()}}</span>
+        </div>
+        
+        <div class="card-footer-row">
+          <div class="pr-value-container">
+            <span class="label">Personal Record</span>
+            <div class="value-wrapper">
+              <span class="value">{{pr.getMaxPr().prestazione | prestazione:pr.unity}}</span>
+            </div>
+          </div>
+          
+          <ion-button fill="clear" color="light" class="action-button" (click)="$event.stopPropagation(); openActions(pr)">
+            <ion-icon slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
 
-            <ion-item class="pr">
-              {{showPr(pr)}}
-            <ion-col > <strong>{{pr.descrizione}}</strong></ion-col>
-            <ion-col >{{pr.getMaxPr().getDate()}}</ion-col>
-            <ion-col >{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button class="main-fab" (click)="createActivity()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-            <ion-col><ion-button color="light" size="small" shape="round" (click)="openActions(pr)"><ion-icon name=ellipsis-horizontal></ion-icon></ion-button></ion-col>
-
-            </ion-item>
-          </ion-row>
-        }
-
-
-  </ion-grid>
-  <ion-action-sheet
+<ion-action-sheet
   [isOpen]="isActionSheetOpen"
-  header="Actions"
+  header="Azioni"
   [buttons]="actionSheetButtons"
   (didDismiss)="actionSheetDidDismiss($event)"
 ></ion-action-sheet>
-

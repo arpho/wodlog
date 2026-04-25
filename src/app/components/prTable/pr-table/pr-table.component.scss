@@ -1,25 +1,115 @@
-.pr{
-  font-size:larger
+.search-container {
+  padding: 8px 0 16px;
 }
-.headers {
-  color: #454f63;
-  font-family: "Open Sans";
-  font-weight: bolder;
-  font-size: 14px;
-  margin-top: 10px;
-  word-wrap: break-word;
-  background-color: #f4f5f8;
 
-// Fixed Header
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10000;
-
-  -webkit-flex-wrap: wrap;
-  flex-wrap: wrap;
+.glass-searchbar {
+  --background: var(--glass-bg);
+  --color: white;
+  --placeholder-color: rgba(255, 255, 255, 0.5);
+  --icon-color: rgba(255, 255, 255, 0.5);
+  --clear-button-color: white;
+  --border-radius: 12px;
+  padding: 0;
+  
+  &::part(container) {
+    backdrop-filter: blur(var(--blur-amount));
+    -webkit-backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border);
+  }
 }
-ion-item{
-  width: 100%;
+
+.pr-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 80px;
+}
+
+.pr-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.pr-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+}
+
+.pr-date {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.card-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pr-value-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 4px;
+}
+
+.value-wrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.action-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  margin: 0;
+  opacity: 0.7;
+  
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.main-fab {
+  --background: var(--primary-gradient);
+  --color: white;
+  --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
