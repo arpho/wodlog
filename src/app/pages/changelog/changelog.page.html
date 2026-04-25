@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>changelog</ion-title>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="glass-header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Changelog</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">changelog</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="changelog-container ion-padding">
+    @for (version of changelog; track version.version) {
+      <div class="version-block glass-effect">
+        <div class="version-header">
+          <div class="v-number">
+            <ion-badge color="primary">v{{ version.version }}</ion-badge>
+            <span class="v-date">{{ version.date }}</span>
+          </div>
+          <div class="v-line"></div>
+        </div>
+        
+        <ion-list lines="none" class="changes-list">
+          @for (change of version.changes; track change.description) {
+            <ion-item class="change-item">
+              <div class="change-icon-box" [ngClass]="change.type">
+                <ion-icon [name]="getIconForType(change.type)" [color]="getColorForType(change.type)"></ion-icon>
+              </div>
+              <ion-label class="ion-text-wrap">
+                <p>{{ change.description }}</p>
+              </ion-label>
+            </ion-item>
+          }
+        </ion-list>
+      </div>
+    }
+  </div>
 </ion-content>

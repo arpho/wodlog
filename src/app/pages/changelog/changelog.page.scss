@@ -1,0 +1,78 @@
+.changelog-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.version-block {
+  padding: 20px;
+  position: relative;
+}
+
+.version-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  
+  .v-number {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    ion-badge {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    
+    .v-date {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.changes-list {
+  background: transparent;
+  padding: 0;
+}
+
+.change-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 12px;
+  
+  ion-label {
+    margin: 0;
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+.change-icon-box {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-right: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  
+  ion-icon {
+    font-size: 1.2rem;
+  }
+  
+  &.feature { background: rgba(42, 245, 152, 0.1); }
+  &.ui { background: rgba(0, 158, 253, 0.1); }
+  &.fix { background: rgba(255, 71, 87, 0.1); }
+  &.refactor { background: rgba(255, 159, 67, 0.1); }
+}
