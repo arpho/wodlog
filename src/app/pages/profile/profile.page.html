@@ -16,6 +16,24 @@
 
   <div class="ion-padding profile-container">
     <ion-list lines="inset" class="profile-list">
+      <div class="avatar-section">
+        <div class="avatar-container glass-effect" (click)="fileInput.click()">
+          <ion-avatar>
+            @if (isUploading()) {
+              <div class="upload-spinner">
+                <ion-spinner name="crescent"></ion-spinner>
+              </div>
+            } @else {
+              <img [src]="getProfileImage()" alt="Profile Picture" />
+            }
+          </ion-avatar>
+          <div class="edit-badge">
+            <ion-icon name="camera-outline"></ion-icon>
+          </div>
+        </div>
+        <input #fileInput type="file" (change)="uploadImage($event)" accept="image/*" style="display: none;">
+      </div>
+
       <ion-list-header>
         <ion-label>Dati Personali</ion-label>
       </ion-list-header>
@@ -112,6 +130,14 @@
           }
         </ion-select>
       </ion-item>
+
+      @if (featuredPrs().length > 0) {
+        <div class="trend-section">
+          @for (key of featuredPrs(); track key) {
+            <app-pr-trend [activity]="getActivityByKey(key)"></app-pr-trend>
+          }
+        </div>
+      }
 
       <ion-list-header class="ion-margin-top">
         <ion-label>Account</ion-label>

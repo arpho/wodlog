@@ -1,35 +1,125 @@
-.profile-container {
-  max-width: 600px;
-  margin: 0 auto;
+.avatar-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 20px 0;
 }
 
-.profile-list {
-  background: transparent;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  padding: 4px;
+  cursor: pointer;
+  
+  ion-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    
+    img {
+      object-fit: cover;
+    }
+  }
 }
 
-ion-item {
-  --padding-start: 16px;
-  --inner-padding-end: 16px;
-  margin-bottom: 4px;
+.edit-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--ion-color-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 2px solid #0f172a;
+  
+  ion-icon {
+    color: white;
+    font-size: 1.2rem;
+  }
 }
 
-.save-button {
-  --border-radius: 12px;
-  height: 50px;
-  font-weight: 600;
-  margin-top: 20px;
+.upload-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
-ion-grid {
-  ion-col {
-    padding-top: 0;
-    padding-bottom: 0;
+.trend-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.trend-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .trend-title {
+    font-weight: 700;
+    color: white;
+    font-size: 1rem;
   }
   
-  ion-item {
-    margin-bottom: 0;
+  .trend-date {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.trend-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trend-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+}
+
+.trend-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  
+  ion-icon {
+    font-size: 1.5rem;
+  }
+  
+  &.better {
+    background: rgba(42, 245, 152, 0.2);
+    color: #2af598;
+  }
+  
+  &.worse {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+  }
+  
+  &.equal, &.none {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
   }
 }

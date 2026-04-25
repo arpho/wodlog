@@ -1,0 +1,71 @@
+.trend-card {
+  margin: 0;
+  box-shadow: none;
+  background: var(--glass-bg);
+}
+
+ion-card-header {
+  padding-bottom: 8px;
+}
+
+.trend-title {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.trend-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.trend-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #2af598 !important; /* Brighter green for visibility */
+  display: block;
+  margin-top: 4px;
+}
+
+.trend-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  
+  ion-icon {
+    font-size: 1.8rem;
+  }
+  
+  &.better {
+    background: rgba(42, 245, 152, 0.2);
+    color: #2af598;
+  }
+  
+  &.worse {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+  }
+  
+  &.equal, &.none {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.trend-footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trend-note {
+  font-size: 0.9rem;
+  font-style: italic;
+  display: block;
+}

@@ -19,6 +19,7 @@ export class UserModel{
   height: number | null = null
   gender: string = ''
   featuredPrs: string[] = []
+  photoUrl: string = ''
   constructor(args?:{}){
     this.build(args);
   }
@@ -50,7 +51,8 @@ serialize(){
     weight: this.weight,
     height: this.height,
     gender: this.gender,
-    featuredPrs: this.featuredPrs || []
+    featuredPrs: this.featuredPrs || [],
+    photoUrl: this.photoUrl || ''
   }
 }
 }

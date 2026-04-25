@@ -10,7 +10,8 @@ import {
   IonItem,
   IonLabel,
   IonAvatar,
-  IonText
+  IonText,
+  IonThumbnail
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -64,10 +65,18 @@ export class UserMenuComponent implements OnInit {
     const user = await this.usersService.getLoggedUser();
     if (user) {
       this.loggedUser.set(user);
-      if (user.email) {
-        const hash = Md5.hashStr(user.email.trim().toLowerCase());
-        this.gravatarUrl.set(`https://www.gravatar.com/avatar/${hash}?d=mp&s=200`);
-      }
+      this.updateAvatarUrl(user);
+    }
+  }
+
+  private updateAvatarUrl(user: UserModel) {
+    if (user.photoUrl) {
+      this.gravatarUrl.set(user.photoUrl);
+    } else if (user.email) {
+      const hash = Md5.hashStr(user.email.trim().toLowerCase());
+      this.gravatarUrl.set(`https://www.gravatar.com/avatar/${hash}?d=mp&s=200`);
+    } else {
+      this.gravatarUrl.set('assets/icon/favicon.png');
     }
   }
 
