@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, authState, signInAnonymously, signOut, GoogleAuthProvider, signInWithPopup, getAuth } from '@angular/fire/auth';
 import { AuthService } from '../auth/auth.service';
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import { UserModel } from 'src/app/models/userModel';
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,11 @@ logout(){
   const auth = getAuth();
   console.log("auth",auth)
   auth.signOut();
+}
+
+updateUser(user: UserModel): Promise<void> {
+  const userRef = ref(this.db, `userProfile/${user.key}`);
+  return set(userRef, user.serialize());
 }
 
 getUserByUid(uid:string):Promise<UserModel>{

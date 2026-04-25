@@ -15,6 +15,10 @@ export class UserModel{
   role = ''
   prList: ActivityModel[] = []
   userName = ''
+  weight: number | null = null
+  height: number | null = null
+  gender: string = ''
+  featuredPrs: string[] = []
   constructor(args?:{}){
     this.build(args);
   }
@@ -22,10 +26,12 @@ export class UserModel{
   build(args?:{}){
     Object.assign(this, args)
     const pr:ActivityModel[] = []
-Object.entries(this.prList).forEach(([key, value]) => {
-  pr.push(new ActivityModel(value).setKey(key))
-})
-this.prList= pr
+    if (this.prList) {
+      Object.entries(this.prList).forEach(([key, value]) => {
+        pr.push(new ActivityModel(value).setKey(key))
+      })
+    }
+    this.prList= pr
 
     return this
 
@@ -40,7 +46,11 @@ serialize(){
     password: this.password,
     phoneNumber: this.phoneNumber,
     role: this.role,
-    userName: this.userName
+    userName: this.userName,
+    weight: this.weight,
+    height: this.height,
+    gender: this.gender,
+    featuredPrs: this.featuredPrs || []
   }
 }
 }
