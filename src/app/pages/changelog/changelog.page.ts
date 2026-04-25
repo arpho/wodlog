@@ -53,6 +53,15 @@ export class ChangelogPage implements OnInit {
 
   changelog: Version[] = [
     {
+      version: '2.0.1',
+      date: '26 Aprile 2026',
+      changes: [
+        { type: 'ui', description: 'Applicato lo stile Glassmorphism alla lista dei Personal Record (PR)' },
+        { type: 'ui', description: 'Personalizzazione premium della barra di scorrimento (scrollbar) in tutta l\'app' },
+        { type: 'refactor', description: 'Refactoring della tabella PR in layout a card moderne' }
+      ]
+    },
+    {
       version: '2.0.0',
       date: '25 Aprile 2026',
       changes: [
