@@ -3,12 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" text=""></ion-back-button>
     </ion-buttons>
-    <ion-breadcrumbs slot="start" class="ion-hide-sm-down">
-      <ion-breadcrumb href="/home">Home</ion-breadcrumb>
-      <ion-breadcrumb href="/pr-list">PR</ion-breadcrumb>
-    </ion-breadcrumbs>
-    <ion-title class="ion-text-center">
-      <strong>{{title}}</strong>
+    <ion-title size="large">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="/home">Home</ion-breadcrumb>
+        <ion-breadcrumb href="/pr-list">PR</ion-breadcrumb>
+      </ion-breadcrumbs>
     </ion-title>
     <ion-buttons slot="end">
       <app-user-menu></app-user-menu>
@@ -17,6 +16,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar transparent>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
   <div class="pr-container">
     <app-activities-list [userKey]="user.key"></app-activities-list>
   </div>
