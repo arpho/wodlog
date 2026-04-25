@@ -1,0 +1,137 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profilo Atleta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Profilo Atleta</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-padding profile-container">
+    <ion-list lines="inset" class="profile-list">
+      <ion-list-header>
+        <ion-label>Dati Personali</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-input 
+          label="Nome" 
+          labelPlacement="stacked" 
+          type="text" 
+          [value]="firstName()" 
+          (ionInput)="updateFirstName($event)"
+          placeholder="Inserisci il nome">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input 
+          label="Cognome" 
+          labelPlacement="stacked" 
+          type="text" 
+          [value]="lastName()" 
+          (ionInput)="updateLastName($event)"
+          placeholder="Inserisci il cognome">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input 
+          label="Nickname" 
+          labelPlacement="stacked" 
+          type="text" 
+          [value]="userName()" 
+          (ionInput)="updateUserName($event)"
+          placeholder="Inserisci un nickname">
+        </ion-input>
+      </ion-item>
+
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-input 
+                label="Peso (kg)" 
+                labelPlacement="stacked" 
+                type="number" 
+                [value]="weight()" 
+                (ionInput)="updateWeight($event)"
+                placeholder="es. 75">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-input 
+                label="Altezza (cm)" 
+                labelPlacement="stacked" 
+                type="number" 
+                [value]="height()" 
+                (ionInput)="updateHeight($event)"
+                placeholder="es. 180">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-item>
+        <ion-select 
+          label="Sesso" 
+          labelPlacement="stacked" 
+          [value]="gender()" 
+          (ionChange)="updateGender($event)"
+          placeholder="Seleziona sesso">
+          <ion-select-option value="M">Maschio</ion-select-option>
+          <ion-select-option value="F">Femmina</ion-select-option>
+          <ion-select-option value="O">Altro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-list-header class="ion-margin-top">
+        <ion-label>Prestazioni Significative</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-select 
+          label="PR da visualizzare" 
+          labelPlacement="stacked" 
+          [multiple]="true"
+          [value]="featuredPrs()"
+          (ionChange)="updateFeaturedPrs($event)"
+          placeholder="Seleziona i tuoi PR migliori">
+          @for (pr of availablePrs(); track pr.key) {
+            <ion-select-option [value]="pr.key">{{ pr.descrizione }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-list-header class="ion-margin-top">
+        <ion-label>Account</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-input 
+          label="Email" 
+          labelPlacement="stacked" 
+          type="email" 
+          [value]="email()" 
+          [readonly]="true">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding-top">
+      <ion-button expand="block" (click)="saveProfile()" shape="round" class="save-button">
+        Salva Profilo
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
