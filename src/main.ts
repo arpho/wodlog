@@ -7,6 +7,7 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { provideServiceWorker } from '@angular/service-worker';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, trashOutline, eyeOutline, ellipsisHorizontal, statsChartOutline, recordingOutline, ribbonOutline } from 'ionicons/icons';
@@ -15,7 +16,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { DatePipe } from "@angular/common";
-import { provideServiceWorker } from '@angular/service-worker';
+
 if (environment.production) {
   enableProdMode();
 }

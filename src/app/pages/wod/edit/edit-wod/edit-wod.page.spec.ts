@@ -1,9 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditWodPage } from './edit-wod.page';
+<<<<<<< HEAD
 import { provideRouter } from '@angular/router';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { UsersService } from 'src/app/services/users/users.service';
+=======
+import { ActivatedRoute } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { UsersService } from 'src/app/services/users/users.service';
+import { ModalController } from '@ionic/angular/standalone';
+
+import { of } from 'rxjs';
+import { WodService } from 'src/app/services/wod/wod.service';
+>>>>>>> origin/reorder
 
 describe('EditWodPage', () => {
   let component: EditWodPage;
@@ -13,10 +23,34 @@ describe('EditWodPage', () => {
     await TestBed.configureTestingModule({
       imports: [EditWodPage],
       providers: [
+<<<<<<< HEAD
         provideRouter([]), 
         provideIonicAngular(),
         { provide: WodService, useValue: { getWodByKey: () => Promise.resolve(null) } },
         { provide: UsersService, useValue: { getLoggedUser: () => Promise.resolve(null) } }
+=======
+        { 
+          provide: ActivatedRoute, 
+          useValue: { 
+            queryParams: of({ wodKey: 'test-key' }),
+            snapshot: { params: {} } 
+          } 
+        },
+        { provide: Auth, useValue: {} },
+        { 
+          provide: UsersService, 
+          useValue: { 
+            getLoggedUser: () => Promise.resolve({ name: 'Test User', key: 'user-key' }) 
+          } 
+        },
+        { 
+          provide: WodService, 
+          useValue: { 
+            getWodByKey: () => Promise.resolve({ title: 'Test WOD', key: 'test-key', date: Date.now() }) 
+          } 
+        },
+        { provide: ModalController, useValue: { create: () => ({ present: () => {}, onDidDismiss: () => ({ data: null }) }), dismiss: () => {} } }
+>>>>>>> origin/reorder
       ]
     }).compileComponents();
 

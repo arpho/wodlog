@@ -6,11 +6,18 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
+<<<<<<< HEAD
 import { initializeApp } from '@firebase/app';
 import { environment } from './environments/environment';
 
 // Initialize Firebase for tests
 initializeApp(environment.firebase);
+=======
+import { initializeApp } from 'firebase/app';
+
+// Initialize a dummy Firebase app to prevent instant crashes in services
+initializeApp({ projectId: 'test', appId: 'test', apiKey: 'test' });
+>>>>>>> origin/reorder
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(

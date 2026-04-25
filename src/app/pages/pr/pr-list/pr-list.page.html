@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar class="glass-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" text=""></ion-back-button>
     </ion-buttons>
     <ion-title size="large">Personal Records</ion-title>
+=======
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-breadcrumbs>
+      <ion-breadcrumb href="#home">Home</ion-breadcrumb>
+      <ion-breadcrumb href="#pr-list">Pr</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <ion-title  class="ion-text-center" >      <h1><strong>{{title}}</strong></h1></ion-title>
+>>>>>>> origin/reorder
     <ion-buttons slot="end">
       <app-user-menu></app-user-menu>
     </ion-buttons>

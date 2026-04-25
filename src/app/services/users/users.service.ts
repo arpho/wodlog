@@ -38,10 +38,10 @@ export class UsersService {
 
     })
 }
-logout(){
+logout(): Promise<void> {
   const auth = getAuth();
-  console.log("auth",auth)
-  auth.signOut();
+  console.log("auth", auth);
+  return auth.signOut();
 }
 
 updateUser(user: UserModel): Promise<void> {

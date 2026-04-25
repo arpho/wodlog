@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="form-container">
   <div class="glass-effect form-section">
     <h2 class="section-title">Informazioni Generali</h2>
@@ -28,9 +29,65 @@
         presentation="date"
         class="glass-datetime"
       ></ion-datetime>
+=======
+<div class="container">
+  <div class="inputs">
+<ion-input
+style="margin:3rem;"
+  type="text"
+  label="nome wod"
+  [value]="title()"
+  (ionChange)="updateName($event)"
+  [value]="title()"
+  labelPlacement="floating"
+></ion-input>
+<ion-input
+  type="text"
+  style="margin: 3rem;"
+  max-width="6rem"
+  label="note"
+  [value]="note()"
+  (ionChange)="updateNote($event)"
+  [value]="note()"
+  labelPlacement="floating"
+></ion-input>
+<ion-datetime
+  [value]="formatDate4Picker()"
+  (ionChange)="updateDate($event)"
+  presentation="date"
+></ion-datetime>
+  </div>
+<div class="switches">
+  <div id="hero">
+  <ion-toggle labelPlacement="start" [ngClass]="{'isAnHero':hero()}" [checked]="hero()" (ionChange)="updateHero($event)">Hero</ion-toggle> @if(hero()){
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+  </div>
+  <div id="open">
+  <ion-toggle labelPlacement="start" [ngClass]="{'isAnOpen':open()}" [checked]="hero()" (ionChange)="updateOpen($event)">Open</ion-toggle> @if(hero()){
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+  </div>
+  <div id="girl">
+  <ion-toggle labelPlacement="start"  [ngClass]="{'isAGirl':girl()}" [checked]="girl()" (ionChange)="updateGirl($event)">Girl</ion-toggle>
+  @if (girl()) {
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+  </div>
+  <div id="benchmark">
+  <ion-toggle labelPlacement="start"  [ngClass]="{'isABenchmark':benchmark()}" [checked]="benchmark()" (ionChange)="updateBenchmark($event)">Benchmark</ion-toggle>@if (benchmark()) {
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+    </div>
+  <div id="QF">
+  <ion-toggle labelPlacement="start"  [checked]="QF()" (ionChange)="updateQF($event)">QF</ion-toggle>@if (QF()) {
+    <ion-icon name="checkmark-outline"></ion-icon>
+  }
+>>>>>>> origin/reorder
     </div>
   </div>
 
+<<<<<<< HEAD
   <div class="glass-effect form-section">
     <h2 class="section-title">Categorie</h2>
     <div class="toggles-grid">
@@ -45,6 +102,39 @@
       </div>
     </div>
   </div>
+=======
+</div>
+</div>
+<ion-grid>
+
+
+  <ion-row>
+    <ion-col><h2>forza</h2>
+
+    </ion-col>
+    <ion-col><h2>wod</h2></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleForceReorder($any($event))">
+
+        <ion-item>
+
+
+          <ion-input
+            type="text"
+            label="esercizio di forza"
+            (ionChange)="updateForce($event)"
+            [value]="force2Input"
+            labelPlacement="floating"
+          >
+
+          </ion-input
+        >
+
+
+>>>>>>> origin/reorder
 
   <div class="exercises-grid">
     <div class="glass-effect form-section exercise-column">
@@ -64,6 +154,7 @@
         ></ion-input>
       </ion-item>
 
+<<<<<<< HEAD
       <div class="exercise-list">
         @for(item of force(); track item; let index =$index){
           <div class="exercise-item glass-effect" (click)="editForce(item,index)">
@@ -107,3 +198,65 @@
     </ion-button>
   </div>
 </div>
+=======
+        @for(item of force(); track item;let index =$index){
+
+        <ion-item (click)="editForce(item,index)">{{ item }}
+          <ion-reorder  ></ion-reorder>
+        </ion-item>
+        }
+        </ion-reorder-group>
+
+      </ion-list>
+    </ion-col>
+    <ion-col>
+      <ion-list>
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="esercizio di wod"
+            (ionChange)="updateWod($event)"
+            [value]="wod2Input()"
+            labelPlacement="floating"
+          ></ion-input
+        ></ion-item>
+        @for(item of wod(); track item; let index=$index){
+        <ion-item>{{ item }}
+          <ion-button (click)="editWod(item,index)" color="light"><ion-icon name="create-outline"></ion-icon></ion-button>
+          <ion-reorder  ></ion-reorder>
+        </ion-item>
+
+        }
+      </ion-reorder-group>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-fab>
+        <ion-fab-button size="small"  color="light" (click)="addForce()" >
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-col>
+    <ion-col>
+      <ion-fab>
+        <ion-fab-button size="small"  color="light" (click)="addActivity()" >
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button (click)="submit()" color="calm" fill="outline" shape="round"
+  >Save<ion-icon name="save-outline"></ion-icon
+></ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+
+>>>>>>> origin/reorder

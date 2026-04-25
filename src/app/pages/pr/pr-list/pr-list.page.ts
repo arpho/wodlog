@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonNav, IonButtons,IonBackButton, IonButton,IonBreadcrumb,IonBreadcrumbs} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonNav, IonButtons, IonBackButton, IonButton, IonBreadcrumb, IonBreadcrumbs} from '@ionic/angular/standalone';
 import { ActivitiesListComponent } from "../../../components/activitiesList/activities-list/activities-list.component";
 import { UserModel } from 'src/app/models/userModel';
 import { UsersService } from 'src/app/services/users/users.service';
 import { HomePage } from 'src/app/home/home.page';
 import { Router } from '@angular/router';
 import { FilterPipe } from 'src/app/components/pipes/customFilter/filterPipe.pipe';
+import { UserMenuComponent } from 'src/app/components/user-menu/user-menu.component';
 
 import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.component';
 
@@ -17,15 +18,25 @@ import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.compone
   styleUrls: ['./pr-list.page.scss'],
   standalone: true,
   imports: [
+<<<<<<< HEAD
+=======
+    CommonModule,
+    FormsModule,
+>>>>>>> origin/reorder
     IonButton,
     IonButtons,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
+<<<<<<< HEAD
     IonBackButton,
     CommonModule,
     FormsModule,
+=======
+    IonBreadcrumb,
+    IonBreadcrumbs,
+>>>>>>> origin/reorder
     ActivitiesListComponent,
     UserMenuComponent
   ]

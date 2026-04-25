@@ -58,8 +58,12 @@ this.router.navigateByUrl('/pr-list')
 })
 
 
+
 }
-subscriptions= new Subscription()
+closeActivity() {
+  this.router.navigateByUrl('/pr-list')
+}
+subscriptions: Subscription | undefined;
 activity= signal(new ActivityModel())
   constructor(
     private route:ActivatedRoute,
@@ -98,18 +102,19 @@ activity= signal(new ActivityModel())
 
       })
     }
-this.subscriptions.unsubscribe()
+    if (this.subscriptions) {
+      this.subscriptions.unsubscribe()
+    }
   }
 
   ngOnInit() {
-    this.subscriptions.add(this.route.queryParams.subscribe(async params=>{
+    this.subscriptions = this.route.queryParams.subscribe(async params=>{
       console.log("params", params);
       const loggedUser = await this.users.getLoggedUser()
       const activity = await this.activities.getActivityByKey(params["activityKey"],loggedUser.key)
       console.log("activity", activity);
       this.activity.set(activity)
       })
-    )
   }
 
 }

@@ -132,7 +132,6 @@ return this.Result()? this.Result().result:"no result";
   ) {
       addIcons({createOutline});}
   async ngOnChanges(changes: SimpleChanges) {
-    console.log("changes", changes);
     const result = await this.service.getResult(this.userKey, this.wodKey);
 
     if (this.userKey && this.wodKey&& this.ask4newResult && result.length == 0)

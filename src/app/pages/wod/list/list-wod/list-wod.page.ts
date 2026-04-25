@@ -2,15 +2,23 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonButtons,
+  IonButton,
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
+<<<<<<< HEAD
   IonFab,
   IonFabButton,
   IonIcon,
   IonButtons,
   IonButton
+=======
+>>>>>>> origin/reorder
 } from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
@@ -21,7 +29,11 @@ import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
 import { UsersService } from 'src/app/services/users/users.service';
 import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
+<<<<<<< HEAD
 import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.component';
+=======
+import { UserMenuComponent } from 'src/app/components/user-menu/user-menu.component';
+>>>>>>> origin/reorder
 
 @Component({
   selector: 'app-list-wod',

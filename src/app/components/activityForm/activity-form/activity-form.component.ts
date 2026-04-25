@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { PrModel } from 'src/app/models/Pr';
-import { IonInput, IonToggle, IonButton, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList } from "@ionic/angular/standalone";
+import { IonInput, IonToggle, IonButton, IonButtons, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonGrid, IonRow, IonCol, ModalController, IonSegment, IonSegmentButton, IonLabel } from "@ionic/angular/standalone";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add } from 'ionicons/icons';
+import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add, trashOutline, checkmark } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { PrListComponent } from "../../prList/pr-list/pr-list.component";
-import { IonToggleCustomEvent } from '@ionic/core';
+import { IonToggleCustomEvent, SegmentChangeEventDetail } from '@ionic/core';
 import { PrGraphComponent } from "../../pr-graph/pr-graph.component";
 @Component({
   selector: 'app-activity-form',
@@ -16,26 +16,41 @@ import { PrGraphComponent } from "../../pr-graph/pr-graph.component";
   //preserveWhitespaces: false
   imports: [
     IonHeader,
-     IonTabs,
-      IonTab,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
     IonInput,
     ReactiveFormsModule,
     FormsModule,
     IonToggle,
-    IonButton,
     IonIcon,
     PrListComponent,
-    IonTitle,
-    IonToolbar,
     IonFab,
     IonFabButton,
-    IonFabList,
-    IonContent,
-    PrGraphComponent
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonList,
+    IonItem,
+    IonGrid,
+    IonRow,
+    IonCol,
+    PrGraphComponent,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel
   ]
 
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
+showView() {
+return this.showList? "list":"graph"
+}
+switchViewSegment($event: any) {
+  this.showList = $event.detail.value === 'list';
+}
 switchView($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
 this.showList= !this.showList
 }
@@ -77,16 +92,33 @@ submit() {
 
   });
   this.submitActivity.emit(this.activity);
+  
+  // Try to dismiss if we are inside a modal
+  try {
+    this.modalCtrl.dismiss(this.activity, 'confirm');
+  } catch(e) {}
 }
 
+delete() {
+  try {
+    this.modalCtrl.dismiss(null, 'delete');
+  } catch(e) {}
+}
+
+close() {
+  this.closeActivity.emit();
+  try {
+    this.modalCtrl.dismiss(null, 'cancel');
+  } catch(e) {}
+}
 
 prDate = new Date().toISOString()
   constructor(
-
+    private modalCtrl: ModalController
   )
   {
 
-    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe});
+    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe, trashOutline, checkmark});
    }
   ngOnChanges(changes: SimpleChanges): void {
     this.descrizione.set(this.activity.descrizione)
@@ -119,6 +151,7 @@ setGirl($event: any) {
   @Output ()editdActivity = new EventEmitter<ActivityModel>();
 
   @Output()submitActivity = new EventEmitter<ActivityModel>();
+  @Output()closeActivity = new EventEmitter<void>();
   test = signal("test")
   descrizione = signal("");
   hero = signal(false);

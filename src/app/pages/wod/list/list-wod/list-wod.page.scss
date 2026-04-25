@@ -1,4 +1,5 @@
 .list-container {
+<<<<<<< HEAD
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -19,6 +20,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+=======
+  padding: 8px 16px 100px;
+}
+
+.wod-card {
+  margin-bottom: 16px;
+  border-radius: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+>>>>>>> origin/reorder
   margin-bottom: 12px;
 }
 
@@ -26,18 +52,42 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
+<<<<<<< HEAD
   color: white;
+=======
+  color: var(--ion-text-color);
+  line-height: 1.2;
+>>>>>>> origin/reorder
 }
 
 .wod-date {
   font-size: 0.85rem;
+<<<<<<< HEAD
   color: rgba(255, 255, 255, 0.6);
+=======
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  white-space: nowrap;
+  margin-left: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 12px;
+>>>>>>> origin/reorder
 }
 
 .wod-note {
   font-size: 0.95rem;
+<<<<<<< HEAD
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 16px;
+=======
+  color: var(--ion-color-step-600);
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+>>>>>>> origin/reorder
   line-height: 1.4;
 }
 
@@ -45,13 +95,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+<<<<<<< HEAD
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding-top: 12px;
+=======
+>>>>>>> origin/reorder
 }
 
 .thumbs-container {
   display: flex;
   gap: 8px;
+<<<<<<< HEAD
   
   .badge-icon {
     width: 24px;
@@ -69,4 +123,41 @@
   --background: var(--primary-gradient);
   --color: white;
   --box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+=======
+  flex-wrap: wrap;
+}
+
+.badge-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.result-box {
+  background: var(--ion-color-primary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+}
+
+.main-fab {
+  --background: var(--ion-color-primary);
+  --color: white;
+  --box-shadow: 0 8px 24px rgba(var(--ion-color-primary-rgb), 0.4);
+}
+
+.glass-header {
+  --background: rgba(var(--ion-background-color-rgb), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.add-button {
+  --color: var(--ion-color-primary);
+  font-size: 1.2rem;
+>>>>>>> origin/reorder
 }

@@ -37,7 +37,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    customLaunchers: {
+      ChromeHeadlessCustom: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-vulkan', '--ozone-platform=x11', '--no-sandbox']
+      }
+    },
+    browsers: ['ChromeHeadlessCustom'],
     singleRun: false,
     restartOnFileChange: true
   });
