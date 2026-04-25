@@ -12,11 +12,7 @@ describe('PaginatorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-<<<<<<< HEAD
       imports: [IonicModule.forRoot(), PaginatorComponent]
-=======
-      imports: [ PaginatorComponent ]
->>>>>>> origin/reorder
     })
     .compileComponents();
   }));
