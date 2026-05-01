@@ -27,9 +27,16 @@
   --background: rgba(255, 255, 255, 0.05);
   --border-radius: 12px;
   --padding-start: 16px;
+  --color: #ffffff;
   margin-bottom: 8px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+
+  ion-input {
+    --color: #ffffff;
+    --placeholder-color: rgba(255, 255, 255, 0.6);
+  }
 }
 
 .date-picker-wrapper {
@@ -40,6 +47,8 @@
   .glass-datetime {
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.03);
+    --color: #ffffff;
+    color: #ffffff;
   }
 }
 
@@ -57,6 +66,11 @@
   display: flex;
   justify-content: center;
   transition: all 0.3s ease;
+  
+  ion-toggle {
+    --color: #ffffff;
+    color: #ffffff;
+  }
   
   &.active {
     background: rgba(255, 255, 255, 0.15);
@@ -84,12 +98,16 @@
 }
 
 .exercise-list {
-  --background: transparent;
+  background: transparent !important;
+  --ion-item-background: transparent;
   padding: 0;
   
   .exercise-item {
-    --background: rgba(255, 255, 255, 0.05);
+    --background: transparent !important;
     --border-radius: 12px;
+    --color: #ffffff !important;
+    color: #ffffff !important;
+    --inner-border-width: 0;
     margin-bottom: 8px;
     --padding-start: 16px;
     --padding-end: 8px;
