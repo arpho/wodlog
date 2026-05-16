@@ -3,14 +3,12 @@ import * as logger from "firebase-functions/logger";
 
 // Import Genkit core and plugins.
 import { genkit, z } from "genkit";
-import { firebase } from "@genkit-ai/firebase";
 import { googleAI, gemini15Flash } from "@genkit-ai/googleai";
 
 // Initialize Genkit
 const ai = genkit({
   plugins: [
     googleAI(),
-    firebase(),
   ],
   model: gemini15Flash,
 });
