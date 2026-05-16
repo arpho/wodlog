@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { IonApp, IonRouterOutlet, ToastController } from '@ionic/angular/standalone';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
+import { ThemeService } from './services/theme/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,10 @@ export class AppComponent implements OnInit {
     private _auth: AngularFireAuth,
     private router: Router,
     private swUpdate: SwUpdate,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private themeService: ThemeService
   ) {
+    this.themeService.initializeTheme();
 
 
     _auth.onAuthStateChanged((user) => {

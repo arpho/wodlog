@@ -73,4 +73,8 @@ export const routes: Routes = [
     path: 'changelog',
     loadComponent: () => import('./pages/changelog/changelog.page').then( m => m.ChangelogPage)
   },
+  {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage)
+  },
 ];
