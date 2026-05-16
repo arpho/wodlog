@@ -1,2 +1,133 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #1e40af;
+  --ion-color-primary-rgb: 30, 64, 175;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1a389a;
+  --ion-color-primary-tint: #3553b7;
+
+  /** secondary **/
+  --ion-color-secondary: #0ea5e9;
+  --ion-color-secondary-rgb: 14, 165, 233;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0d91ce;
+  --ion-color-secondary-tint: #26aef2;
+
+  /** tertiary **/
+  --ion-color-tertiary: #6366f1;
+  --ion-color-tertiary-rgb: 99, 102, 241;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #575ad4;
+  --ion-color-tertiary-tint: #7375f2;
+
+  /** success **/
+  --ion-color-success: #10b981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ea371;
+  --ion-color-success-tint: #28c08e;
+
+  /** warning **/
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #d88b0a;
+  --ion-color-warning-tint: #f6a823;
+
+  /** danger **/
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d23c3c;
+  --ion-color-danger-tint: #f15757;
+
+  /** dark **/
+  --ion-color-dark: #0f172a;
+  --ion-color-dark-rgb: 15, 23, 42;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #0d1425;
+  --ion-color-dark-tint: #272e3f;
+
+  /** medium **/
+  --ion-color-medium: #64748b;
+  --ion-color-medium-rgb: 100, 116, 139;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #58667a;
+  --ion-color-medium-tint: #748297;
+
+  /** light **/
+  --ion-color-light: #f1f5f9;
+  --ion-color-light-rgb: 241, 245, 249;
+  --ion-color-light-contrast: #0f172a;
+  --ion-color-light-contrast-rgb: 15, 23, 42;
+  --ion-color-light-shade: #d4d8db;
+  --ion-color-light-tint: #f2f6fa;
+
+  /** Custom Glassmorphism Tokens **/
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-blur: 20px;
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+/* Light Theme overrides for background */
+body {
+  --ion-background-color: #e2e8f0; /* Slate 200 - clearly not white */
+  --ion-background-color-rgb: 226, 232, 240;
+  --ion-text-color: #0f172a;
+  --ion-text-color-rgb: 15, 23, 42;
+}
+
+/** Dark Mode Classes **/
+.ion-palette-dark {
+  --ion-color-primary: #3b82f6;
+  --ion-color-primary-rgb: 59, 130, 246;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3472d8;
+  --ion-color-primary-tint: #4f8ff7;
+
+  --ion-background-color: #0b1120; /* Slightly deeper blue-black */
+  --ion-background-color-rgb: 11, 17, 32;
+
+  --ion-text-color: #f1f5f9;
+  --ion-text-color-rgb: 241, 245, 249;
+
+  --ion-color-step-50: #141c2f;
+  --ion-color-step-100: #1e2537;
+  --ion-color-step-150: #282f40;
+  --ion-color-step-200: #323948;
+  --ion-color-step-250: #3c4351;
+  --ion-color-step-300: #464d59;
+  --ion-color-step-350: #505762;
+  --ion-color-step-400: #5a616a;
+  --ion-color-step-450: #646a73;
+  --ion-color-step-500: #6e747b;
+  --ion-color-step-550: #787e84;
+  --ion-color-step-600: #82888c;
+  --ion-color-step-650: #8c9295;
+  --ion-color-step-700: #969c9d;
+  --ion-color-step-750: #a0a6a6;
+  --ion-color-step-800: #aaafae;
+  --ion-color-step-850: #b4b9b7;
+  --ion-color-step-900: #bec3bf;
+  --ion-color-step-950: #c8cdc8;
+
+  --ion-item-background: transparent;
+  --ion-card-background: rgba(30, 41, 59, 0.5);
+
+  /** Dark Glassmorphism Tokens **/
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 20px;
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}

@@ -1,37 +1,133 @@
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Optional CSS utils */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Dark Palette - Manual Control via .ion-palette-dark class */
+@import '@ionic/angular/css/palettes/dark.class.css';
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --ion-font-family: 'Inter', sans-serif;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ion-background-color);
+}
+
+ion-app {
+  background: var(--ion-background-color);
+  background-image: radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.1) 0%, transparent 40%),
+                    radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.1) 0%, transparent 40%);
+}
+
+.ion-palette-dark ion-app {
+  background-image: radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.2) 0%, transparent 50%);
+}
+
+/* Remove old body specific gradient classes if any */
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Premium Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ion-text-color);
+}
+
+ion-toolbar {
+  --background: transparent;
+  --border-style: none;
+}
+
+ion-content {
+  --background: transparent; /* Changed to transparent to let ion-app background show through */
+  
+  /* Ensuring the shadow DOM background is also transparent */
+  &::part(background) {
+    background: transparent;
+  }
+}
+
+.ion-palette-dark ion-content::part(background) {
+  background-image: radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.2) 0%, transparent 50%);
+}
+
+/* Custom Item Styling */
+ion-item {
+  --background: transparent;
+  --border-color: rgba(var(--ion-text-color-rgb), 0.1);
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  font-weight: 500;
+  color: var(--ion-text-color);
+}
+
+/* Enhanced Input Visibility */
+ion-input, ion-textarea, ion-select {
+  --color: var(--ion-text-color);
+  --placeholder-color: rgba(var(--ion-text-color-rgb), 0.5);
+}
+
+ion-label {
+  color: var(--ion-text-color);
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.ion-palette-dark ion-item {
+  --border-color: rgba(255, 255, 255, 0.15);
+  --background: rgba(255, 255, 255, 0.03);
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  
+  /* Lighter background for inputs in dark mode to improve focus and contrast */
+  &.item-has-focus {
+    --background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Elegant Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--ion-color-primary-rgb), 0.2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--ion-color-primary-rgb), 0.4);
+}

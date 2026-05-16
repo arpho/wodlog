@@ -8,7 +8,7 @@
   font-size: 14px;
   margin-top: 10px;
   word-wrap: break-word;
-  background-color: #f4f5f8;
+  background-color: transparent;
 
 // Fixed Header
   position: sticky;
@@ -22,4 +22,5 @@
 }
 ion-item{
   width: 100%;
+  --background: transparent;
 }

@@ -1,35 +1,61 @@
+ion-content {
+  --background: transparent;
+}
+
 .profile-container {
+  padding: 16px;
   max-width: 600px;
   margin: 0 auto;
 }
 
-.profile-list {
-  background: transparent;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
+.glass-panel {
+  padding: 24px;
+  margin-bottom: 24px;
 
-ion-item {
-  --padding-start: 16px;
-  --inner-padding-end: 16px;
-  margin-bottom: 4px;
+  ion-list {
+    background: transparent;
+    padding: 0;
+  }
+
+  ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin-bottom: 12px;
+    
+    ion-label {
+      font-weight: 600;
+      color: var(--ion-color-primary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    ion-input, ion-select {
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  }
 }
 
 .save-button {
+  margin-top: 16px;
   --border-radius: 12px;
-  height: 50px;
-  font-weight: 600;
-  margin-top: 20px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 15px rgba(var(--ion-color-primary-rgb), 0.3);
 }
 
-ion-grid {
-  ion-col {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  
-  ion-item {
-    margin-bottom: 0;
+ion-list-header {
+  padding-left: 0;
+  margin-bottom: 16px;
+  ion-label {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--ion-text-color);
   }
 }
