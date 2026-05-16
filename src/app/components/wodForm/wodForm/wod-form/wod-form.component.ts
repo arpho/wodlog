@@ -32,9 +32,12 @@ import {
   ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, checkmarkOutline } from 'ionicons/icons';
+import { saveOutline, add, checkmarkOutline, camera } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ExerciseModalComponent } from '../../../../components/exerciseModal/exercise-modal/exercise-modal.component';
+import { inject } from '@angular/core';
+import { Functions, httpsCallable } from '@angular/fire/functions';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-wod-form',
@@ -116,10 +119,66 @@ export class WodFormComponent implements OnInit, OnChanges {
     }
   }
   index: any;
+  private functions = inject(Functions);
+  
   constructor(
     private modalCtrl: ModalController
   ) {
-    addIcons({ add, checkmarkOutline, saveOutline });
+    addIcons({ add, checkmarkOutline, saveOutline, camera });
+  }
+
+  async scanForce() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Prompt
+      });
+
+      if (image.base64String) {
+        const analyzeFunction = httpsCallable(this.functions, 'analyzeForceImage');
+        console.log("Analisi Forza in corso...");
+        const result = await analyzeFunction({
+          imageBufferBase64: image.base64String,
+          mimeType: `image/${image.format}`
+        });
+
+        const newForceLines = result.data as string[];
+        const currentForce = this.force() || [];
+        this.force.set([...currentForce, ...newForceLines]);
+        console.log("Forza aggiornata:", this.force());
+      }
+    } catch (error) {
+      console.error("Errore durante la scansione della forza:", error);
+    }
+  }
+
+  async scanWod() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Prompt
+      });
+
+      if (image.base64String) {
+        const analyzeFunction = httpsCallable(this.functions, 'analyzeWodImage');
+        console.log("Analisi WOD in corso...");
+        const result = await analyzeFunction({
+          imageBufferBase64: image.base64String,
+          mimeType: `image/${image.format}`
+        });
+
+        const newWodLines = result.data as string[];
+        const currentWod = this.wod() || [];
+        this.wod.set([...currentWod, ...newWodLines]);
+        console.log("WOD aggiornato:", this.wod());
+      }
+    } catch (error) {
+      console.error("Errore durante la scansione del WOD:", error);
+    }
   }
   async editWod(_t38: string, index: number) {
     console.log("editing", _t38)

@@ -97,18 +97,24 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-fab>
-        <ion-fab-button size="small"  color="light" (click)="addForce()" >
+      <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+        <ion-fab-button size="small" color="light" (click)="addForce()" >
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
-      </ion-fab>
+        <ion-fab-button size="small" color="tertiary" (click)="scanForce()" >
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </div>
     </ion-col>
     <ion-col>
-      <ion-fab>
-        <ion-fab-button size="small"  color="light" (click)="addActivity()" >
+      <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+        <ion-fab-button size="small" color="light" (click)="addActivity()" >
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
-      </ion-fab>
+        <ion-fab-button size="small" color="tertiary" (click)="scanWod()" >
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </div>
     </ion-col>
   </ion-row>
 </ion-grid>
