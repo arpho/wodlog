@@ -1,8 +1,8 @@
+import { UserMenuComponent } from '../../../../components/userMenu/user-menu.component';
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
+import { IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
@@ -15,7 +15,7 @@ import {
   IonFabButton,
   IonIcon,
    IonBreadcrumb,
-  IonThumbnail, IonImg } from '@ionic/angular/standalone';
+  IonThumbnail, IonImg, IonButtons } from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
@@ -31,7 +31,7 @@ import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
   templateUrl: './list-wod.page.html',
   styleUrls: ['./list-wod.page.scss'],
   standalone: true,
-  imports: [IonImg, IonBreadcrumb,
+  imports: [IonButtons, UserMenuComponent, IonImg, IonBreadcrumb,
     IonIcon,
     IonFabButton,
     IonFab,

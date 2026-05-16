@@ -1,13 +1,12 @@
+import { UserMenuComponent } from '../../../../components/userMenu/user-menu.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
+import { IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  ToastController,
-} from '@ionic/angular/standalone';
+  ToastController, IonButtons } from '@ionic/angular/standalone';
 import { WodFormComponent } from '../../../../components/wodForm/wodForm/wod-form/wod-form.component';
 import { WodModel } from 'src/app/models/wod';
 import { WodService } from 'src/app/services/wod/wod.service';
@@ -18,7 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-wod.page.html',
   styleUrls: ['./create-wod.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButtons, UserMenuComponent, 
     IonContent,
     IonHeader,
     IonTitle,

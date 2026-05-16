@@ -5,3 +5,7 @@ ion-row{
   display: flex;
   flex-direction: row;
 }
+
+ion-item {
+  --background: transparent;
+}

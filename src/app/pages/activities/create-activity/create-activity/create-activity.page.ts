@@ -1,7 +1,8 @@
+import { UserMenuComponent } from '../../../../components/userMenu/user-menu.component';
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, ToastController, IonButtons } from '@ionic/angular/standalone';
 import { ActivityFormComponent } from "../../../../components/activityForm/activity-form/activity-form.component";
 import { ActivityModel } from 'src/app/models/activityModel';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-activity.page.html',
   styleUrls: ['./create-activity.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ActivityFormComponent]
+  imports: [IonButtons, UserMenuComponent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ActivityFormComponent]
 })
 export class CreateActivityPage implements OnInit {
   async createActivity(activity: ActivityModel) {

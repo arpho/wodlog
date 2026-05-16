@@ -1,8 +1,9 @@
+import { UserMenuComponent } from '../../../components/userMenu/user-menu.component';
 import { alert } from 'ionicons/icons';
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar,ToastController,AlertController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,ToastController,AlertController, IonButtons } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -17,7 +18,7 @@ import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
   templateUrl: './edit-activity.page.html',
   styleUrls: ['./edit-activity.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButtons, UserMenuComponent, 
     IonContent,
      IonHeader,
      IonTitle,

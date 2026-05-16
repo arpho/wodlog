@@ -10,14 +10,16 @@ import {
   IonItem,
   IonLabel,
   IonAvatar,
-  IonText
+  IonText,
+  IonThumbnail
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   personCircleOutline,
   logOutOutline,
   personOutline,
-  listOutline
+  listOutline,
+  settingsOutline
 } from 'ionicons/icons';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserModel } from 'src/app/models/userModel';
@@ -45,6 +47,7 @@ import { Md5 } from 'ts-md5';
   ]
 })
 export class UserMenuComponent implements OnInit {
+  public triggerId = 'user-menu-trigger-' + Math.random().toString(36).substring(2, 9);
   private usersService = inject(UsersService);
   private router = inject(Router);
 
@@ -56,7 +59,8 @@ export class UserMenuComponent implements OnInit {
       personCircleOutline,
       logOutOutline,
       personOutline,
-      listOutline
+      listOutline,
+      settingsOutline
     });
   }
 
@@ -77,6 +81,10 @@ export class UserMenuComponent implements OnInit {
 
   openChangelog() {
     this.router.navigate(['/changelog']);
+  }
+
+  openSettings() {
+    this.router.navigate(['/settings']);
   }
 
   openPrList() {

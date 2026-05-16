@@ -1,3 +1,4 @@
+import { UserMenuComponent } from '../../../components/userMenu/user-menu.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,7 @@ import { FilterPipe } from 'src/app/components/pipes/customFilter/filterPipe.pip
   templateUrl: './pr-list.page.html',
   styleUrls: ['./pr-list.page.scss'],
   standalone: true,
-  imports: [IonButton,
+  imports: [UserMenuComponent, IonButton,
     IonButtons,
     IonContent,
     IonHeader,

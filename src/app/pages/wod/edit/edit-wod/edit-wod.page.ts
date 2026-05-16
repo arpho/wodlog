@@ -1,3 +1,4 @@
+import { UserMenuComponent } from '../../../../components/userMenu/user-menu.component';
 import { alert } from 'ionicons/icons';
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,7 +27,7 @@ import { UserModel } from 'src/app/models/userModel';
   templateUrl: './edit-wod.page.html',
   styleUrls: ['./edit-wod.page.scss'],
   standalone: true,
-  imports: [IonButtons,
+  imports: [UserMenuComponent, IonButtons,
     IonButton,
     IonContent,
     IonHeader,

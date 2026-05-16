@@ -1,3 +1,4 @@
+import { UserMenuComponent } from '../../components/userMenu/user-menu.component';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +31,7 @@ import { ActivityModel } from 'src/app/models/activityModel';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [
+  imports: [UserMenuComponent, 
     IonContent, 
     IonHeader, 
     IonTitle, 
