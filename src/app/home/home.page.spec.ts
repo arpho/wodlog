@@ -1,39 +1,39 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PrListPage } from './pr-list.page';
-import { UsersService } from 'src/app/services/users/users.service';
-import { ThemeService } from 'src/app/services/theme/theme.service';
-import { ActivityService } from 'src/app/services/activity/activity.service';
+import { HomePage } from './home.page';
+import { UsersService } from '../services/users/users.service';
+import { ActivityService } from '../services/activity/activity.service';
+import { ThemeService } from '../services/theme/theme.service';
 import { Router } from '@angular/router';
 import { signal } from '@angular/core';
 
-describe('PrListPage', () => {
-  let component: PrListPage;
-  let fixture: ComponentFixture<PrListPage>;
+describe('HomePage', () => {
+  let component: HomePage;
+  let fixture: ComponentFixture<HomePage>;
   let mockUsersService: any;
-  let mockThemeService: any;
   let mockActivityService: any;
+  let mockThemeService: any;
 
   beforeEach(async () => {
     mockUsersService = jasmine.createSpyObj('UsersService', ['getLoggedUser']);
-    mockUsersService.getLoggedUser.and.returnValue(Promise.resolve({ key: 'test', name: 'Test User' }));
+    mockUsersService.getLoggedUser.and.returnValue(Promise.resolve({ key: 'test', firstName: 'Test', lastName: 'User' }));
 
+    mockActivityService = jasmine.createSpyObj('ActivityService', ['realtimeFetchAllActivities']);
+    
     mockThemeService = jasmine.createSpyObj('ThemeService', [], {
       currentTheme: signal('system')
     });
 
-    mockActivityService = jasmine.createSpyObj('ActivityService', ['realtimeFetchAllActivities']);
-
     await TestBed.configureTestingModule({
-      imports: [PrListPage],
+      imports: [HomePage],
       providers: [
         { provide: UsersService, useValue: mockUsersService },
-        { provide: ThemeService, useValue: mockThemeService },
         { provide: ActivityService, useValue: mockActivityService },
+        { provide: ThemeService, useValue: mockThemeService },
         { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PrListPage);
+    fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

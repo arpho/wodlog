@@ -94,12 +94,13 @@ ion-item {
 
 /* Enhanced Input Visibility */
 ion-input, ion-textarea, ion-select {
-  --color: var(--ion-text-color);
-  --placeholder-color: rgba(var(--ion-text-color-rgb), 0.5);
+  --color: var(--ion-text-color) !important;
+  color: var(--ion-text-color) !important;
+  --placeholder-color: rgba(var(--ion-text-color-rgb), 0.5) !important;
 }
 
 ion-label {
-  color: var(--ion-text-color);
+  color: var(--ion-text-color) !important;
   opacity: 0.9;
   font-weight: 600;
 }

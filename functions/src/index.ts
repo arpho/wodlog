@@ -3,14 +3,14 @@ import * as logger from "firebase-functions/logger";
 
 // Import Genkit core and plugins.
 import { genkit, z } from "genkit";
-import { googleAI, gemini15Flash } from "@genkit-ai/googleai";
+import { googleAI, gemini } from "@genkit-ai/googleai";
 
 // Initialize Genkit
 const ai = genkit({
   plugins: [
     googleAI(),
   ],
-  model: gemini15Flash,
+  model: gemini('gemini-2.5-flash'),
 });
 
 // Input Schema condiviso per le immagini
@@ -45,7 +45,7 @@ export const analyzeForceImageFlow = ai.defineFlow(
     const base64Data = extractBase64(input.imageBufferBase64);
     
     const response = await ai.generate({
-      model: gemini15Flash,
+      model: gemini('gemini-2.5-flash'),
       prompt: [
         { text: "Analizza questa immagine della lavagna di un allenamento CrossFit. Estrai SOLO la parte relativa alla 'Forza', pesistica, tecnica o sollevamento (es. Squat, Deadlift, Snatch, Clean & Jerk, skill work). Trascrivi ogni singola riga di testo di questa sezione esattamente come la leggi e restituiscila come elemento di un array. Ignora qualsiasi parte relativa al riscaldamento generico o al WOD finale (condizionamento metabolico). Se nell'immagine non c'è una parte di forza, restituisci un array vuoto." },
         { media: { url: `data:${input.mimeType};base64,${base64Data}` } }
@@ -71,7 +71,7 @@ export const analyzeWodImageFlow = ai.defineFlow(
     const base64Data = extractBase64(input.imageBufferBase64);
     
     const response = await ai.generate({
-      model: gemini15Flash,
+      model: gemini('gemini-2.5-flash'),
       prompt: [
         { text: "Analizza questa immagine della lavagna di un allenamento CrossFit. Estrai SOLO la parte finale relativa al 'WOD', circuito, AMRAP, EMOM, For Time o condizionamento metabolico. Trascrivi ogni singola riga di testo di questa sezione esattamente come la leggi e restituiscila come elemento di un array. Ignora qualsiasi parte relativa al riscaldamento iniziale, alla mobilità o all'allenamento di forza/pesistica pura. Se nell'immagine non c'è un WOD, restituisci un array vuoto." },
         { media: { url: `data:${input.mimeType};base64,${base64Data}` } }

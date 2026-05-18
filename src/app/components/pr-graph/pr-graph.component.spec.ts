@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { PrGraphComponent } from './pr-graph.component';
 
 describe('PrGraphComponent', () => {
@@ -13,6 +12,7 @@ describe('PrGraphComponent', () => {
 
     fixture = TestBed.createComponent(PrGraphComponent);
     component = fixture.componentInstance;
+    component.prList = []; // Initialize required input
     fixture.detectChanges();
   }));
 

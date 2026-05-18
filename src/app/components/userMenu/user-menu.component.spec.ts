@@ -3,7 +3,7 @@ import { UserMenuComponent } from './user-menu.component';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/userModel';
-import { signal } from '@angular/core';
+import { provideIonicAngular } from '@ionic/angular/standalone';
 
 describe('UserMenuComponent', () => {
   let component: UserMenuComponent;
@@ -21,7 +21,8 @@ describe('UserMenuComponent', () => {
       imports: [UserMenuComponent],
       providers: [
         { provide: UsersService, useValue: mockUsersService },
-        { provide: Router, useValue: mockRouter }
+        { provide: Router, useValue: mockRouter },
+        provideIonicAngular()
       ]
     }).compileComponents();
 

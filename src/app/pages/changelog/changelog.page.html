@@ -9,9 +9,40 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">changelog</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="changelog-container">
+    <ion-card class="glass-card animate-in">
+      <ion-card-header>
+        <ion-card-subtitle>Maggio 2026</ion-card-subtitle>
+        <ion-card-title>Midnight Ocean Update</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="change-item">
+          <ion-badge color="primary">Design</ion-badge>
+          <p>Restyling completo con estetica <strong>Midnight Ocean</strong>. Nuova palette colori premium, effetti glassmorphism e tipografia migliorata.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p>Implementato <strong>Theme Switcher</strong> dinamico (Chiaro/Scuro) con persistenza automatica.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="tertiary">UX</ion-badge>
+          <p>Integrazione globale del <strong>User Menu</strong> con ID dinamici per una navigazione più fluida e priva di bug.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="warning">Fix</ion-badge>
+          <p>Ripristinata interamente la suite di <strong>Test Unitari</strong> (34/34 SUCCESS). Corretti bug strutturali nei componenti standalone e aggiunti mock completi per Firebase e i servizi core.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="glass-card animate-in" style="--animation-delay: 0.1s">
+      <ion-card-header>
+        <ion-card-subtitle>Version 1.0.0</ion-card-subtitle>
+        <ion-card-title>Initial Release</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Lancio ufficiale di WodLog: gestione workout, massimali e statistiche.</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

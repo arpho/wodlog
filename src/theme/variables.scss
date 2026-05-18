@@ -87,6 +87,13 @@ body {
   --ion-text-color-rgb: 15, 23, 42;
 }
 
+.ion-palette-dark body {
+  --ion-background-color: #0b1120;
+  --ion-background-color-rgb: 11, 17, 32;
+  --ion-text-color: #f1f5f9;
+  --ion-text-color-rgb: 241, 245, 249;
+}
+
 /** Dark Mode Classes **/
 .ion-palette-dark {
   --ion-color-primary: #3b82f6;
