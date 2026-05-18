@@ -22,7 +22,9 @@ import {
   IonCol,
   IonList,
   ModalController,
-  IonItem, IonFabButton
+  IonItem, IonFabButton,
+  LoadingController,
+  AlertController
 } from '@ionic/angular/standalone';
 import {
   InputChangeEventDetail,
@@ -122,12 +124,15 @@ export class WodFormComponent implements OnInit, OnChanges {
   private functions = inject(Functions);
   
   constructor(
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {
     addIcons({ add, checkmarkOutline, saveOutline, camera });
   }
 
   async scanForce() {
+    let loading: any;
     try {
       const image = await Camera.getPhoto({
         quality: 80,
@@ -137,6 +142,13 @@ export class WodFormComponent implements OnInit, OnChanges {
       });
 
       if (image.base64String) {
+        loading = await this.loadingCtrl.create({
+          message: 'Analisi Forza in corso con Genkit...',
+          spinner: 'crescent',
+          translucent: true
+        });
+        await loading.present();
+
         const analyzeFunction = httpsCallable(this.functions, 'analyzeForceImage');
         console.log("Analisi Forza in corso...");
         const result = await analyzeFunction({
@@ -148,13 +160,39 @@ export class WodFormComponent implements OnInit, OnChanges {
         const currentForce = this.force() || [];
         this.force.set([...currentForce, ...newForceLines]);
         console.log("Forza aggiornata:", this.force());
+
+        await loading.dismiss();
+        loading = null;
+
+        const alertMessage = newForceLines.length > 0 
+          ? `Esercizi di forza inseriti con successo:\n${newForceLines.map(item => `• ${item}`).join('\n')}`
+          : 'Non è stato possibile identificare alcun esercizio di forza dall\'immagine.';
+        
+        const alert = await this.alertCtrl.create({
+          header: 'Forza Rilevata!',
+          message: alertMessage,
+          buttons: ['Ottimo']
+        });
+        await alert.present();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Errore durante la scansione della forza:", error);
+      if (loading) {
+        await loading.dismiss();
+      }
+      if (error?.message !== 'User cancelled photos app' && error !== 'User cancelled photos app') {
+        const alert = await this.alertCtrl.create({
+          header: 'Errore Scansione',
+          message: 'Si è verificato un errore durante l\'analisi dell\'immagine della forza. Riprova.',
+          buttons: ['Chiudi']
+        });
+        await alert.present();
+      }
     }
   }
 
   async scanWod() {
+    let loading: any;
     try {
       const image = await Camera.getPhoto({
         quality: 80,
@@ -164,6 +202,13 @@ export class WodFormComponent implements OnInit, OnChanges {
       });
 
       if (image.base64String) {
+        loading = await this.loadingCtrl.create({
+          message: 'Analisi WOD in corso con Genkit...',
+          spinner: 'crescent',
+          translucent: true
+        });
+        await loading.present();
+
         const analyzeFunction = httpsCallable(this.functions, 'analyzeWodImage');
         console.log("Analisi WOD in corso...");
         const result = await analyzeFunction({
@@ -175,9 +220,34 @@ export class WodFormComponent implements OnInit, OnChanges {
         const currentWod = this.wod() || [];
         this.wod.set([...currentWod, ...newWodLines]);
         console.log("WOD aggiornato:", this.wod());
+
+        await loading.dismiss();
+        loading = null;
+
+        const alertMessage = newWodLines.length > 0 
+          ? `Esercizi del WOD inseriti con successo:\n${newWodLines.map(item => `• ${item}`).join('\n')}`
+          : 'Non è stato possibile identificare alcun esercizio del WOD dall\'immagine.';
+        
+        const alert = await this.alertCtrl.create({
+          header: 'WOD Rilevato!',
+          message: alertMessage,
+          buttons: ['Ottimo']
+        });
+        await alert.present();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Errore durante la scansione del WOD:", error);
+      if (loading) {
+        await loading.dismiss();
+      }
+      if (error?.message !== 'User cancelled photos app' && error !== 'User cancelled photos app') {
+        const alert = await this.alertCtrl.create({
+          header: 'Errore Scansione',
+          message: 'Si è verificato un errore durante l\'analisi dell\'immagine del WOD. Riprova.',
+          buttons: ['Chiudi']
+        });
+        await alert.present();
+      }
     }
   }
   async editWod(_t38: string, index: number) {
