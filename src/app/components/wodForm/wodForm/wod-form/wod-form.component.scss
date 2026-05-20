@@ -18,3 +18,19 @@ flex-direction: column;
 .isABenchmark {background-color: aliceblue;
   width: fit-content;
 }
+
+.ai-camera-icon {
+  font-size: 24px;
+  animation: float-ai 3s infinite ease-in-out;
+}
+
+@keyframes float-ai {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-2px) scale(1.05);
+    opacity: 1;
+  }
+}

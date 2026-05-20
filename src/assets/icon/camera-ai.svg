@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Camera Body -->
+  <path d="M432 144h-59.33L357 96H155L139.33 144H80a48 48 0 00-48 48v224a48 48 0 0048 48h352a48 48 0 0048-48V192a48 48 0 00-48-48zM256 392a96 96 0 1 1 96-96 96.11 96.11 0 0 1-96 96zm112-184a16 16 0 1 1 16-16 16 16 0 0 1-16 16z" fill="currentColor"/>
+  <circle cx="256" cy="296" r="64" fill="currentColor"/>
+  
+  <!-- AI Sparkle 1 (Large, top-right) -->
+  <path d="M430 50c0-20 15-35 35-35c-20 0-35-15-35-35c0 20-15 35-35 35c20 0 35 15 35 35z" fill="#ffca28"/>
+  <!-- AI Sparkle 2 (Medium, slightly lower-left) -->
+  <path d="M360 80c0-12 9-21 21-21c-12 0-21-9-21-21c0 12-9 21-21 21c12 0 21 9 21 21z" fill="#ffca28"/>
+</svg>
