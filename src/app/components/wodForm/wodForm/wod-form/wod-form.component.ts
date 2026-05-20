@@ -24,7 +24,8 @@ import {
   ModalController,
   IonItem, IonFabButton,
   LoadingController,
-  AlertController
+  AlertController,
+  ToastController
 } from '@ionic/angular/standalone';
 import {
   InputChangeEventDetail,
@@ -34,7 +35,7 @@ import {
   ToggleChangeEventDetail,
 } from '@ionic/core';
 import { addIcons } from 'ionicons';
-import { saveOutline, add, checkmarkOutline, camera } from 'ionicons/icons';
+import { saveOutline, add, checkmarkOutline, camera, sparkles } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ExerciseModalComponent } from '../../../../components/exerciseModal/exercise-modal/exercise-modal.component';
 import { inject } from '@angular/core';
@@ -126,9 +127,10 @@ export class WodFormComponent implements OnInit, OnChanges {
   constructor(
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) {
-    addIcons({ add, checkmarkOutline, saveOutline, camera });
+    addIcons({ add, checkmarkOutline, saveOutline, camera, sparkles });
   }
 
   async scanForce() {
@@ -143,18 +145,24 @@ export class WodFormComponent implements OnInit, OnChanges {
 
       if (image.base64String) {
         loading = await this.loadingCtrl.create({
-          message: 'Analisi Forza in corso con Genkit...',
+          message: 'Elaborazione immagine...',
           spinner: 'crescent',
           translucent: true
         });
         await loading.present();
 
+        // 1. Invio a Genkit
+        loading.message = 'Analisi della lavagna con Genkit AI...';
         const analyzeFunction = httpsCallable(this.functions, 'analyzeForceImage');
         console.log("Analisi Forza in corso...");
         const result = await analyzeFunction({
           imageBufferBase64: image.base64String,
           mimeType: `image/${image.format}`
         });
+
+        // 2. Elaborazione dei risultati
+        loading.message = 'Elaborazione esercizi della Forza...';
+        await new Promise(resolve => setTimeout(resolve, 500)); // Breve pausa per fluidità visiva
 
         const newForceLines = result.data as string[];
         const currentForce = this.force() || [];
@@ -164,16 +172,15 @@ export class WodFormComponent implements OnInit, OnChanges {
         await loading.dismiss();
         loading = null;
 
-        const alertMessage = newForceLines.length > 0 
-          ? `Esercizi di forza inseriti con successo:\n${newForceLines.map(item => `• ${item}`).join('\n')}`
-          : 'Non è stato possibile identificare alcun esercizio di forza dall\'immagine.';
-        
-        const alert = await this.alertCtrl.create({
-          header: 'Forza Rilevata!',
-          message: alertMessage,
-          buttons: ['Ottimo']
+        const toast = await this.toastCtrl.create({
+          message: newForceLines.length > 0 
+            ? `Rilevati ed inseriti ${newForceLines.length} esercizi di Forza!`
+            : 'Non è stato possibile identificare alcun esercizio di Forza dall\'immagine.',
+          duration: 3500,
+          color: newForceLines.length > 0 ? 'success' : 'warning',
+          position: 'bottom'
         });
-        await alert.present();
+        await toast.present();
       }
     } catch (error: any) {
       console.error("Errore durante la scansione della forza:", error);
@@ -181,12 +188,13 @@ export class WodFormComponent implements OnInit, OnChanges {
         await loading.dismiss();
       }
       if (error?.message !== 'User cancelled photos app' && error !== 'User cancelled photos app') {
-        const alert = await this.alertCtrl.create({
-          header: 'Errore Scansione',
-          message: 'Si è verificato un errore durante l\'analisi dell\'immagine della forza. Riprova.',
-          buttons: ['Chiudi']
+        const toast = await this.toastCtrl.create({
+          message: 'Errore durante l\'analisi dell\'immagine della forza. Riprova.',
+          duration: 3500,
+          color: 'danger',
+          position: 'bottom'
         });
-        await alert.present();
+        await toast.present();
       }
     }
   }
@@ -203,18 +211,24 @@ export class WodFormComponent implements OnInit, OnChanges {
 
       if (image.base64String) {
         loading = await this.loadingCtrl.create({
-          message: 'Analisi WOD in corso con Genkit...',
+          message: 'Elaborazione immagine...',
           spinner: 'crescent',
           translucent: true
         });
         await loading.present();
 
+        // 1. Invio a Genkit
+        loading.message = 'Analisi del circuito con Genkit AI...';
         const analyzeFunction = httpsCallable(this.functions, 'analyzeWodImage');
         console.log("Analisi WOD in corso...");
         const result = await analyzeFunction({
           imageBufferBase64: image.base64String,
           mimeType: `image/${image.format}`
         });
+
+        // 2. Elaborazione dei risultati
+        loading.message = 'Elaborazione esercizi del WOD...';
+        await new Promise(resolve => setTimeout(resolve, 500)); // Breve pausa per fluidità visiva
 
         const newWodLines = result.data as string[];
         const currentWod = this.wod() || [];
@@ -224,16 +238,15 @@ export class WodFormComponent implements OnInit, OnChanges {
         await loading.dismiss();
         loading = null;
 
-        const alertMessage = newWodLines.length > 0 
-          ? `Esercizi del WOD inseriti con successo:\n${newWodLines.map(item => `• ${item}`).join('\n')}`
-          : 'Non è stato possibile identificare alcun esercizio del WOD dall\'immagine.';
-        
-        const alert = await this.alertCtrl.create({
-          header: 'WOD Rilevato!',
-          message: alertMessage,
-          buttons: ['Ottimo']
+        const toast = await this.toastCtrl.create({
+          message: newWodLines.length > 0 
+            ? `Rilevati ed inseriti ${newWodLines.length} esercizi del WOD!`
+            : 'Non è stato possibile identificare alcun esercizio del WOD dall\'immagine.',
+          duration: 3500,
+          color: newWodLines.length > 0 ? 'success' : 'warning',
+          position: 'bottom'
         });
-        await alert.present();
+        await toast.present();
       }
     } catch (error: any) {
       console.error("Errore durante la scansione del WOD:", error);
@@ -241,12 +254,13 @@ export class WodFormComponent implements OnInit, OnChanges {
         await loading.dismiss();
       }
       if (error?.message !== 'User cancelled photos app' && error !== 'User cancelled photos app') {
-        const alert = await this.alertCtrl.create({
-          header: 'Errore Scansione',
-          message: 'Si è verificato un errore durante l\'analisi dell\'immagine del WOD. Riprova.',
-          buttons: ['Chiudi']
+        const toast = await this.toastCtrl.create({
+          message: 'Errore durante l\'analisi dell\'immagine del WOD. Riprova.',
+          duration: 3500,
+          color: 'danger',
+          position: 'bottom'
         });
-        await alert.present();
+        await toast.present();
       }
     }
   }
