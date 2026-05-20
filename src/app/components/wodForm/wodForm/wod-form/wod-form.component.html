@@ -41,44 +41,41 @@
 
 </div>
 <ion-grid>
-
-
   <ion-row>
-    <ion-col><h2>forza</h2>
-
-    </ion-col>
-    <ion-col><h2>wod</h2></ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
+    <!-- COLONNA FORZA -->
+    <ion-col size="12" size-md="6">
+      <h2 class="ion-text-center">forza</h2>
+      
       <ion-list>
-
         <ion-item>
-
-
           <ion-input
             type="text"
             label="esercizio di forza"
             (ionChange)="updateForce($event)"
             [value]="force2Input"
             labelPlacement="floating"
-          >
-
-          </ion-input
-        >
-
-
-
-      </ion-item>
-
-        @for(item of force(); track item;let index =$index){
-
-        <ion-item (click)="editForce(item,index)">{{ item }}</ion-item>
+          ></ion-input>
+        </ion-item>
+        
+        @for(item of force(); track item; let index = $index) {
+          <ion-item (click)="editForce(item, index)">{{ item }}</ion-item>
         }
-
       </ion-list>
+      
+      <div style="display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 15px; margin-bottom: 25px;">
+        <ion-fab-button size="small" color="light" (click)="addForce()" >
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button size="small" color="tertiary" (click)="scanForce()" >
+          <ion-icon src="assets/icon/camera-ai.svg" class="ai-camera-icon"></ion-icon>
+        </ion-fab-button>
+      </div>
     </ion-col>
-    <ion-col>
+
+    <!-- COLONNA WOD -->
+    <ion-col size="12" size-md="6">
+      <h2 class="ion-text-center">wod</h2>
+      
       <ion-list>
         <ion-item>
           <ion-input
@@ -87,32 +84,20 @@
             (ionChange)="updateWod($event)"
             [value]="wod2Input()"
             labelPlacement="floating"
-          ></ion-input
-        ></ion-item>
-        @for(item of wod(); track item; let index=$index){
-        <ion-item (click)="editWod(item,index)">{{ item }}</ion-item>
+          ></ion-input>
+        </ion-item>
+        
+        @for(item of wod(); track item; let index = $index) {
+          <ion-item (click)="editWod(item, index)">{{ item }}</ion-item>
         }
       </ion-list>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-        <ion-fab-button size="small" color="light" (click)="addForce()" >
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button size="small" color="tertiary" (click)="scanForce()" >
-          <ion-icon name="camera"></ion-icon>
-        </ion-fab-button>
-      </div>
-    </ion-col>
-    <ion-col>
-      <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+      
+      <div style="display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 15px; margin-bottom: 25px;">
         <ion-fab-button size="small" color="light" (click)="addActivity()" >
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-button size="small" color="tertiary" (click)="scanWod()" >
-          <ion-icon name="camera"></ion-icon>
+          <ion-icon src="assets/icon/camera-ai.svg" class="ai-camera-icon"></ion-icon>
         </ion-fab-button>
       </div>
     </ion-col>
