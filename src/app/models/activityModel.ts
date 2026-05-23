@@ -46,6 +46,10 @@ this.prList = this.prList?.map((pr)=>{
 
 return this.unity==" sec " ? this.getMax4Sec() : this.getMax4Kg();
   }
+  getLastPr(){
+    if (!this.prList || this.prList.length === 0) return null;
+    return [...this.prList].sort((a, b) => b.date - a.date)[0];
+  }
   serialize(){
     return {
       key: this.id,

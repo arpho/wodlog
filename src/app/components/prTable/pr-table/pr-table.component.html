@@ -25,11 +25,33 @@
 
             <ion-item class="pr">
               {{showPr(pr)}}
-            <ion-col > <strong>{{pr.descrizione}}</strong></ion-col>
-            <ion-col >{{pr.getMaxPr().getDate()}}</ion-col>
-            <ion-col >{{pr.getMaxPr().prestazione|prestazione:pr.unity}}</ion-col>
+            <ion-col>
+              <strong>{{pr.descrizione}}</strong>
+            </ion-col>
+            <ion-col>
+              <div class="best-date" style="font-weight: 500;">
+                {{pr.getMaxPr().getDate()}}
+              </div>
+              @if (pr.getLastPr()) {
+                <div class="last-date" style="opacity: 0.65; font-size: 0.85em; margin-top: 4px;">
+                  {{pr.getLastPr().getDate()}}
+                </div>
+              }
+            </ion-col>
+            <ion-col>
+              <div class="best-value" style="font-weight: 600; display: flex; align-items: center;">
+                <span style="font-size: 0.9em; margin-right: 4px;" title="Migliore (PR)">🏆</span>
+                {{pr.getMaxPr().prestazione|prestazione:pr.unity}}
+              </div>
+              @if (pr.getLastPr()) {
+                <div class="last-value" style="opacity: 0.65; font-size: 0.85em; margin-top: 4px; display: flex; align-items: center;">
+                  <span style="font-size: 0.9em; margin-right: 4px;" title="Ultimo Risultato">⏱️</span>
+                  {{pr.getLastPr().prestazione|prestazione:pr.unity}}
+                </div>
+              }
+            </ion-col>
 
-            <ion-col><ion-button color="light" size="small" shape="round" (click)="openActions(pr)"><ion-icon name=ellipsis-horizontal></ion-icon></ion-button></ion-col>
+            <ion-col><ion-button color="light" size="small" shape="round" (click)="openActions(pr)"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></ion-col>
 
             </ion-item>
           </ion-row>
