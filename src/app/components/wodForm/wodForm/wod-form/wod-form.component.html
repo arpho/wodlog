@@ -57,9 +57,14 @@
           ></ion-input>
         </ion-item>
         
-        @for(item of force(); track item; let index = $index) {
-          <ion-item (click)="editForce(item, index)">{{ item }}</ion-item>
-        }
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorderForce($event)">
+          @for(item of force(); track item; let index = $index) {
+            <ion-item>
+              <ion-label (click)="editForce(item, index)">{{ item }}</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+          }
+        </ion-reorder-group>
       </ion-list>
       
       <div style="display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 15px; margin-bottom: 25px;">
@@ -87,9 +92,14 @@
           ></ion-input>
         </ion-item>
         
-        @for(item of wod(); track item; let index = $index) {
-          <ion-item (click)="editWod(item, index)">{{ item }}</ion-item>
-        }
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorderWod($event)">
+          @for(item of wod(); track item; let index = $index) {
+            <ion-item>
+              <ion-label (click)="editWod(item, index)">{{ item }}</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+          }
+        </ion-reorder-group>
       </ion-list>
       
       <div style="display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 15px; margin-bottom: 25px;">

@@ -1,4 +1,4 @@
-import { IonFab, IonToggle, } from '@ionic/angular/standalone';
+import { IonFab, IonToggle, IonReorderGroup, IonReorder, IonLabel } from '@ionic/angular/standalone';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -59,12 +59,32 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
     IonInput,
     CommonModule,
     IonDatetime,
-    IonFab
+    IonFab,
+    IonReorderGroup,
+    IonReorder,
+    IonLabel
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WodFormComponent implements OnInit, OnChanges {
-  test = false
+  test = false;
+
+  handleReorderForce(ev: any) {
+    const currentForce = [...this.force()];
+    const draggedItem = currentForce.splice(ev.detail.from, 1)[0];
+    currentForce.splice(ev.detail.to, 0, draggedItem);
+    this.force.set(currentForce);
+    ev.detail.complete();
+  }
+
+  handleReorderWod(ev: any) {
+    const currentWod = [...this.wod()];
+    const draggedItem = currentWod.splice(ev.detail.from, 1)[0];
+    currentWod.splice(ev.detail.to, 0, draggedItem);
+    this.wod.set(currentWod);
+    ev.detail.complete();
+  }
+
   updateHero(event: any) {
     console.log("hero", event.detail.checked);
     this.hero.set(event.detail.checked)
