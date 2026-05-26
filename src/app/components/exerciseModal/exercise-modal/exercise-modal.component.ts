@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -37,7 +37,7 @@ import { closeOutline, saveOutline, trashOutline } from 'ionicons/icons';
     IonIcon
   ]
 })
-export class ExerciseModalComponent implements OnInit {
+export class ExerciseModalComponent {
   @Input() title: string = 'Esercizio';
   @Input() exerciseName: string = '';
   @Input() isEditing: boolean = false;
@@ -46,7 +46,7 @@ export class ExerciseModalComponent implements OnInit {
     addIcons({ closeOutline, saveOutline, trashOutline });
   }
 
-  ngOnInit() { }
+
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');

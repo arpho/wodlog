@@ -25,6 +25,7 @@ import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
 import { UsersService } from 'src/app/services/users/users.service';
 import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
+import { UserModel } from 'src/app/models/userModel';
 
 @Component({
   selector: 'app-list-wod',
@@ -53,8 +54,7 @@ import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
 ],
 })
 export class ListWodPage implements OnInit {
-[x: string]: any;
-user: any;
+  user!: UserModel;
 
   sorter = (a: WodModel, b: WodModel) => {
     return b.date -  a.date; //a.date - b.date;
@@ -86,7 +86,7 @@ title="";
   async ngOnInit() {
     console.log("loading wods")
     this.user = await this.users.getLoggedUser()
-    this.title = `pr di ${this.user.name}`
+    this.title = `pr di ${this.user.firstName}`
     console.log("user",this.user);
     const callback = (data: { wods: WodModel[]; total: number }) => {
       console.log('data', data);

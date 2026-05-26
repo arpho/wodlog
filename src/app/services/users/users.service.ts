@@ -1,69 +1,61 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, signInAnonymously, signOut, GoogleAuthProvider, signInWithPopup, getAuth } from '@angular/fire/auth';
+import { Auth, getAuth } from '@angular/fire/auth';
 import { AuthService } from '../auth/auth.service';
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, get, ref, set } from "firebase/database";
 import { UserModel } from 'src/app/models/userModel';
+import { firstValueFrom, take } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   db = getDatabase();
 
-  constructor( private auth:Auth,
-
-    private MyAuth:AuthService
+  constructor(
+    private auth: Auth,
+    private MyAuth: AuthService
   ) { }
-   isUserAuthenticated():Promise<boolean> {
- return new Promise((resolve, reject) => {
-    this.auth.onAuthStateChanged((user) => {
-      if (user) {
-        resolve(true);
-      } else {
+
+  isUserAuthenticated(): Promise<boolean> {
+    return new Promise((resolve) => {
+      const unsubscribe = this.auth.onAuthStateChanged((user) => {
+        unsubscribe();
+        resolve(!!user);
+      }, () => {
         resolve(false);
-      }
+      });
     });
-  });
-   }
-
-   getLoggedUser():Promise<UserModel>{
-
-    return new Promise((resolve, reject) => {
-      this.MyAuth.getUser().subscribe(async (user) => {
-        if (user) {
-
-         const loggedUser = await this.getUserByUid(user.uid)
-          resolve(loggedUser);
-        }
-      })
-
-    })
-}
-logout(){
-  const auth = getAuth();
-  console.log("auth",auth)
-  auth.signOut();
-}
-
-updateUser(user: UserModel): Promise<void> {
-  const userRef = ref(this.db, `userProfile/${user.key}`);
-  return set(userRef, user.serialize());
-}
-
-getUserByUid(uid:string):Promise<UserModel>{
-const UsewrRef = ref(this.db,`userProfile/${uid}` );
-return new Promise((resolve, reject) =>{
-onValue(UsewrRef, (snapshot) => {
-  if(snapshot.exists()){
-    const data = snapshot.val();
-    const user = new UserModel(data).setKey(uid)
-    resolve(user);
-  }else{console.log("No user found")
-    reject("no data found");
   }
-},(error)=>{
-  console.log("error",error)
-})
 
-})
-}
+  async getLoggedUser(): Promise<UserModel> {
+    const user = await firstValueFrom(this.MyAuth.getUser().pipe(take(1)));
+    if (user) {
+      return this.getUserByUid(user.uid);
+    } else {
+      throw new Error("No user is logged");
+    }
+  }
+
+  logout() {
+    const auth = getAuth();
+    console.log("auth", auth);
+    auth.signOut();
+  }
+
+  updateUser(user: UserModel): Promise<void> {
+    const userRef = ref(this.db, `userProfile/${user.key}`);
+    return set(userRef, user.serialize());
+  }
+
+  async getUserByUid(uid: string): Promise<UserModel> {
+    const userRef = ref(this.db, `userProfile/${uid}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      return new UserModel(data).setKey(uid);
+    } else {
+      console.log("No user found");
+      throw new Error("no data found");
+    }
+  }
 }

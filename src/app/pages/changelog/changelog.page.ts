@@ -1,5 +1,5 @@
 import { UserMenuComponent } from '../../components/userMenu/user-menu.component';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
@@ -38,11 +38,10 @@ import {
     FormsModule
   ]
 })
-export class ChangelogPage implements OnInit {
+export class ChangelogPage {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+
 
 }

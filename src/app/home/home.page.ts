@@ -21,35 +21,25 @@ import { HomeSquareComponent } from '../components/home-square/home-square.compo
     IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonList, HeaderComponent, PrTableComponent, ],
 })
 export class HomePage implements OnInit {
-goToWodList() {
-  console.log("ciao wod");
-this.router.navigate(["/wods"]);
-}
-goToPrList() {
-console.log("ciao");
-this.router.navigate(["/pr-list"])
-}
-moveData() {
-this.user.prList.forEach((pr) => this.service.create(this.user.key, pr).then((res) => console.log("data moved", res)).catch((err) => console.log("error", err)))
-}
-  user = new UserModel({key:"bubba"})
+  user = new UserModel({key:"bubba"});
   title = "";
-  async makeTitle() {
-  const user = await this.users.getLoggedUser()
-  return `Benvenuto ${user.firstName} ${user.lastName}`
 
-}
-  constructor(
-    private users:UsersService,
-    private service:ActivityService,
-    private router:Router
-  ) {
- this.ngOnInit();
- addIcons({ menu });
+  async makeTitle() {
+    const user = await this.users.getLoggedUser();
+    return `Benvenuto ${user.firstName} ${user.lastName}`;
   }
+
+  constructor(
+    private users: UsersService,
+    private service: ActivityService,
+    private router: Router
+  ) {
+    addIcons({ menu });
+  }
+
   async ngOnInit(): Promise<void> {
-    this.user = await this.users.getLoggedUser()
- this.service.realtimeFetchAllActivities(this.user.key, (res) => console.log("**data", res))
-this.title = await this.makeTitle()
+    this.user = await this.users.getLoggedUser();
+    this.service.realtimeFetchAllActivities(this.user.key, (res) => console.log("**data", res));
+    this.title = await this.makeTitle();
   }
 }
