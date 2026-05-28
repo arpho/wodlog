@@ -20,7 +20,17 @@
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-ion-item{
+ion-item {
   width: 100%;
   --background: transparent;
 }
+
+.desc-text {
+  color: var(--ion-text-color) !important;
+}
+
+:host-context(.ion-palette-dark) .desc-text {
+  color: #ffffff !important;
+}
+
+

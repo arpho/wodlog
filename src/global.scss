@@ -132,3 +132,25 @@ ion-label {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(var(--ion-color-primary-rgb), 0.4);
 }
+
+/* Fix for PR and item description/text colors in dark mode */
+.desc-text {
+  color: var(--ion-text-color) !important;
+}
+
+.ion-palette-dark .desc-text, 
+.ion-palette-dark strong.desc-text {
+  color: #ffffff !important;
+}
+
+/* Ensure all text inside list items is highly readable in dark mode */
+.ion-palette-dark ion-item,
+.ion-palette-dark ion-item ion-col,
+.ion-palette-dark ion-item strong,
+.ion-palette-dark ion-item span,
+.ion-palette-dark ion-item p,
+.ion-palette-dark ion-item div {
+  --color: #ffffff !important;
+  color: #ffffff !important;
+}
+
