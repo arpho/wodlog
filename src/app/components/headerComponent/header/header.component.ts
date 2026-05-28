@@ -1,10 +1,7 @@
 import { UserModel } from 'src/app/models/userModel';
 import { UsersService } from './../../../services/users/users.service';
 import { Component, OnInit } from '@angular/core';
-import { IonButton, IonIcon, IonPopover, IonItem, IonList,IonContent } from "@ionic/angular/standalone";
-import { logOutOutline, menu, medal, fitness } from 'ionicons/icons';
-import { addIcons } from 'ionicons';
-import { Router } from '@angular/router';
+import { IonButton, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-header',
@@ -12,34 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
   imports:[
     IonButton,
-    IonIcon,
-    IonPopover,
-    IonItem,
-    IonList,
-    IonContent
+    IonIcon
   ],
   standalone: true,
 })
 export class HeaderComponent  implements OnInit {
-gotoWod() {
-console.log("goto wod");
-this.router.navigateByUrl(`/wods`)
-}
-gotoPR() {
-  console.log("goto pr");
-  this.router.navigateByUrl(`/home`)
-}
-logout() {
-console.log("logout");
-this.users.logout();
-}
 
   constructor(
-    private users:UsersService,
-    private router:Router
-  ) {
-    addIcons({logOutOutline,menu, medal,fitness});
-  }
+    private users:UsersService
+  ) {}
   user = new UserModel()
 
   async ngOnInit() {
