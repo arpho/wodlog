@@ -6,6 +6,9 @@
     <ion-title>Profilo Atleta</ion-title>
   
     <ion-buttons slot="end">
+      <ion-button (click)="toggleEditMode()" class="edit-toggle-btn">
+        <ion-icon [name]="isEditMode() ? 'close-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
       <app-user-menu></app-user-menu>
     </ion-buttons>
   </ion-toolbar>
@@ -19,123 +22,226 @@
   </ion-header>
 
   <div class="ion-padding profile-container">
-    <ion-list lines="inset" class="profile-list">
-      <ion-list-header>
-        <ion-label>Dati Personali</ion-label>
-      </ion-list-header>
+    <!-- INTESTAZIONE PROFILO COMUNE (VISTA & MODIFICA) -->
+    <div class="profile-header-card ion-text-center">
+      <div class="avatar-circle" [class.editable]="isEditMode()" (click)="isEditMode() && !isUploading() && fileInput.click()">
+        @if (isUploading()) {
+          <ion-spinner name="crescent" color="light"></ion-spinner>
+        } @else if (photoUrl()) {
+          <img [src]="photoUrl()" alt="Avatar Atleta" class="profile-image" />
+        } @else {
+          <span class="avatar-initials">{{ (firstName() && firstName().charAt(0) || '') + (lastName() && lastName().charAt(0) || '') | uppercase }}</span>
+        }
+        
+        @if (isEditMode() && !isUploading()) {
+          <div class="avatar-overlay">
+            <ion-icon name="camera-outline"></ion-icon>
+          </div>
+        }
+      </div>
+      
+      <!-- Input file nascosto -->
+      <input 
+        #fileInput 
+        type="file" 
+        accept="image/*" 
+        style="display: none;" 
+        (change)="onPhotoSelected($event)">
 
-      <ion-item>
-        <ion-input 
-          label="Nome" 
-          labelPlacement="stacked" 
-          type="text" 
-          [value]="firstName()" 
-          (ionInput)="updateFirstName($event)"
-          placeholder="Inserisci il nome">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input 
-          label="Cognome" 
-          labelPlacement="stacked" 
-          type="text" 
-          [value]="lastName()" 
-          (ionInput)="updateLastName($event)"
-          placeholder="Inserisci il cognome">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input 
-          label="Nickname" 
-          labelPlacement="stacked" 
-          type="text" 
-          [value]="userName()" 
-          (ionInput)="updateUserName($event)"
-          placeholder="Inserisci un nickname">
-        </ion-input>
-      </ion-item>
-
-      <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col size="6">
-            <ion-item>
-              <ion-input 
-                label="Peso (kg)" 
-                labelPlacement="stacked" 
-                type="number" 
-                [value]="weight()" 
-                (ionInput)="updateWeight($event)"
-                placeholder="es. 75">
-              </ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-input 
-                label="Altezza (cm)" 
-                labelPlacement="stacked" 
-                type="number" 
-                [value]="height()" 
-                (ionInput)="updateHeight($event)"
-                placeholder="es. 180">
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <ion-item>
-        <ion-select 
-          label="Sesso" 
-          labelPlacement="stacked" 
-          [value]="gender()" 
-          (ionChange)="updateGender($event)"
-          placeholder="Seleziona sesso">
-          <ion-select-option value="M">Maschio</ion-select-option>
-          <ion-select-option value="F">Femmina</ion-select-option>
-          <ion-select-option value="O">Altro</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-list-header class="ion-margin-top">
-        <ion-label>Prestazioni Significative</ion-label>
-      </ion-list-header>
-
-      <ion-item>
-        <ion-select 
-          label="PR da visualizzare" 
-          labelPlacement="stacked" 
-          [multiple]="true"
-          [value]="featuredPrs()"
-          (ionChange)="updateFeaturedPrs($event)"
-          placeholder="Seleziona i tuoi PR migliori">
-          @for (pr of availablePrs(); track pr.key) {
-            <ion-select-option [value]="pr.key">{{ pr.descrizione }}</ion-select-option>
-          }
-        </ion-select>
-      </ion-item>
-
-      <ion-list-header class="ion-margin-top">
-        <ion-label>Account</ion-label>
-      </ion-list-header>
-
-      <ion-item>
-        <ion-input 
-          label="Email" 
-          labelPlacement="stacked" 
-          type="email" 
-          [value]="email()" 
-          [readonly]="true">
-        </ion-input>
-      </ion-item>
-    </ion-list>
-
-    <div class="ion-padding-top">
-      <ion-button expand="block" (click)="saveProfile()" shape="round" class="save-button">
-        Salva Profilo
-      </ion-button>
+      <h2>{{ firstName() }} {{ lastName() }}</h2>
+      <p class="nickname">&#64;{{ userName() || 'atleta' }}</p>
     </div>
+
+    @if (!isEditMode()) {
+      <!-- MODALITÀ VISTA -->
+      <div class="glass-panel profile-details-panel">
+        <ion-list lines="none" class="profile-view-list">
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <span class="metric-label">Peso</span>
+              <span class="metric-value">{{ weight() ? weight() + ' kg' : '-' }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Altezza</span>
+              <span class="metric-value">{{ height() ? height() + ' cm' : '-' }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Sesso</span>
+              <span class="metric-value">{{ gender() === 'M' ? 'Maschio' : gender() === 'F' ? 'Femmina' : gender() === 'O' ? 'Altro' : '-' }}</span>
+            </div>
+          </div>
+
+          <ion-item class="email-item">
+            <ion-label>
+              <h3>Email Account</h3>
+              <p>{{ email() }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="prs-section">
+        <ion-list-header>
+          <ion-label>Prestazioni Significative</ion-label>
+        </ion-list-header>
+        
+        @if (featuredPrs().length === 0) {
+          <div class="empty-prs-card">
+            <ion-icon name="trophy-outline" class="empty-icon"></ion-icon>
+            <p>Nessun PR selezionato come significativo.</p>
+            <ion-button fill="outline" size="small" (click)="toggleEditMode()" shape="round">
+              Seleziona PR
+            </ion-button>
+          </div>
+        } @else {
+          <div class="pr-cards-list">
+            @for (prKey of featuredPrs(); track prKey) {
+              <div class="pr-glass-card">
+                <div class="pr-icon-wrapper">
+                  <ion-icon name="trophy-outline"></ion-icon>
+                </div>
+                <div class="pr-info">
+                  <span class="pr-descrizione">{{ getFeaturedPrName(prKey) }}</span>
+                  <span class="pr-valore">{{ getFeaturedPrValue(prKey) }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="ion-padding-top">
+        <ion-button expand="block" (click)="toggleEditMode()" shape="round" class="action-button">
+          <ion-icon name="create-outline" slot="start"></ion-icon>
+          Modifica Profilo
+        </ion-button>
+      </div>
+    } @else {
+      <!-- MODALITÀ MODIFICA -->
+      <div class="glass-panel edit-panel">
+        <ion-list lines="inset" class="profile-list">
+          <ion-list-header>
+            <ion-label>Dati Personali</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-input 
+              label="Nome" 
+              labelPlacement="stacked" 
+              type="text" 
+              [value]="firstName()" 
+              (ionInput)="updateFirstName($event)"
+              placeholder="Inserisci il nome">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input 
+              label="Cognome" 
+              labelPlacement="stacked" 
+              type="text" 
+              [value]="lastName()" 
+              (ionInput)="updateLastName($event)"
+              placeholder="Inserisci il cognome">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input 
+              label="Nickname" 
+              labelPlacement="stacked" 
+              type="text" 
+              [value]="userName()" 
+              (ionInput)="updateUserName($event)"
+              placeholder="Inserisci un nickname">
+            </ion-input>
+          </ion-item>
+
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size="6">
+                <ion-item>
+                  <ion-input 
+                    label="Peso (kg)" 
+                    labelPlacement="stacked" 
+                    type="number" 
+                    [value]="weight()" 
+                    (ionInput)="updateWeight($event)"
+                    placeholder="es. 75">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6">
+                <ion-item>
+                  <ion-input 
+                    label="Altezza (cm)" 
+                    labelPlacement="stacked" 
+                    type="number" 
+                    [value]="height()" 
+                    (ionInput)="updateHeight($event)"
+                    placeholder="es. 180">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-item>
+            <ion-select 
+              label="Sesso" 
+              labelPlacement="stacked" 
+              [value]="gender()" 
+              (ionChange)="updateGender($event)"
+              placeholder="Seleziona sesso">
+              <ion-select-option value="M">Maschio</ion-select-option>
+              <ion-select-option value="F">Femmina</ion-select-option>
+              <ion-select-option value="O">Altro</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-list-header class="ion-margin-top">
+            <ion-label>Prestazioni Significative</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select 
+              label="PR da visualizzare" 
+              labelPlacement="stacked" 
+              [multiple]="true"
+              [value]="featuredPrs()"
+              (ionChange)="updateFeaturedPrs($event)"
+              placeholder="Seleziona i tuoi PR migliori">
+              @for (pr of availablePrs(); track pr.key) {
+                <ion-select-option [value]="pr.key">{{ pr.descrizione }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+
+          <ion-list-header class="ion-margin-top">
+            <ion-label>Account</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-input 
+              label="Email" 
+              labelPlacement="stacked" 
+              type="email" 
+              [value]="email()" 
+              [readonly]="true">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="ion-padding-top button-group">
+        <ion-button expand="block" (click)="saveProfile()" shape="round" class="save-button">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Salva Profilo
+        </ion-button>
+        <ion-button expand="block" fill="clear" color="medium" (click)="toggleEditMode()" class="cancel-button">
+          Annulla
+        </ion-button>
+      </div>
+    }
   </div>
 </ion-content>

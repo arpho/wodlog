@@ -13,6 +13,7 @@ import { addCircle, add, addCircleOutline, removeCircle, remove, createOutline, 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { DatePipe } from "@angular/common";
 import { provideServiceWorker } from '@angular/service-worker';
@@ -43,6 +44,7 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFunctions(() => getFunctions()),
+    provideStorage(() => getStorage()),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
