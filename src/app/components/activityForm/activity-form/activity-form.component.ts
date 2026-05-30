@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';
 import { PrModel } from 'src/app/models/Pr';
-import { IonInput, IonToggle, IonButton, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader,IonTitle,IonContent, IonFab, IonFabButton, IonFabList } from "@ionic/angular/standalone";
+import { IonInput, IonToggle, IonButton, IonIcon, IonToolbar, ToggleChangeEventDetail, IonTab, IonTabBar, IonTabs, IonHeader, IonTitle, IonContent, IonFab, IonFabButton, IonFabList, IonSegment, IonSegmentButton, IonLabel } from "@ionic/angular/standalone";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add } from 'ionicons/icons';
+import { saveOutline, chevronForwardCircle, document, colorPalette, globe, chevronBackCircle, add, listOutline, trendingUpOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { PrListComponent } from "../../prList/pr-list/pr-list.component";
 import { IonToggleCustomEvent } from '@ionic/core';
@@ -31,14 +31,17 @@ import { PrGraphComponent } from "../../pr-graph/pr-graph.component";
     IonFabButton,
     IonFabList,
     IonContent,
-    PrGraphComponent
+    PrGraphComponent,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel
   ]
 
 })
 export class ActivityFormComponent  implements OnInit, OnChanges {
-switchView($event: IonToggleCustomEvent<ToggleChangeEventDetail<any>>) {
-this.showList= !this.showList
-}
+  segmentChanged(event: any) {
+    this.showList = event.detail.value === 'list';
+  }
   showList = true;
 save() {
 console.log("save");
@@ -86,7 +89,7 @@ prDate = new Date().toISOString()
   )
   {
 
-    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe});
+    addIcons({saveOutline,chevronBackCircle,document,add,colorPalette,globe,listOutline,trendingUpOutline});
    }
   ngOnChanges(changes: SimpleChanges): void {
     this.descrizione.set(this.activity.descrizione)

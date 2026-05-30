@@ -15,3 +15,41 @@ form {
 ion-toggle {
   padding: 10px;
 }
+
+.tooltip-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  
+  .tooltip-text {
+    visibility: hidden;
+    width: 250px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--ion-text-color);
+    text-align: center;
+    border-radius: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 110%; /* Position above the toggle */
+    left: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateY(4px);
+    font-size: 0.85rem;
+    font-weight: 600; /* leggermente più spesso per una leggibilità ottimale nel tema chiaro */
+    line-height: 1.4;
+    box-shadow: var(--glass-shadow);
+    pointer-events: none;
+  }
+
+  &:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,10 +1,36 @@
 <div class="container">
   <ion-input label="Specialità"   (ionInput)="setDescrizione($event)"  labelPlacement="floating" [value]="descrizione()"></ion-input>
-<ion-toggle    [enableOnOffLabels]="true" [value]="hero()"  (ionChange)="setHero($event)"> Hero</ion-toggle>
-<ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
-<ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
-<ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
-<ion-toggle [value]="showList" (ionChange)="switchView($event)" ></ion-toggle>
+<div class="tooltip-wrapper">
+  <ion-toggle [enableOnOffLabels]="true" [value]="hero()" (ionChange)="setHero($event)"> Hero</ion-toggle>
+  <span class="tooltip-text">Gli allenamenti 'Hero' sono dedicati ai militari, vigili del fuoco e poliziotti caduti in servizio. Solitamente molto impegnativi.</span>
+</div>
+
+<div class="tooltip-wrapper">
+  <ion-toggle [value]="girl()" [enableOnOffLabels]="true" (ionChange)="setGirl($event)">Girl</ion-toggle>
+  <span class="tooltip-text">I WOD 'Girl' (come Fran o Grace) sono benchmark standard di riferimento nel CrossFit per misurare i progressi.</span>
+</div>
+
+<div class="tooltip-wrapper">
+  <ion-toggle [value]="typePr()==='benchmark'" [enableOnOffLabels]="true" (ionChange)="setTypePr($event)">{{showPrType()}}</ion-toggle>
+  <span class="tooltip-text">Seleziona Benchmark per i test fisici di riferimento che utilizzi per tracciare periodicamente la tua crescita atletica.</span>
+</div>
+
+<div class="tooltip-wrapper">
+  <ion-toggle [value]="unity().includes('sec')" (ionChange)="setUnity($event)">{{showUnity()}}</ion-toggle>
+  <span class="tooltip-text">Scegli Kg per esercizi basati sul peso (valore maggiore = migliore) o secondi per esercizi a tempo (tempo minore = migliore). Questa scelta cambierà il calcolo del tuo record migliore.</span>
+</div>
+<div class="segment-container" style="margin: 16px 0;">
+  <ion-segment [value]="showList ? 'list' : 'graph'" (ionChange)="segmentChanged($event)" mode="ios">
+    <ion-segment-button value="list">
+      <ion-icon name="list-outline" style="margin-right: 4px; vertical-align: middle;"></ion-icon>
+      <ion-label style="font-weight: 600;">Lista PR</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="graph">
+      <ion-icon name="trending-up-outline" style="margin-right: 4px; vertical-align: middle;"></ion-icon>
+      <ion-label style="font-weight: 600;">Grafico</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</div>
 @if(showList){
 <app-pr-list [prList]="prList()" [unity]="unity()" (editedPrList)="setPrList($event)"></app-pr-list>
 
