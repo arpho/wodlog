@@ -19,7 +19,8 @@ import {
   logOutOutline,
   personOutline,
   listOutline,
-  settingsOutline
+  settingsOutline,
+  homeOutline
 } from 'ionicons/icons';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserModel } from 'src/app/models/userModel';
@@ -60,7 +61,8 @@ export class UserMenuComponent implements OnInit {
       logOutOutline,
       personOutline,
       listOutline,
-      settingsOutline
+      settingsOutline,
+      homeOutline
     });
   }
 
@@ -73,6 +75,10 @@ export class UserMenuComponent implements OnInit {
         this.gravatarUrl.set(`https://www.gravatar.com/avatar/${hash}?d=mp&s=200`);
       }
     }
+  }
+
+  openHome() {
+    this.router.navigate(['/home']);
   }
 
   openProfile() {
