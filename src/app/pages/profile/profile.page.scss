@@ -290,10 +290,51 @@ ion-list-header {
       color: var(--ion-text-color);
     }
 
-    .pr-valore {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--ion-color-primary);
+    .pr-stats-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 6px;
+      width: 100%;
+    }
+
+    .pr-stat-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.95rem;
+      color: var(--ion-text-color);
+
+      &.last-pr {
+        opacity: 0.75;
+        font-size: 0.85rem;
+        margin-top: 2px;
+      }
+
+      .pr-stat-label {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        color: var(--ion-color-medium);
+        font-size: 0.88rem;
+        
+        .emoji-icon {
+          margin-right: 4px;
+        }
+      }
+
+      .pr-stat-value {
+        font-weight: 700;
+        color: var(--ion-color-primary);
+      }
+
+      .pr-stat-date {
+        color: var(--ion-color-medium);
+        opacity: 0.85;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
     }
   }
 }

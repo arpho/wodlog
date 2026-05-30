@@ -31,6 +31,7 @@ import { UsersService } from 'src/app/services/users/users.service';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { UserModel } from 'src/app/models/userModel';
 import { ActivityModel } from 'src/app/models/activityModel';
+import { PrestazionePipe } from 'src/app/pipes/prestazione/prestazione.pipe';
 
 @Component({
   selector: 'app-profile',
@@ -58,7 +59,8 @@ import { ActivityModel } from 'src/app/models/activityModel';
     IonCol,
     IonListHeader,
     IonIcon,
-    IonSpinner
+    IonSpinner,
+    PrestazionePipe
   ]
 })
 export class ProfilePage implements OnInit {
@@ -168,6 +170,10 @@ export class ProfilePage implements OnInit {
   getFeaturedPrName(prKey: string): string {
     const activity = this.availablePrs().find(a => a.key === prKey);
     return activity ? activity.descrizione : '';
+  }
+
+  getFeaturedActivity(prKey: string): ActivityModel | undefined {
+    return this.availablePrs().find(a => a.key === prKey);
   }
 
   formatPrValue(pr: any, unity: string): string {

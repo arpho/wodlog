@@ -96,15 +96,44 @@
         } @else {
           <div class="pr-cards-list">
             @for (prKey of featuredPrs(); track prKey) {
-              <div class="pr-glass-card">
-                <div class="pr-icon-wrapper">
-                  <ion-icon name="trophy-outline"></ion-icon>
+              @if (getFeaturedActivity(prKey); as activity) {
+                <div class="pr-glass-card">
+                  <div class="pr-icon-wrapper">
+                    <ion-icon name="trophy-outline"></ion-icon>
+                  </div>
+                  <div class="pr-info">
+                    <span class="pr-descrizione">{{ activity.descrizione }}</span>
+                    <div class="pr-stats-grid">
+                      @if (activity.getMaxPr(); as maxPr) {
+                        <div class="pr-stat-row">
+                          <span class="pr-stat-label">
+                            <span class="emoji-icon">🏆</span> Migliore:
+                          </span>
+                          <span class="pr-stat-value">
+                            {{ maxPr.prestazione | prestazione: activity.unity }}
+                          </span>
+                          <span class="pr-stat-date">
+                            ({{ maxPr.getDate() }})
+                          </span>
+                        </div>
+                      }
+                      @if (activity.getLastPr(); as lastPr) {
+                        <div class="pr-stat-row last-pr">
+                          <span class="pr-stat-label">
+                            <span class="emoji-icon">⏱️</span> Ultimo:
+                          </span>
+                          <span class="pr-stat-value">
+                            {{ lastPr.prestazione | prestazione: activity.unity }}
+                          </span>
+                          <span class="pr-stat-date">
+                            ({{ lastPr.getDate() }})
+                          </span>
+                        </div>
+                      }
+                    </div>
+                  </div>
                 </div>
-                <div class="pr-info">
-                  <span class="pr-descrizione">{{ getFeaturedPrName(prKey) }}</span>
-                  <span class="pr-valore">{{ getFeaturedPrValue(prKey) }}</span>
-                </div>
-              </div>
+              }
             }
           </div>
         }
