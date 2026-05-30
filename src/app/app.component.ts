@@ -7,6 +7,7 @@ import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
 import { ThemeService } from './services/theme/theme.service';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import { NotificationService } from './services/notification/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private notificationService: NotificationService
   ) {
     this.themeService.initializeTheme();
 
@@ -36,6 +38,15 @@ export class AppComponent implements OnInit {
 
       if (user) {
         console.log("user is logged", user);
+
+        // Richiedi i permessi per le notifiche all'accesso dell'utente
+        this.notificationService.requestPermission()
+          .then(granted => {
+            console.log('Stato permessi notifiche:', granted ? 'consentito' : 'non consentito');
+          })
+          .catch(err => {
+            console.error('Errore durante la richiesta di permesso notifiche:', err);
+          });
 
         const db = getDatabase();
         const userRef = ref(db, `userProfile/${user.uid}`);
@@ -71,6 +82,12 @@ export class AppComponent implements OnInit {
                 ]
               });
               await toast.present();
+
+              // 3. Mostra la notifica di sistema (Web/Nativa)
+              this.notificationService.showNotification(
+                'WodLog',
+                'Il tuo account è stato abilitato! Tutte le funzionalità sono ora attive.'
+              );
             }
 
             previousEnabledState = isEnabled;

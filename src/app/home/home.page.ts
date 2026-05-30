@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { HomeSquareComponent } from '../components/home-square/home-square.component';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../services/notification/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +38,8 @@ export class HomePage implements OnInit, OnDestroy {
   constructor(
     private users: UsersService,
     private service: ActivityService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     addIcons({ menu, alertCircleOutline });
   }
@@ -50,6 +52,14 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.user.role === 'editor') {
       this.notificationsSubscription = this.users.getPendingNotifications().subscribe((notifs) => {
         const pending = notifs.filter(n => !n.read);
+        
+        if (pending.length > this.pendingNotificationsCount()) {
+          this.notificationService.showNotification(
+            'WodLog - Utenti da abilitare',
+            `Ci sono ${pending.length} utenti in attesa di essere abilitati!`
+          );
+        }
+        
         this.pendingNotificationsCount.set(pending.length);
       });
     }
