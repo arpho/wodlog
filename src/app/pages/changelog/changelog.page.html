@@ -17,6 +17,14 @@
       </ion-card-header>
       <ion-card-content>
         <div class="change-item">
+          <ion-badge color="warning">Performance</ion-badge>
+          <p><strong>Rimozione PrimeNG</strong>: Rimosse interamente le librerie <code>primeng</code> e <code>primeicons</code> dal progetto, riducendo drasticamente il peso del bundle mobile ed eliminando codice inutilizzato.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p><strong>Grafici PR Nativi</strong>: Riscritto il grafico dei massimali (<code>PrGraphComponent</code>) utilizzando direttamente un elemento HTML5 <code>&lt;canvas&gt;</code> e la libreria nativa <code>chart.js</code> per caricamenti istantanei su smartphone.</p>
+        </div>
+        <div class="change-item">
           <ion-badge color="danger">Security</ion-badge>
           <p><strong>Onboarding Sicuro</strong>: I nuovi utenti registrati non sono abilitati di default (<code>enabled: false</code>), bloccando accessi non autorizzati in attesa di approvazione.</p>
         </div>

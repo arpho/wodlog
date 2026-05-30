@@ -1,89 +1,117 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { PrModel } from 'src/app/models/Pr';
-import { ChartModule } from 'primeng/chart';
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
+
 @Component({
   selector: 'app-pr-graph',
   templateUrl: './pr-graph.component.html',
   styleUrls: ['./pr-graph.component.scss'],
   standalone: true,
-  //prettier-ignore
-  imports: [ChartModule
-  ]
+  imports: []
 })
-export class PrGraphComponent  implements OnInit {
+export class PrGraphComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('prChartCanvas', { static: false }) prChartCanvas!: ElementRef<HTMLCanvasElement>;
+  
+  @Input({required:true}) prList: PrModel[] = [];
+  @Input({required:true}) unity: string = ' Kg ';
 
-  data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            fill: false,
+  chart: Chart | null = null;
 
-            tension: 0.4
-        },
-        {
-            label: 'Second Dataset',
-            data: [28, 48, 40, 19, 86, 27, 90],
-            fill: false,
-            tension: 0.4
-        }
-    ]
-};
-
-options = {
-  maintainAspectRatio: false,
-  aspectRatio: 0.6,
-  plugins: {
-      legend: {
-          labels: {
-              color: "#495057"
-          }
-      }
-  },
-  scales: {
-      x: {
-          ticks: {
-              color: "red"
-          },
-          grid: {
-              color: "green",
-              drawBorder: false
-          }
-      },
-      y: {
-          ticks: {
-              color: "blue"
-          },
-          grid: {
-              color: "blue",
-              drawBorder: true
-          }
-      }
-  }
-};
-
-  constructor(
-
-  ) { }
-  @Input({required:true}) prList: PrModel[] = []
-  @Input({required:true}) unity: string = ' Kg '
+  constructor() { }
 
   ngOnInit() {
-
-    console.log("pr list", this.prList)
-    console.log("unity", this.unity)
-    this.data.labels = this.prList.sort((a,b) => a.date - b.date).map((pr) => new Date(pr.date).toLocaleDateString())
-    if (this.unity === ' Kg ')
-    this.data.datasets =[
-      {label:"pr", data: this.prList.sort((a,b) => a.date - b.date).map((pr) => pr.prestazione) as number[], fill: false, tension: 0.4},
-    ]
-    else{
-      this.data.labels = this.prList.sort((a,b) => a.date - b.date).map((pr) => `${new Date(pr.date).toLocaleDateString()} ${Math.floor(Number(pr.prestazione)/60)} min ${Number(pr.prestazione)%60} sec`)
-    this.data.datasets =[
-
-      {label:"pr", data: this.prList.sort((a,b) => a.date - b.date).map((pr) => pr.prestazione) as number[], fill: false, tension: 0.4},
-    ]}
+    console.log("pr list", this.prList);
+    console.log("unity", this.unity);
   }
 
+  ngAfterViewInit() {
+    this.initChart();
+  }
+
+  ngOnDestroy() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+
+  initChart() {
+    if (!this.prChartCanvas) return;
+    
+    const canvas = this.prChartCanvas.nativeElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Clean up any pre-existing chart instance
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    // Sort prList chronologically by date
+    const sortedPrs = [...this.prList].sort((a, b) => a.date - b.date);
+    
+    const labels = sortedPrs.map(pr => {
+      const dateStr = new Date(pr.date).toLocaleDateString();
+      if (this.unity !== ' Kg ') {
+        const mins = Math.floor(Number(pr.prestazione) / 60);
+        const secs = Number(pr.prestazione) % 60;
+        return `${dateStr} ${mins} min ${secs} sec`;
+      }
+      return dateStr;
+    });
+
+    const datasetData = sortedPrs.map(pr => pr.prestazione as number);
+
+    this.chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'PR',
+          data: datasetData,
+          fill: false,
+          borderColor: '#3880ff', // Vibrant Ionic blue
+          backgroundColor: 'rgba(56, 128, 255, 0.1)',
+          tension: 0.4,
+          borderWidth: 2,
+          pointBackgroundColor: '#3880ff',
+          pointBorderColor: '#ffffff',
+          pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: '#ffffff' // Crisp white labels for Midnight Ocean dark mode
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: 'rgba(255, 255, 255, 0.7)'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          y: {
+            ticks: {
+              color: 'rgba(255, 255, 255, 0.7)'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        }
+      }
+    });
+  }
 }
