@@ -13,6 +13,34 @@
     <ion-card class="glass-card animate-in">
       <ion-card-header>
         <ion-card-subtitle>Maggio 2026</ion-card-subtitle>
+        <ion-card-title>Real-time Active Notifications & Security Fixed</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="change-item">
+          <ion-badge color="danger">Security</ion-badge>
+          <p><strong>Risoluzione Permessi Firebase</strong>: Ottimizzate le regole di sicurezza (<code>database.rules.json</code>) usando <code>!== false</code> ed introdotto un meccanismo di fallback sicuro sul database per abilitare l'amministratore all'istante.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="warning">Fix</ion-badge>
+          <p><strong>Ripristino Profilo</strong>: Rimosso il vincolo di abilitazione per l'accesso del proprio profilo <code>userProfile/$uid</code>, evitando blocchi e ripristinando il corretto caricamento di Gravatar.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p><strong>Notifica Istantanea Abilitazione</strong>: Integrazione reattiva in <code>AppComponent</code> per avvisare subito l'utente con una notifica Toast targata <strong>WodLog</strong> quando l'account viene abilitato, eseguendo in background l'auto-refresh dei claims locali.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="primary">Design</ion-badge>
+          <p><strong>Layout & Icona Gestione</strong>: Aggiornato il menù utente con la voce <em>"Permessi Utenti"</em> ed inserito il pulsante quadrato reattivo in Home, entrambi arricchiti da un'icona atletica personalizzata bianca su sfondo blu scuro.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="secondary">Database</ion-badge>
+          <p><strong>Script di Migrazione Firestore</strong>: Creato <code>migrate-to-firestore.js</code> per il passaggio strutturato e compatibile dei dati a Cloud Firestore Native con supporto a database denominati.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="glass-card animate-in">
+      <ion-card-header>
+        <ion-card-subtitle>Maggio 2026</ion-card-subtitle>
         <ion-card-title>User Administration & Secure Onboarding</ion-card-title>
       </ion-card-header>
       <ion-card-content>

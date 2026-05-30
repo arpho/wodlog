@@ -5,3 +5,4 @@ lib/
 firebase-debug.log
 firebase-debug.*.log
 *.local
+service-account.json

@@ -21,7 +21,8 @@ import {
   listOutline,
   settingsOutline,
   homeOutline,
-  peopleOutline
+  peopleOutline,
+  shieldCheckmarkOutline
 } from 'ionicons/icons';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserModel } from 'src/app/models/userModel';
@@ -64,7 +65,8 @@ export class UserMenuComponent implements OnInit {
       listOutline,
       settingsOutline,
       homeOutline,
-      peopleOutline
+      peopleOutline,
+      shieldCheckmarkOutline
     });
   }
 

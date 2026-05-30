@@ -1,32 +1,32 @@
 {
   "rules": {
     "userProfile": {
-      ".read": "auth != null && auth.token.enabled === true && auth.token.role === 'editor'",
+      ".read": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')",
       "$uid": {
-        ".read": "auth != null && auth.token.enabled === true && auth.uid === $uid",
-        ".write": "auth != null && auth.token.enabled === true && (auth.uid === $uid || auth.token.role === 'editor')"
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.token.enabled !== false && (auth.uid === $uid || auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')"
       }
     },
     "activities": {
       "$uid": {
-        ".read": "auth != null && auth.token.enabled === true && auth.uid === $uid",
-        ".write": "auth != null && auth.token.enabled === true && auth.uid === $uid"
+        ".read": "auth != null && auth.token.enabled !== false && auth.uid === $uid",
+        ".write": "auth != null && auth.token.enabled !== false && auth.uid === $uid"
       }
     },
     "wods": {
-      ".read": "auth != null && auth.token.enabled === true",
-      ".write": "auth != null && auth.token.enabled === true && auth.token.role === 'editor'"
+      ".read": "auth != null && auth.token.enabled !== false",
+      ".write": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')"
     },
     "results": {
-      ".read": "auth != null && auth.token.enabled === true",
-      ".write": "auth != null && auth.token.enabled === true",
+      ".read": "auth != null && auth.token.enabled !== false",
+      ".write": "auth != null && auth.token.enabled !== false",
       ".indexOn": ["userKey"],
       "$resultId": {
-        ".write": "auth != null && auth.token.enabled === true && (auth.token.role === 'editor' || (!data.exists() ? newData.child('userKey').val() === auth.uid : data.child('userKey').val() === auth.uid))"
+        ".write": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor' || (!data.exists() ? newData.child('userKey').val() === auth.uid : data.child('userKey').val() === auth.uid))"
       }
     },
     "notifications": {
-      ".read": "auth != null && auth.token.enabled === true && auth.token.role === 'editor'",
+      ".read": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')",
       ".write": "false"
     }
   }

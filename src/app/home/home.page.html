@@ -42,10 +42,13 @@
       <ion-row>
         <ion-col>
           <app-home-square title="Pr" image="assets/images/Pr.png" url="/pr-list"></app-home-square>
-          </ion-col>
-          <ion-col>
-            <app-home-square title="Wod" image="assets/images/wod.png" url="/wods-list"></app-home-square>
-          </ion-col>
+        </ion-col>
+        <ion-col>
+          <app-home-square title="Wod" image="assets/images/wod.png" url="/wods-list"></app-home-square>
+        </ion-col>
+        <ion-col *ngIf="user.role === 'editor'">
+          <app-home-square title="Gestione Utenti" image="assets/images/users.png" url="/users"></app-home-square>
+        </ion-col>
       </ion-row>
     </ion-grid>
   <div class="Wod">

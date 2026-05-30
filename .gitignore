@@ -60,3 +60,7 @@ Thumbs.db
 src/assets/images/Programma Giornata sulla Neve Piani di Bobbio2025.docx
 
 src/assets/images/16263271_0105-via-rismondo-110-capitolato.pdf
+
+# Firebase Service Account Credentials
+service-account.json
+**/service-account.json
