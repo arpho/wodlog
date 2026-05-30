@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+import { getAuth, UserRecord } from "firebase-admin/auth";
 import { getDatabase } from "firebase-admin/database";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
@@ -115,7 +115,7 @@ export const analyzeWodImage = onCall(functionOptions, async (request) => {
 // --------------------------------------------------
 // TRIGGER: INIZIALIZZAZIONE UTENTE SU REGISTRAZIONE
 // --------------------------------------------------
-export const beforeUserCreated = functions.auth.user().onCreate(async (user) => {
+export const beforeUserCreated = functions.auth.user().onCreate(async (user: UserRecord) => {
   const uid = user.uid;
   const email = user.email || "";
 
