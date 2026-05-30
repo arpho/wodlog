@@ -7,6 +7,7 @@ import {
   onValue,
   push,
   update,
+  query,
 } from 'firebase/database';
 import { ResultsModel } from 'src/app/models/results';
 @Injectable({
@@ -30,20 +31,26 @@ return update(refResults, result.serialize());
   getResult(userKey: string, wodKey: string): Promise<ResultsModel[]> {
     return new Promise((resolve, reject) => {
       const resultsRef = ref(this.db, this.url);
-      onValue(resultsRef, (snapshot) => {
+      const userResultsQuery = query(
+        resultsRef,
+        orderByChild('userKey'),
+        equalTo(userKey)
+      );
+      onValue(userResultsQuery, (snapshot) => {
         const out: ResultsModel[] = [];
-        snapshot.forEach((childSnapshot) => {
-          if (
-            childSnapshot.val().wodKey == wodKey &&
-            childSnapshot.val().userKey == userKey
-          ) {
-            const res = new ResultsModel(childSnapshot.val()).setKey(
-              childSnapshot.key
-            );
-            out.push(res);
-          }
-        });
+        if (snapshot.exists()) {
+          snapshot.forEach((childSnapshot) => {
+            if (childSnapshot.val().wodKey == wodKey) {
+              const res = new ResultsModel(childSnapshot.val()).setKey(
+                childSnapshot.key
+              );
+              out.push(res);
+            }
+          });
+        }
         resolve(out);
+      }, (error) => {
+        reject(error);
       });
     });
   }

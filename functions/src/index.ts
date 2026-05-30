@@ -1,9 +1,18 @@
-import { onCall } from "firebase-functions/v2/https";
+import { initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getDatabase } from "firebase-admin/database";
+import * as functions from "firebase-functions";
+import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
 // Import Genkit core and plugins.
 import { genkit, z } from "genkit";
 import { googleAI, gemini } from "@genkit-ai/googleai";
+
+// Initialize Firebase Admin SDK
+initializeApp({
+  databaseURL: "https://m1crossfit-5b2b9.firebaseio.com"
+});
 
 // Initialize Genkit
 const ai = genkit({
@@ -86,13 +95,117 @@ export const analyzeWodImageFlow = ai.defineFlow(
 // Opzioni condivise per le Cloud Functions (es. abilitazione CORS)
 const functionOptions = { maxInstances: 10, cors: true };
 
-// Esponiamo i flow come Firebase Callable Functions separate
+// Esponiamo i flow come Firebase Callable Functions separate (protette da autenticazione)
 export const analyzeForceImage = onCall(functionOptions, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Questo servizio richiede l'autenticazione.");
+  }
   const result = await analyzeForceImageFlow(request.data);
   return result;
 });
 
 export const analyzeWodImage = onCall(functionOptions, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Questo servizio richiede l'autenticazione.");
+  }
   const result = await analyzeWodImageFlow(request.data);
   return result;
+});
+
+// --------------------------------------------------
+// TRIGGER: INIZIALIZZAZIONE UTENTE SU REGISTRAZIONE
+// --------------------------------------------------
+export const beforeUserCreated = functions.auth.user().onCreate(async (user) => {
+  const uid = user.uid;
+  const email = user.email || "";
+
+  logger.info(`Nuovo utente registrato: ${uid}. Inizializzazione in corso...`);
+
+  // 1. Impostiamo il ruolo di default 'user' ed enabled true nei Custom Claims di Firebase Auth
+  await getAuth().setCustomUserClaims(uid, { enabled: true, role: "user" });
+
+  // 2. Creiamo il profilo utente di default nel database Realtime per prevenire crash
+  const db = getDatabase();
+  const userRef = db.ref(`userProfile/${uid}`);
+  await userRef.set({
+    key: uid,
+    email: email,
+    firstName: user.displayName ? user.displayName.split(" ")[0] : "",
+    lastName: user.displayName ? user.displayName.split(" ").slice(1).join(" ") : "",
+    role: "user",
+    enabled: true,
+    birthDate: "",
+    phoneNumber: user.phoneNumber || "",
+    userName: email.split("@")[0],
+    weight: null,
+    height: null,
+    gender: "",
+    featuredPrs: [],
+    photoUrl: user.photoURL || ""
+  });
+
+  logger.info(`Inizializzazione completata con successo per l'utente: ${uid}`);
+});
+
+// --------------------------------------------------
+// CALLABLE: GESTIONE PRIVILEGI UTENTI PER EMAIL (setClaims)
+// --------------------------------------------------
+export const setClaims = onCall(functionOptions, async (request) => {
+  const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
+  
+  if (!isEmulator) {
+    // 1. Verifica autenticazione
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "L'utente deve essere autenticato per questa operazione.");
+    }
+
+    // 2. Verifica privilegi admin (role === 'editor') del chiamante
+    const callerUid = request.auth.uid;
+    const db = getDatabase();
+    const callerRef = db.ref(`userProfile/${callerUid}`);
+    const callerSnapshot = await callerRef.once("value");
+    const callerData = callerSnapshot.val();
+    const isCallerEditor = callerData && callerData.role === "editor";
+
+    if (!isCallerEditor) {
+      throw new HttpsError("permission-denied", "Solo gli amministratori (ruolo editor) possono modificare i privilegi degli utenti.");
+    }
+  }
+
+  const { email, role, enabled } = request.data;
+  if (!email || !role || enabled === undefined) {
+    throw new HttpsError("invalid-argument", "I parametri email, role ed enabled sono obbligatori.");
+  }
+
+  if (role !== "editor" && role !== "user") {
+    throw new HttpsError("invalid-argument", "Il ruolo deve essere 'editor' o 'user'.");
+  }
+
+  logger.info(`Ricerca utente con email: ${email}...`);
+
+  try {
+    // 3. Cerca l'utente tramite email in Firebase Auth
+    const userRecord = await getAuth().getUserByEmail(email);
+    const targetUid = userRecord.uid;
+
+    logger.info(`Trovato utente ${targetUid}. Aggiornamento privilegi a role: '${role}', enabled: ${enabled}...`);
+
+    // 4. Imposta custom claims in Firebase Auth
+    await getAuth().setCustomUserClaims(targetUid, { enabled, role });
+
+    // 5. Aggiorna il profilo nel database
+    const db = getDatabase();
+    const targetRef = db.ref(`userProfile/${targetUid}`);
+    await targetRef.update({ role, enabled });
+
+    logger.info(`Privilegi aggiornati con successo per ${email} (${targetUid})`);
+
+    return {
+      success: true,
+      message: `Privilegi impostati con successo per l'utente ${email} (${targetUid}): role='${role}', enabled=${enabled}`
+    };
+  } catch (error: any) {
+    logger.error("Errore durante l'aggiornamento dei claims:", error);
+    throw new HttpsError("internal", `Errore durante la configurazione dei privilegi: ${error.message}`);
+  }
 });

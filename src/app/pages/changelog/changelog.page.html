@@ -13,6 +13,39 @@
     <ion-card class="glass-card animate-in">
       <ion-card-header>
         <ion-card-subtitle>Maggio 2026</ion-card-subtitle>
+        <ion-card-title>Multi-User Security & Privileges</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="change-item">
+          <ion-badge color="danger">Security</ion-badge>
+          <p>Implementato modello di sicurezza multilivello basato su <strong>Firebase Auth Custom Claims</strong> (enabled e role).</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="danger">Security</ion-badge>
+          <p>Aggiunto il blocco automatico per tutti gli utenti contrassegnati come disabilitati (<code>enabled: false</code>).</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p><strong>Auto-Onboarding</strong>: Trigger Firebase Auth automatico su registrazione per assegnare i privilegi e creare il profilo database di base, prevenendo crash.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p>Gestione privilegi tramite Cloud Function sicura <code>setClaims</code> e script CLI da terminale <code>set-claims.js</code> utilizzabile tramite email.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p><strong>OCR Protetti</strong>: Limitate le funzioni AI Genkit di scansione lavagna ai soli utenti autenticati per evitare abusi di fatturazione.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="warning">Performance</ion-badge>
+          <p>Ottimizzazione delle query dei risultati WOD tramite indicizzazione server-side basata su <code>userKey</code>.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="glass-card animate-in" style="--animation-delay: 0.05s">
+      <ion-card-header>
+        <ion-card-subtitle>Maggio 2026</ion-card-subtitle>
         <ion-card-title>PR Details & UX Enhancements</ion-card-title>
       </ion-card-header>
       <ion-card-content>

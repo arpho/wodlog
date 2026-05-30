@@ -1,28 +1,28 @@
 {
-
   "rules": {
-
-        "userProfile":{
-          "$uid":{
-            ".read":"true",
-              ".write":"true"
-          }
-        },"activities":{
-          "$uid":{
-            ".read":"true",
-              ".write":"true"
-          }
-        },
-          "wods":{
-
-              ".read":"true",
-                ".write":"true"
-
-          },
-            "results":{
-              ".read":"true",
-                ".write":"true"
-            }
+    "userProfile": {
+      "$uid": {
+        ".read": "auth != null && auth.token.enabled === true",
+        ".write": "auth != null && auth.token.enabled === true && (auth.uid === $uid || auth.token.role === 'editor')"
+      }
+    },
+    "activities": {
+      "$uid": {
+        ".read": "auth != null && auth.token.enabled === true && auth.uid === $uid",
+        ".write": "auth != null && auth.token.enabled === true && auth.uid === $uid"
+      }
+    },
+    "wods": {
+      ".read": "auth != null && auth.token.enabled === true",
+      ".write": "auth != null && auth.token.enabled === true && auth.token.role === 'editor'"
+    },
+    "results": {
+      ".read": "auth != null && auth.token.enabled === true",
+      ".write": "auth != null && auth.token.enabled === true",
+      ".indexOn": ["userKey"],
+      "$resultId": {
+        ".write": "auth != null && auth.token.enabled === true && (auth.token.role === 'editor' || (!data.exists() ? newData.child('userKey').val() === auth.uid : data.child('userKey').val() === auth.uid))"
+      }
+    }
   }
-
 }
