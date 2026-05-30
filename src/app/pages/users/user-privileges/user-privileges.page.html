@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/users" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Gestisci Privilegi</ion-title>
+    <ion-buttons slot="end">
+      <app-user-menu></app-user-menu>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="privileges-container animate-in">
+    
+    <!-- Spinner Caricamento -->
+    <div class="loader-container" *ngIf="isLoading()">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Caricamento profilo utente...</p>
+    </div>
+
+    <!-- Contenuto principale -->
+    <div class="privileges-content" *ngIf="!isLoading() && userProfile()">
+      
+      <!-- Info Utente Card -->
+      <ion-card class="user-info-card glass-card">
+        <ion-card-header>
+          <div class="avatar-large">
+            {{ userProfile()!.firstName.charAt(0).toUpperCase() }}{{ userProfile()!.lastName.charAt(0).toUpperCase() }}
+          </div>
+          <ion-card-title>{{ userProfile()!.firstName }} {{ userProfile()!.lastName }}</ion-card-title>
+          <ion-card-subtitle>{{ userProfile()!.email }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size="6">
+                <span class="info-label">Username:</span>
+                <p class="info-value">{{ userProfile()!.userName || '-' }}</p>
+              </ion-col>
+              <ion-col size="6">
+                <span class="info-label">Telefono:</span>
+                <p class="info-value">{{ userProfile()!.phoneNumber || '-' }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Regolazione dei Privilegi -->
+      <ion-card class="settings-card glass-card">
+        <ion-card-header>
+          <ion-card-subtitle>Autorizzazioni e Privilegi</ion-card-subtitle>
+          <ion-card-title>Configurazione Ruoli</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-list lines="none" class="glass-list">
+            
+            <!-- Selezione Ruolo -->
+            <ion-item class="glass-item">
+              <ion-icon name="shield-outline" slot="start" color="primary"></ion-icon>
+              <ion-select 
+                label="Ruolo Utente" 
+                interface="popover" 
+                [ngModel]="selectedRole()"
+                (ionChange)="selectedRole.set($event.detail.value)">
+                <ion-select-option value="user">User (Atleta)</ion-select-option>
+                <ion-select-option value="editor">Editor (Admin/Coach)</ion-select-option>
+              </ion-select>
+            </ion-item>
+            
+            <p class="role-description">
+              Gli utenti <strong>Editor</strong> possono creare, modificare e rimuovere WODs, e regolare i privilegi di altri atleti. Gli utenti <strong>User</strong> possono solo registrare ed editare i propri PR e risultati personali.
+            </p>
+
+            <div class="divider"></div>
+
+            <!-- Abilitazione Account -->
+            <ion-item class="glass-item">
+              <ion-icon name="lock-open-outline" slot="start" color="primary"></ion-icon>
+              <ion-toggle 
+                justify="space-between" 
+                [checked]="isEnabled()"
+                (ionChange)="isEnabled.set($event.detail.checked)">
+                Stato Abilitazione
+              </ion-toggle>
+            </ion-item>
+            
+            <p class="role-description">
+              Gli account disabilitati vengono bloccati ed esclusi dall'accesso a qualsiasi risorsa del database dell'applicazione.
+            </p>
+
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Bottone di Salvataggio -->
+      <div class="action-container">
+        <ion-button expand="block" (click)="savePrivileges()" class="save-button">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          Salva Privilegi Utente
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

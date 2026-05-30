@@ -1,8 +1,9 @@
 {
   "rules": {
     "userProfile": {
+      ".read": "auth != null && auth.token.enabled === true && auth.token.role === 'editor'",
       "$uid": {
-        ".read": "auth != null && auth.token.enabled === true",
+        ".read": "auth != null && auth.token.enabled === true && auth.uid === $uid",
         ".write": "auth != null && auth.token.enabled === true && (auth.uid === $uid || auth.token.role === 'editor')"
       }
     },
@@ -23,6 +24,10 @@
       "$resultId": {
         ".write": "auth != null && auth.token.enabled === true && (auth.token.role === 'editor' || (!data.exists() ? newData.child('userKey').val() === auth.uid : data.child('userKey').val() === auth.uid))"
       }
+    },
+    "notifications": {
+      ".read": "auth != null && auth.token.enabled === true && auth.token.role === 'editor'",
+      ".write": "false"
     }
   }
 }

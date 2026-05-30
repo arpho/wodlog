@@ -1,0 +1,119 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Gestione Utenti</ion-title>
+    <ion-buttons slot="end">
+      <app-user-menu></app-user-menu>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="users-container animate-in">
+    
+    <!-- Barra dei Filtri -->
+    <ion-card class="filter-card glass-card">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <!-- Ricerca per Testo -->
+            <ion-col size="12" size-md="6">
+              <ion-searchbar 
+                [ngModel]="searchQuery()" 
+                (ionInput)="searchQuery.set($any($event).target.value)"
+                placeholder="Cerca atleta..."
+                show-clear-button="always"
+                class="custom-search">
+              </ion-searchbar>
+            </ion-col>
+            
+            <!-- Filtro Ruolo -->
+            <ion-col size="6" size-md="3">
+              <ion-item class="glass-item">
+                <ion-select 
+                  label="Ruolo" 
+                  interface="popover" 
+                  [ngModel]="roleFilter()"
+                  (ionChange)="roleFilter.set($event.detail.value)">
+                  <ion-select-option value="all">Tutti i ruoli</ion-select-option>
+                  <ion-select-option value="editor">Editor (Admin)</ion-select-option>
+                  <ion-select-option value="user">User (Atleta)</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <!-- Filtro Stato -->
+            <ion-col size="6" size-md="3">
+              <ion-item class="glass-item">
+                <ion-select 
+                  label="Stato" 
+                  interface="popover" 
+                  [ngModel]="enabledFilter()"
+                  (ionChange)="enabledFilter.set($event.detail.value)">
+                  <ion-select-option value="all">Tutti gli stati</ion-select-option>
+                  <ion-select-option value="true">Abilitato</ion-select-option>
+                  <ion-select-option value="false">Non Abilitato</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Indicatore di Caricamento -->
+    <div class="loader-container" *ngIf="isLoading()">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Caricamento atleti in corso...</p>
+    </div>
+
+    <!-- Lista degli Utenti -->
+    <div class="users-list-grid" *ngIf="!isLoading()">
+      
+      <!-- Se non ci sono utenti corrispondenti -->
+      <div class="empty-state" *ngIf="filteredUsers().length === 0">
+        <ion-icon name="people-outline"></ion-icon>
+        <p>Nessun atleta corrisponde ai filtri impostati.</p>
+      </div>
+
+      <!-- Card dei Singoli Utenti -->
+      <div 
+        class="user-card glass-card animate-in" 
+        *ngFor="let athlete of filteredUsers(); let i = index" 
+        [style.--animation-delay]="i * 0.03 + 's'"
+        (click)="viewUserPrivileges(athlete)">
+        
+        <div class="user-card-header">
+          <div class="avatar-initials">
+            {{ athlete.firstName.charAt(0).toUpperCase() }}{{ athlete.lastName.charAt(0).toUpperCase() }}
+          </div>
+          <div class="user-details">
+            <h3>{{ athlete.firstName }} {{ athlete.lastName }}</h3>
+            <p>{{ athlete.email }}</p>
+          </div>
+        </div>
+
+        <div class="user-card-badges">
+          <!-- Badge Ruolo -->
+          <ion-badge [color]="athlete.role === 'editor' ? 'secondary' : 'light'" class="role-badge">
+            {{ athlete.role === 'editor' ? 'Editor' : 'User' }}
+          </ion-badge>
+
+          <!-- Badge Stato -->
+          <ion-badge [color]="(athlete.enabled === undefined || athlete.enabled === true) ? 'success' : 'danger'" class="status-badge">
+            {{ (athlete.enabled === undefined || athlete.enabled === true) ? 'Attivo' : 'In attesa' }}
+          </ion-badge>
+        </div>
+
+        <div class="user-card-action">
+          <span>Gestisci Privilegi</span>
+          <ion-icon name="eye-outline"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

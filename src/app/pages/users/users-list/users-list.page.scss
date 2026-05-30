@@ -1,0 +1,206 @@
+.users-container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// Card per i filtri
+.filter-card {
+  margin-bottom: 24px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  box-shadow: var(--glass-shadow, 0 8px 32px 0 rgba(0, 0, 0, 0.2));
+  border-radius: 16px;
+
+  ion-card-content {
+    padding: 8px 16px;
+  }
+}
+
+.custom-search {
+  --background: rgba(0, 0, 0, 0.2);
+  --color: #fff;
+  --placeholder-color: #aaa;
+  --icon-color: #fff;
+  --clear-button-color: #fff;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.glass-item {
+  --background: rgba(0, 0, 0, 0.2);
+  --color: #fff;
+  --border-radius: 10px;
+  margin: 0;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  ion-select {
+    width: 100%;
+    --placeholder-color: #bbb;
+    --color: #fff;
+  }
+}
+
+// Indicatore caricamento
+.loader-container {
+  text-align: center;
+  padding: 48px 0;
+  
+  ion-spinner {
+    width: 48px;
+    height: 48px;
+  }
+
+  p {
+    margin-top: 16px;
+    color: #ccc;
+    font-weight: 500;
+  }
+}
+
+// Lista Utenti Grid
+.users-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding-bottom: 32px;
+}
+
+// Stato vuoto
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 16px;
+  color: #aaa;
+
+  ion-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+// Card Atleta
+.user-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  padding: 16px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  box-shadow: var(--glass-shadow, 0 8px 32px 0 rgba(0, 0, 0, 0.2));
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cardFadeIn 0.5s ease-out both;
+  animation-delay: var(--animation-delay, 0s);
+
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 40px 0 rgba(0, 150, 255, 0.15);
+
+    .user-card-action {
+      color: var(--ion-color-secondary, #3dc2ff);
+      
+      ion-icon {
+        transform: translateX(4px);
+      }
+    }
+  }
+}
+
+.user-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .avatar-initials {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--ion-color-primary, #3880ff), var(--ion-color-secondary, #3dc2ff));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(56, 128, 255, 0.3);
+    margin-right: 12px;
+  }
+
+  .user-details {
+    h3 {
+      margin: 0 0 4px 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      color: #bbb;
+      word-break: break-all;
+    }
+  }
+}
+
+.user-card-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  ion-badge {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+}
+
+.user-card-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #bbb;
+  font-size: 12px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+
+  span {
+    margin-right: 6px;
+  }
+
+  ion-icon {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+  }
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,5 +1,5 @@
 import { UserMenuComponent } from '../components/userMenu/user-menu.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonPopover, IonItem, IonList, IonCard, IonImg, IonLabel, IonGrid, IonRow, IonCol, IonButtons } from '@ionic/angular/standalone';
 import { HeaderComponent } from "../components/headerComponent/header/header.component";
 import { UsersService } from '../services/users/users.service';
@@ -7,22 +7,27 @@ import { PrTableComponent } from "../components/prTable/pr-table/pr-table.compon
 import { UserModel } from '../models/userModel';
 import { ActivityService } from '../services/activity/activity.service';
 import { ActivitiesListComponent } from '../components/activitiesList/activities-list/activities-list.component';
-import { menu } from 'ionicons/icons';
+import { menu, alertCircleOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
 import { HomeSquareComponent } from '../components/home-square/home-square.component';
+import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [IonButtons, UserMenuComponent, IonCol, IonRow, IonGrid, IonLabel, IonImg, IonCard, IonList, IonItem, IonPopover, IonIcon,
-    ActivitiesListComponent,HomeSquareComponent,
+    ActivitiesListComponent,HomeSquareComponent, CommonModule,
     IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonList, HeaderComponent, PrTableComponent, ],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   user = new UserModel({key:"bubba"});
   title = "";
+  pendingNotificationsCount = signal<number>(0);
+  private notificationsSubscription?: Subscription;
 
   async makeTitle() {
     const user = await this.users.getLoggedUser();
@@ -34,12 +39,29 @@ export class HomePage implements OnInit {
     private service: ActivityService,
     private router: Router
   ) {
-    addIcons({ menu });
+    addIcons({ menu, alertCircleOutline });
   }
 
   async ngOnInit(): Promise<void> {
     this.user = await this.users.getLoggedUser();
     this.service.realtimeFetchAllActivities(this.user.key, (res) => console.log("**data", res));
     this.title = await this.makeTitle();
+
+    if (this.user.role === 'editor') {
+      this.notificationsSubscription = this.users.getPendingNotifications().subscribe((notifs) => {
+        const pending = notifs.filter(n => !n.read);
+        this.pendingNotificationsCount.set(pending.length);
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.notificationsSubscription) {
+      this.notificationsSubscription.unsubscribe();
+    }
+  }
+
+  goToUserManagement() {
+    this.router.navigate(['/users']);
   }
 }

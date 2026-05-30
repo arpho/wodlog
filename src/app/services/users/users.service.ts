@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Auth, getAuth } from '@angular/fire/auth';
 import { AuthService } from '../auth/auth.service';
-import { getDatabase, get, ref, set } from "firebase/database";
+import { getDatabase, get, ref, set, onValue, remove } from "firebase/database";
 import { UserModel } from 'src/app/models/userModel';
-import { firstValueFrom, take } from 'rxjs';
+import { firstValueFrom, take, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +57,40 @@ export class UsersService {
       console.log("No user found");
       throw new Error("no data found");
     }
+  }
+
+  async getAllUsers(): Promise<UserModel[]> {
+    const usersRef = ref(this.db, 'userProfile');
+    const snapshot = await get(usersRef);
+    const out: UserModel[] = [];
+    if (snapshot.exists()) {
+      Object.entries(snapshot.val()).forEach(([key, value]) => {
+        out.push(new UserModel(value as any).setKey(key));
+      });
+    }
+    return out;
+  }
+
+  getPendingNotifications(): Observable<any[]> {
+    return new Observable((subscriber) => {
+      const notificationsRef = ref(this.db, 'notifications');
+      const unsubscribe = onValue(notificationsRef, (snapshot) => {
+        const out: any[] = [];
+        if (snapshot.exists()) {
+          Object.entries(snapshot.val()).forEach(([key, value]) => {
+            out.push({ ...(value as any), key });
+          });
+        }
+        subscriber.next(out);
+      }, (error) => {
+        subscriber.error(error);
+      });
+      return () => unsubscribe();
+    });
+  }
+
+  dismissNotification(userKey: string): Promise<void> {
+    const notificationRef = ref(this.db, `notifications/${userKey}`);
+    return remove(notificationRef);
   }
 }

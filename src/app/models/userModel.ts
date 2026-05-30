@@ -13,6 +13,7 @@ export class UserModel{
   password = ''
   phoneNumber = ''
   role = ''
+  enabled: boolean | undefined = undefined
   prList: ActivityModel[] = []
   userName = ''
   weight: number | null = null
@@ -47,6 +48,7 @@ serialize(){
     password: this.password,
     phoneNumber: this.phoneNumber,
     role: this.role,
+    enabled: this.enabled,
     userName: this.userName,
     weight: this.weight,
     height: this.height,

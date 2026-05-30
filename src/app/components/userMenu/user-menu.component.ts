@@ -20,7 +20,8 @@ import {
   personOutline,
   listOutline,
   settingsOutline,
-  homeOutline
+  homeOutline,
+  peopleOutline
 } from 'ionicons/icons';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserModel } from 'src/app/models/userModel';
@@ -62,7 +63,8 @@ export class UserMenuComponent implements OnInit {
       personOutline,
       listOutline,
       settingsOutline,
-      homeOutline
+      homeOutline,
+      peopleOutline
     });
   }
 
@@ -99,6 +101,10 @@ export class UserMenuComponent implements OnInit {
 
   openWodList() {
     this.router.navigate(['/wods-list']);
+  }
+
+  openUserManagement() {
+    this.router.navigate(['/users']);
   }
 
   logout() {

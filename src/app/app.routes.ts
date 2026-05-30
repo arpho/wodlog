@@ -77,4 +77,14 @@ export const routes: Routes = [
     path: 'settings',
     loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage)
   },
+  {
+    path: 'users',
+    loadComponent: () => import('./pages/users/users-list/users-list.page').then( m => m.UsersListPage),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'users/:uid/privilegies',
+    loadComponent: () => import('./pages/users/user-privileges/user-privileges.page').then( m => m.UserPrivilegesPage),
+    canActivate: [authGuard]
+  },
 ];

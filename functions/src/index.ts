@@ -121,8 +121,8 @@ export const beforeUserCreated = functions.auth.user().onCreate(async (user: Use
 
   logger.info(`Nuovo utente registrato: ${uid}. Inizializzazione in corso...`);
 
-  // 1. Impostiamo il ruolo di default 'user' ed enabled true nei Custom Claims di Firebase Auth
-  await getAuth().setCustomUserClaims(uid, { enabled: true, role: "user" });
+  // 1. Impostiamo il ruolo di default 'user' ed enabled false nei Custom Claims di Firebase Auth
+  await getAuth().setCustomUserClaims(uid, { enabled: false, role: "user" });
 
   // 2. Creiamo il profilo utente di default nel database Realtime per prevenire crash
   const db = getDatabase();
@@ -133,7 +133,7 @@ export const beforeUserCreated = functions.auth.user().onCreate(async (user: Use
     firstName: user.displayName ? user.displayName.split(" ")[0] : "",
     lastName: user.displayName ? user.displayName.split(" ").slice(1).join(" ") : "",
     role: "user",
-    enabled: true,
+    enabled: false,
     birthDate: "",
     phoneNumber: user.phoneNumber || "",
     userName: email.split("@")[0],
@@ -144,7 +144,17 @@ export const beforeUserCreated = functions.auth.user().onCreate(async (user: Use
     photoUrl: user.photoURL || ""
   });
 
-  logger.info(`Inizializzazione completata con successo per l'utente: ${uid}`);
+  // 3. Creiamo la notifica per segnalare all'editor l'utente in attesa di approvazione
+  const notificationsRef = db.ref(`notifications/${uid}`);
+  await notificationsRef.set({
+    key: uid,
+    message: `Nuovo utente registrato: ${email || uid}. Richiede abilitazione.`,
+    email: email,
+    date: Date.now(),
+    read: false
+  });
+
+  logger.info(`Inizializzazione completata per l'utente non abilitato: ${uid}`);
 });
 
 // --------------------------------------------------
