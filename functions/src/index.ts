@@ -5,31 +5,15 @@ import * as functions from "firebase-functions/v1";
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
-// Import Genkit core and plugins.
-import { genkit, z } from "genkit";
-import { googleAI, gemini } from "@genkit-ai/googleai";
+import { GoogleGenAI, Type, Schema } from "@google/genai";
 
 // Initialize Firebase Admin SDK
 initializeApp({
   databaseURL: "https://m1crossfit-5b2b9.firebaseio.com"
 });
 
-// Initialize Genkit
-const ai = genkit({
-  plugins: [
-    googleAI(),
-  ],
-  model: gemini('gemini-2.5-flash'),
-});
-
-// Input Schema condiviso per le immagini
-const ImageInputSchema = z.object({
-  imageBufferBase64: z.string().describe("L'immagine codificata in base64"),
-  mimeType: z.string().default("image/jpeg")
-});
-
-// Output Schema: un semplice array di stringhe
-const TextLinesSchema = z.array(z.string()).describe("Righe di testo estratte dall'immagine");
+// Initialize the new Google Gen AI SDK
+const ai = new GoogleGenAI({}); // Automatically uses GEMINI_API_KEY from environment
 
 // Funzione di utilità per ripulire il base64
 function extractBase64(base64Data: string): string {
@@ -40,57 +24,80 @@ function extractBase64(base64Data: string): string {
   return base64Data;
 }
 
-// --------------------------------------------------
-// FLOW 1: ESTREAZIONE DELLA FORZA
-// --------------------------------------------------
-export const analyzeForceImageFlow = ai.defineFlow(
-  {
-    name: "analyzeForceImageFlow",
-    inputSchema: ImageInputSchema,
-    outputSchema: TextLinesSchema,
+// Output Schema per Google Gen AI
+const textLinesSchema: Schema = {
+  type: Type.ARRAY,
+  items: {
+    type: Type.STRING
   },
-  async (input) => {
-    logger.info("Avvio analisi immagine Forza");
-    const base64Data = extractBase64(input.imageBufferBase64);
-    
-    const response = await ai.generate({
-      model: gemini('gemini-2.5-flash'),
-      prompt: [
-        { text: "Analizza questa immagine della lavagna di un allenamento CrossFit. Estrai SOLO la parte relativa alla 'Forza', pesistica, tecnica o sollevamento (es. Squat, Deadlift, Snatch, Clean & Jerk, skill work). Trascrivi ogni singola riga di testo di questa sezione esattamente come la leggi e restituiscila come elemento di un array. Ignora qualsiasi parte relativa al riscaldamento generico o al WOD finale (condizionamento metabolico). Se nell'immagine non c'è una parte di forza, restituisci un array vuoto." },
-        { media: { url: `data:${input.mimeType};base64,${base64Data}` } }
-      ],
-      output: { schema: TextLinesSchema }
-    });
-    
-    return response.output || [];
-  }
-);
+  description: "Righe di testo estratte dall'immagine"
+};
 
 // --------------------------------------------------
-// FLOW 2: ESTRAZIONE DEL WOD
+// Helper 1: ESTREAZIONE DELLA FORZA
 // --------------------------------------------------
-export const analyzeWodImageFlow = ai.defineFlow(
-  {
-    name: "analyzeWodImageFlow",
-    inputSchema: ImageInputSchema,
-    outputSchema: TextLinesSchema,
-  },
-  async (input) => {
-    logger.info("Avvio analisi immagine WOD");
-    const base64Data = extractBase64(input.imageBufferBase64);
-    
-    const response = await ai.generate({
-      model: gemini('gemini-2.5-flash'),
-      prompt: [
-        { text: "Analizza questa immagine della lavagna di un allenamento CrossFit. Estrai SOLO la parte finale relativa al 'WOD', circuito, AMRAP, EMOM, For Time o condizionamento metabolico. Trascrivi ogni singola riga di testo di questa sezione esattamente come la leggi e restituiscila come elemento di un array. Ignora qualsiasi parte relativa al riscaldamento iniziale, alla mobilità o all'allenamento di forza/pesistica pura. Se nell'immagine non c'è un WOD, restituisci un array vuoto." },
-        { media: { url: `data:${input.mimeType};base64,${base64Data}` } }
-      ],
-      output: { schema: TextLinesSchema }
-    });
-    
-    return response.output || [];
+const analyzeForceImageFlow = async (input: { imageBufferBase64: string, mimeType?: string }) => {
+  logger.info("Avvio analisi immagine Forza");
+  const base64Data = extractBase64(input.imageBufferBase64);
+  const mimeType = input.mimeType || "image/jpeg";
+  
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: "Analizza questa immagine della lavagna di un allenamento CrossFit. Estrai SOLO la parte relativa alla 'Forza', pesistica, tecnica o sollevamento (es. Squat, Deadlift, Snatch, Clean & Jerk, skill work). Trascrivi ogni singola riga di testo di questa sezione esattamente come la leggi e restituiscila come elemento di un array. Ignora qualsiasi parte relativa al riscaldamento generico o al WOD finale (condizionamento metabolico). Se nell'immagine non c'è una parte di forza, restituisci un array vuoto." },
+          { inlineData: { mimeType, data: base64Data } }
+        ]
+      }
+    ],
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: textLinesSchema
+    }
+  });
+  
+  try {
+    return JSON.parse(response.text || "[]");
+  } catch (e) {
+    logger.error("Errore nel parsing JSON della risposta", e);
+    return [];
   }
-);
+};
+
+// --------------------------------------------------
+// Helper 2: ESTRAZIONE DEL WOD
+// --------------------------------------------------
+const analyzeWodImageFlow = async (input: { imageBufferBase64: string, mimeType?: string }) => {
+  logger.info("Avvio analisi immagine WOD");
+  const base64Data = extractBase64(input.imageBufferBase64);
+  const mimeType = input.mimeType || "image/jpeg";
+  
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: "Analizza questa immagine della lavagna di un allenamento CrossFit. Estrai SOLO la parte finale relativa al 'WOD', circuito, AMRAP, EMOM, For Time o condizionamento metabolico. Trascrivi ogni singola riga di testo di questa sezione esattamente come la leggi e restituiscila come elemento di un array. Ignora qualsiasi parte relativa al riscaldamento iniziale, alla mobilità o all'allenamento di forza/pesistica pura. Se nell'immagine non c'è un WOD, restituisci un array vuoto." },
+          { inlineData: { mimeType, data: base64Data } }
+        ]
+      }
+    ],
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: textLinesSchema
+    }
+  });
+  
+  try {
+    return JSON.parse(response.text || "[]");
+  } catch (e) {
+    logger.error("Errore nel parsing JSON della risposta", e);
+    return [];
+  }
+};
 
 // Opzioni condivise per le Cloud Functions (es. abilitazione CORS)
 const functionOptions = { maxInstances: 10, cors: true };
