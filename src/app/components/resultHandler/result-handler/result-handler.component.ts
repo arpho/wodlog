@@ -120,7 +120,8 @@ return this.Result()? this.Result().result:"no result";
 
   @Input({ required: true }) userKey: string = '';
   @Input({ required: true }) wodKey: string = '';
-  @Input() ask4newResult=false
+  @Input() ask4newResult=false;
+  @Input() showButton = true;
 
   constructor(
     private service: ResultsService,

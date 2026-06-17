@@ -4,6 +4,10 @@ Tutte le novità e gli aggiornamenti del progetto WodLog.
 
 ## Giugno 2026
 
+### WOD List UX Enhancement
+- **UX**: Introdotti gli **Sliding Buttons** (swipe-to-reveal) nella lista dei WOD. Ora le azioni di modifica, eliminazione e aggiunta del risultato sono gestite tramite uno swipe laterale, rendendo l'interfaccia molto più pulita, moderna e a prova di tap accidentali.
+
+
 ### Gemini API SDK Migration
 - **Features (Migrazione GenAI)**: Rimosso il pacchetto obsoleto `@google/generative-ai` e migrato l'intero strato backend OCR all'SDK ufficiale `@google/genai` per una lettura stabile e duratura dei WOD ed Esercizi di Forza.
 - **Performance (Pulizia Backend)**: Rimossi completamente i pacchetti `genkit` e ottimizzate le Cloud Functions per un'esecuzione più veloce e leggera.

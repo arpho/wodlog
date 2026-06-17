@@ -1,4 +1,6 @@
     <h1 >
   {{ showResult() }}
 </h1>
-<ion-button (click)="updateResult()" color="light" slot="end" size="small" shape="round"><ion-icon name="create-outline"></ion-icon></ion-button>
+@if (showButton) {
+  <ion-button (click)="updateResult()" color="light" slot="end" size="small" shape="round"><ion-icon name="create-outline"></ion-icon></ion-button>
+}

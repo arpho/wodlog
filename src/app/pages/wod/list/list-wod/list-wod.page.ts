@@ -1,5 +1,5 @@
 import { UserMenuComponent } from '../../../../components/userMenu/user-menu.component';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent,
@@ -15,10 +15,12 @@ import { IonContent,
   IonFabButton,
   IonIcon,
    IonBreadcrumb,
-  IonThumbnail, IonImg, IonButtons } from '@ionic/angular/standalone';
+  IonThumbnail, IonImg, IonButtons,
+  IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
+import { AlertController } from '@ionic/angular';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
+import { add, trash, create, clipboard } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { WodModel } from 'src/app/models/wod';
 import { ResultsService } from 'src/app/services/results/results.service';
@@ -50,7 +52,10 @@ import { UserModel } from 'src/app/models/userModel';
     FormsModule,
     ResultHandlerComponent,
     IonThumbnail,
-    CustomSorterPipe
+    CustomSorterPipe,
+    IonItemSliding,
+    IonItemOptions,
+    IonItemOption
 ],
 })
 export class ListWodPage implements OnInit {
@@ -77,10 +82,45 @@ title="";
     console.log('edit wod', wod);
     this.router.navigateByUrl(`/edit-wod?wodKey=${wod.key}`);
   }
+
+  async deleteWod(wod: WodModel) {
+    const alert = await this.alertCtrl.create({
+      header: 'Conferma',
+      message: `Sei sicuro di voler eliminare il WOD "${wod.title}"?`,
+      buttons: [
+        {
+          text: 'Annulla',
+          role: 'cancel'
+        },
+        {
+          text: 'Elimina',
+          role: 'destructive',
+          handler: () => {
+            this.service.deleteWod(wod);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  @ViewChildren(ResultHandlerComponent) resultHandlers!: QueryList<ResultHandlerComponent>;
+
+  triggerResultHandler(wodKey: string) {
+    const handler = this.resultHandlers.find(h => h.wodKey === wodKey);
+    if (handler) {
+      if (handler.Result() && handler.Result().result) {
+         handler.updateResult();
+      } else {
+         handler.setResult();
+      }
+    }
+  }
+
   wods = signal<WodModel[]>([]);
 
-  constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService) {
-    addIcons({ add });
+  constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService, private alertCtrl: AlertController) {
+    addIcons({ add, trash, create, clipboard });
   }
 
   async ngOnInit() {
