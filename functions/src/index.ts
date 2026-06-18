@@ -226,3 +226,37 @@ export const setClaims = onCall(functionOptions, async (request) => {
     throw new HttpsError("internal", `Errore durante la configurazione dei privilegi: ${error.message}`);
   }
 });
+
+// --------------------------------------------------
+// TRIGGER: AGGIORNAMENTO MEDIA VALUTAZIONI WOD
+// --------------------------------------------------
+export const onWodRatingWritten = functions.database.ref('/wodRatings/{wodKey}/{userKey}')
+  .onWrite(async (change, context) => {
+    const wodKey = context.params.wodKey;
+    const db = getDatabase();
+    const wodRatingsRef = db.ref(`/wodRatings/${wodKey}`);
+    
+    try {
+      const snapshot = await wodRatingsRef.once('value');
+      let ratingTotal = 0;
+      let ratingCount = 0;
+      
+      snapshot.forEach(childSnapshot => {
+        const data = childSnapshot.val();
+        if (data && typeof data.rating === 'number') {
+          ratingTotal += data.rating;
+          ratingCount++;
+        }
+      });
+      
+      const wodRef = db.ref(`/wods/${wodKey}`);
+      await wodRef.update({
+        ratingTotal,
+        ratingCount
+      });
+      
+      logger.info(`Aggiornata media valutazioni per WOD ${wodKey}: total=${ratingTotal}, count=${ratingCount}`);
+    } catch (error) {
+      logger.error(`Errore nell'aggiornamento della media valutazioni per WOD ${wodKey}:`, error);
+    }
+  });
