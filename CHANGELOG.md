@@ -6,6 +6,10 @@ Tutte le novità e gli aggiornamenti del progetto WodLog.
 
 ### WOD List UX Enhancement
 - **UX**: Introdotti gli **Sliding Buttons** (swipe-to-reveal) nella lista dei WOD. Ora le azioni di modifica, eliminazione e aggiunta del risultato sono gestite tramite uno swipe laterale, rendendo l'interfaccia molto più pulita, moderna e a prova di tap accidentali.
+- **UX**: Aggiunta la chiusura automatica degli **Sliding Buttons** dopo il click su una delle opzioni, migliorando l'esperienza d'uso.
+
+### WOD & Results Rating System
+- **Features**: Implementato un nuovo sistema di valutazione (Rating) a stelle per i WOD e i relativi risultati. Gli atleti possono ora valutare i WOD (da 1 a 5 stelle), permettendo di calcolare e visualizzare la media dei voti della community direttamente nella lista.
 
 
 ### Gemini API SDK Migration

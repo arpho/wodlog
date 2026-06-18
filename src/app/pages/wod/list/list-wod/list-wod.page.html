@@ -31,7 +31,7 @@
     <ion-col><h3>result</h3></ion-col>
   </ion-row>
   @for (item of  wods()|customSorter:sorter; track item.key) {
-    <ion-item-sliding>
+    <ion-item-sliding #slidingItem>
       <ion-item> <ion-row>
         <ion-col size="1" class="ion-text-center">
           <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
@@ -69,16 +69,16 @@
       </ion-item>
       
       <ion-item-options side="end">
-        <ion-item-option color="warning" (click)="rateWod(item)">
+        <ion-item-option color="warning" (click)="rateWod(item); slidingItem.close()">
           <ion-icon slot="icon-only" name="star"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="success" (click)="triggerResultHandler(item.key)">
+        <ion-item-option color="success" (click)="triggerResultHandler(item.key); slidingItem.close()">
           <ion-icon slot="icon-only" name="clipboard"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="primary" (click)="editWod(item)">
+        <ion-item-option color="primary" (click)="editWod(item); slidingItem.close()">
           <ion-icon slot="icon-only" name="create"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="deleteWod(item)">
+        <ion-item-option color="danger" (click)="deleteWod(item); slidingItem.close()">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>
