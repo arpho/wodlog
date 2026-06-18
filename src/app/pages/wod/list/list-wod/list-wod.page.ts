@@ -20,7 +20,7 @@ import { IonContent,
 import { AlertController } from '@ionic/angular';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
-import { add, trash, create, clipboard } from 'ionicons/icons';
+import { add, trash, create, clipboard, star } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { WodModel } from 'src/app/models/wod';
 import { ResultsService } from 'src/app/services/results/results.service';
@@ -104,6 +104,34 @@ title="";
     await alert.present();
   }
 
+  async rateWod(wod: WodModel) {
+    const alert = await this.alertCtrl.create({
+      header: 'Valuta WOD',
+      inputs: [
+        {
+          name: 'rating',
+          type: 'number',
+          placeholder: 'Voto da 1 a 5',
+          min: 1,
+          max: 5
+        }
+      ],
+      buttons: [
+        { text: 'Annulla', role: 'cancel' },
+        {
+          text: 'Vota',
+          handler: (data) => {
+            const rating = Number(data.rating);
+            if (rating >= 1 && rating <= 5) {
+              this.service.rateWod(wod.key, this.user.key, rating);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   @ViewChildren(ResultHandlerComponent) resultHandlers!: QueryList<ResultHandlerComponent>;
 
   triggerResultHandler(wodKey: string) {
@@ -120,7 +148,7 @@ title="";
   wods = signal<WodModel[]>([]);
 
   constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService, private alertCtrl: AlertController) {
-    addIcons({ add, trash, create, clipboard });
+    addIcons({ add, trash, create, clipboard, star });
   }
 
   async ngOnInit() {

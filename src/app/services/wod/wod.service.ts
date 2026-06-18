@@ -66,4 +66,14 @@ return wod;
 
 
   }
+
+  async rateWod(wodKey: string, userKey: string, rating: number) {
+    const ratingRef = ref(this.db, `wodRatings/${wodKey}/${userKey}`);
+    return set(ratingRef, {
+      rating,
+      date: new Date().getTime(),
+      wodKey,
+      userKey
+    });
+  }
 }
