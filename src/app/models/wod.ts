@@ -8,6 +8,8 @@ export class WodModel {
   date: number = new Date().getTime();
   title = '';
   note = '';
+  ratingTotal = 0;
+  ratingCount = 0;
   constructor(args?: {}) {
     this.loadFields(args);
   }
@@ -35,7 +37,9 @@ export class WodModel {
       note: this.note,
       hero: this.hero,
       girl: this.girl,
-      benchmark: this.benchmark
+      benchmark: this.benchmark,
+      ratingTotal: this.ratingTotal || 0,
+      ratingCount: this.ratingCount || 0
     };
   }
 }

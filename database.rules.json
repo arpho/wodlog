@@ -17,6 +17,14 @@
       ".read": "auth != null && auth.token.enabled !== false",
       ".write": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')"
     },
+    "wodRatings": {
+      ".read": "auth != null && auth.token.enabled !== false",
+      "$wodKey": {
+        "$userKey": {
+          ".write": "auth != null && auth.token.enabled !== false && auth.uid === $userKey"
+        }
+      }
+    },
     "results": {
       ".read": "auth != null && auth.token.enabled !== false",
       ".write": "auth != null && auth.token.enabled !== false",
