@@ -53,6 +53,14 @@ const alert = await this.alertCtrl.create({
       placeholder: 'data',
     },
     {
+      name: 'rating',
+      type: 'number',
+      placeholder: 'valutazione (1-5)',
+      value: this.Result().rating,
+      min: 1,
+      max: 5
+    },
+    {
       name: 'note',
       type: 'textarea',
       placeholder: 'note',
@@ -79,6 +87,7 @@ const alert = await this.alertCtrl.create({
         result.result = data.result;
         result.date = data.date;
         result.note = data.note;
+        if (data.rating) result.rating = Number(data.rating);
         result.key = this.Result().key
         this.Result.set(result);
         console.log('result', result);
@@ -228,6 +237,13 @@ console.log("result", result.length);
           placeholder: 'data',
         },
         {
+          name: 'rating',
+          type: 'number',
+          placeholder: 'valutazione (1-5)',
+          min: 1,
+          max: 5
+        },
+        {
           name: 'note',
           type: 'textarea',
           placeholder: 'note',
@@ -248,6 +264,7 @@ console.log("result", result.length);
             console.log('Confirm Ok', data);
             data['userKey'] = this.userKey;
             data['wodKey'] = this.wodKey;
+            if (data.rating) data.rating = Number(data.rating);
             const result = new ResultsModel(data);
             console.log('result', result);
             this.service

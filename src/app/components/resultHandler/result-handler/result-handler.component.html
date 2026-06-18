@@ -1,5 +1,5 @@
-    <h1 >
-  {{ showResult() }}
+<h1 >
+  {{ showResult() }} @if (Result()?.rating) { <ion-icon name="star" color="warning"></ion-icon> {{Result().rating}} }
 </h1>
 @if (showButton) {
   <ion-button (click)="updateResult()" color="light" slot="end" size="small" shape="round"><ion-icon name="create-outline"></ion-icon></ion-button>

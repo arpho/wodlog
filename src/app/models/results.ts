@@ -5,6 +5,7 @@ export class ResultsModel {
   result = "";
   note = "";
   userKey = "";
+  rating?: number;
   constructor(arg?:{}) {
     this.loadFields(arg);
   }
@@ -24,7 +25,8 @@ export class ResultsModel {
       date: this.date,
       result: this.result,
       note: this.note,
-      userKey: this.userKey
+      userKey: this.userKey,
+      rating: this.rating
     }
   }
 }
