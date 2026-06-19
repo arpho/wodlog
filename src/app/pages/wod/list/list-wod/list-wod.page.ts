@@ -1,5 +1,5 @@
 import { UserMenuComponent } from '../../../../components/userMenu/user-menu.component';
-import { Component, OnInit, signal, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, signal, computed, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent,
@@ -146,6 +146,39 @@ title="";
   }
 
   wods = signal<WodModel[]>([]);
+
+  searchText = signal<string>('');
+  filterHero = signal<boolean>(false);
+  filterGirl = signal<boolean>(false);
+  filterBenchmark = signal<boolean>(false);
+  filterDate = signal<string>('');
+
+  filteredWods = computed(() => {
+    let list = this.wods();
+
+    if (this.filterHero()) list = list.filter(w => w.hero);
+    if (this.filterGirl()) list = list.filter(w => w.girl);
+    if (this.filterBenchmark()) list = list.filter(w => w.benchmark);
+
+    const date = this.filterDate();
+    if (date) {
+      list = list.filter(w => {
+        const wodDate = new Date(w.date).toISOString().split('T')[0];
+        return wodDate === date;
+      });
+    }
+
+    const search = this.searchText().toLowerCase().trim();
+    if (search) {
+      list = list.filter(w => {
+        const inForce = w.force?.some(f => f.toLowerCase().includes(search));
+        const inWod = w.wod?.some(x => x.toLowerCase().includes(search));
+        return inForce || inWod;
+      });
+    }
+
+    return list;
+  });
 
   constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService, private alertCtrl: AlertController) {
     addIcons({ add, trash, create, clipboard, star });
