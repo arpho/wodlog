@@ -16,7 +16,7 @@ import { IonContent,
   IonIcon,
    IonBreadcrumb,
   IonThumbnail, IonImg, IonButtons,
-  IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
+  IonItemSliding, IonItemOptions, IonItemOption, IonSearchbar, IonChip } from '@ionic/angular/standalone';
 import { AlertController } from '@ionic/angular';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
@@ -55,7 +55,9 @@ import { UserModel } from 'src/app/models/userModel';
     CustomSorterPipe,
     IonItemSliding,
     IonItemOptions,
-    IonItemOption
+    IonItemOption,
+    IonSearchbar,
+    IonChip
 ],
 })
 export class ListWodPage implements OnInit {

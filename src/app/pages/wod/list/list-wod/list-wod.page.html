@@ -22,6 +22,19 @@
     </ion-toolbar>
   </ion-header>
 
+  <div class="glass-panel" style="margin: 10px; padding: 10px;">
+    <ion-searchbar (ionInput)="searchText.set($any($event).detail.value || '')" placeholder="Cerca negli esercizi (forza/wod)..."></ion-searchbar>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; align-items: center;">
+      <ion-chip [color]="filterHero() ? 'primary' : 'medium'" (click)="filterHero.set(!filterHero())">Hero</ion-chip>
+      <ion-chip [color]="filterGirl() ? 'primary' : 'medium'" (click)="filterGirl.set(!filterGirl())">Girl</ion-chip>
+      <ion-chip [color]="filterBenchmark() ? 'primary' : 'medium'" (click)="filterBenchmark.set(!filterBenchmark())">Benchmark</ion-chip>
+      <input type="date" [ngModel]="filterDate()" (ngModelChange)="filterDate.set($event)" style="padding: 8px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: inherit; outline: none; margin-left: auto;">
+      @if (filterDate() !== '') {
+        <ion-icon name="trash" color="danger" style="cursor: pointer; font-size: 24px;" (click)="filterDate.set('')"></ion-icon>
+      }
+    </div>
+  </div>
+
 <ion-grid class="glass-panel" style="margin: 10px;">
   <ion-row>
     <ion-col size="1" class="ion-text-center"><h3>voto</h3></ion-col>
