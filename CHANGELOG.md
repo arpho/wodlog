@@ -4,6 +4,10 @@ Tutte le novità e gli aggiornamenti del progetto WodLog.
 
 ## Giugno 2026
 
+### WOD Filtering & Search
+- **Features**: Aggiunto un sistema di filtraggio avanzato per la lista dei WOD. È ora possibile filtrare per flag (Hero, Girl, Benchmark), per data specifica e tramite una comoda barra di ricerca testuale per gli esercizi (forza e WOD).
+- **Security**: Risolta una vulnerabilità critica nelle regole di sicurezza di Firebase Realtime Database (nodo `results`) che esponeva i dati a sovrascritture accidentali o malevole.
+
 ### WOD List UX Enhancement
 - **UX**: Introdotti gli **Sliding Buttons** (swipe-to-reveal) nella lista dei WOD. Ora le azioni di modifica, eliminazione e aggiunta del risultato sono gestite tramite uno swipe laterale, rendendo l'interfaccia molto più pulita, moderna e a prova di tap accidentali.
 - **UX**: Aggiunta la chiusura automatica degli **Sliding Buttons** dopo il click su una delle opzioni, migliorando l'esperienza d'uso.
