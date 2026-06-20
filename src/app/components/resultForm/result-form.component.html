@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Risultato WOD</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Annulla</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <ion-item>
+      <ion-label position="stacked">Risultato</ion-label>
+      <ion-input type="text" [(ngModel)]="resultStr" placeholder="Inserisci il tuo risultato"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Data</ion-label>
+      <ion-input type="date" [(ngModel)]="dateStr"></ion-input>
+    </ion-item>
+
+    <div class="rpe-section">
+      <ion-label position="stacked" class="rpe-title">RPE (Sforzo Percepito)</ion-label>
+      <app-custom-slider 
+        [maxValue]="10" 
+        [iconType]="'bar'" 
+        [(value)]="rating">
+      </app-custom-slider>
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked">Note</ion-label>
+      <ion-textarea [(ngModel)]="noteStr" placeholder="Inserisci eventuali note (scalato, peso, ecc.)" auto-grow="true"></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" class="ion-margin-top" (click)="save()" [disabled]="!resultStr()">
+      Salva Risultato
+    </ion-button>
+  </div>
+</ion-content>

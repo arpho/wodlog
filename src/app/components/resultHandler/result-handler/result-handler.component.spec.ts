@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ResultHandlerComponent } from './result-handler.component';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { AlertController, ToastController } from '@ionic/angular/standalone';
+import { AlertController, ToastController, ModalController } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -26,6 +26,7 @@ describe('ResultHandlerComponent', () => {
         { provide: UsersService, useValue: mockUsersService },
         { provide: AlertController, useValue: jasmine.createSpyObj('AlertController', ['create']) },
         { provide: ToastController, useValue: jasmine.createSpyObj('ToastController', ['create']) },
+        { provide: ModalController, useValue: jasmine.createSpyObj('ModalController', ['create']) },
         { provide: Router, useValue: { navigateByUrl: jasmine.createSpy('navigateByUrl') } },
         {
           provide: ActivatedRoute,

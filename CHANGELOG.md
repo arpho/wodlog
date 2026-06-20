@@ -8,12 +8,16 @@ Tutte le novità e gli aggiornamenti del progetto WodLog.
 - **Features**: Aggiunto un sistema di filtraggio avanzato per la lista dei WOD. È ora possibile filtrare per flag (Hero, Girl, Benchmark), per data specifica e tramite una comoda barra di ricerca testuale per gli esercizi (forza e WOD).
 - **Security**: Risolta una vulnerabilità critica nelle regole di sicurezza di Firebase Realtime Database (nodo `results`) che esponeva i dati a sovrascritture accidentali o malevole.
 
+### PWA & UX Improvements
+- **UX**: Aggiunto un listener per i cambiamenti di visibilità dell'app (Visibility API). Ora l'app controlla automaticamente gli aggiornamenti del Service Worker in background non appena torna in primo piano. Questo garantisce che il prompt di aggiornamento venga mostrato immediatamente al rientro, evitando perdite accidentali di dati nei form attivi causate da reload ritardati.
+
 ### WOD List UX Enhancement
 - **UX**: Introdotti gli **Sliding Buttons** (swipe-to-reveal) nella lista dei WOD. Ora le azioni di modifica, eliminazione e aggiunta del risultato sono gestite tramite uno swipe laterale, rendendo l'interfaccia molto più pulita, moderna e a prova di tap accidentali.
 - **UX**: Aggiunta la chiusura automatica degli **Sliding Buttons** dopo il click su una delle opzioni, migliorando l'esperienza d'uso.
 
 ### WOD & Results Rating System
 - **Features**: Implementato un nuovo sistema di valutazione (Rating) a stelle per i WOD e i relativi risultati. Gli atleti possono ora valutare i WOD (da 1 a 5 stelle), permettendo di calcolare e visualizzare la media dei voti della community direttamente nella lista.
+- **UX**: Rimpiazzati gli alert di sistema base con slider customizzati: uno slider a 5 stelle interattive per la valutazione del WOD e un indicatore a barre verticali per esprimere lo sforzo percepito (RPE da 1 a 10) nel risultato del WOD.
 
 
 ### Gemini API SDK Migration

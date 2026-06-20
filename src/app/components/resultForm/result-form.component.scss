@@ -1,0 +1,18 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .rpe-section {
+    padding: 16px;
+    background: var(--ion-color-step-50, #f4f5f8);
+    border-radius: 8px;
+
+    .rpe-title {
+      font-weight: bold;
+      color: var(--ion-color-medium);
+      margin-bottom: 8px;
+      display: block;
+    }
+  }
+}

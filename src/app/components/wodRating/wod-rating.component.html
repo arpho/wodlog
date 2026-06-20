@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Valuta WOD</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Annulla</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="rating-content">
+    <h3>{{ wodTitle }}</h3>
+    <p>Come valuti questo WOD?</p>
+    
+    <app-custom-slider 
+      [maxValue]="5" 
+      [iconType]="'star'" 
+      [(value)]="rating">
+    </app-custom-slider>
+
+    <ion-button expand="block" class="ion-margin-top" (click)="save()" [disabled]="rating() === 0">
+      Vota
+    </ion-button>
+  </div>
+</ion-content>

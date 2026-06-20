@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/services/users/users.service';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { signal } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 describe('ListWodPage', () => {
   let component: ListWodPage;
@@ -33,7 +34,8 @@ describe('ListWodPage', () => {
         { provide: WodService, useValue: mockWodService },
         { provide: UsersService, useValue: mockUsersService },
         { provide: ResultsService, useValue: mockResultsService },
-        { provide: ThemeService, useValue: mockThemeService }
+        { provide: ThemeService, useValue: mockThemeService },
+        { provide: ModalController, useValue: jasmine.createSpyObj('ModalController', ['create']) }
       ]
     }).compileComponents();
 

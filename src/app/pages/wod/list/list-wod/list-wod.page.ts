@@ -17,7 +17,7 @@ import { IonContent,
    IonBreadcrumb,
   IonThumbnail, IonImg, IonButtons,
   IonItemSliding, IonItemOptions, IonItemOption, IonSearchbar, IonChip } from '@ionic/angular/standalone';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
 import { add, trash, create, clipboard, star } from 'ionicons/icons';
@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 import { WodModel } from 'src/app/models/wod';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultHandlerComponent } from "../../../../components/resultHandler/result-handler/result-handler.component";
+import { WodRatingComponent } from "../../../../components/wodRating/wod-rating.component";
 import { UsersService } from 'src/app/services/users/users.service';
 import { CustomSorterPipe } from 'src/app/components/pipes/customSorter.pipe';
 import { UserModel } from 'src/app/models/userModel';
@@ -107,31 +108,24 @@ title="";
   }
 
   async rateWod(wod: WodModel) {
-    const alert = await this.alertCtrl.create({
-      header: 'Valuta WOD',
-      inputs: [
-        {
-          name: 'rating',
-          type: 'number',
-          placeholder: 'Voto da 1 a 5',
-          min: 1,
-          max: 5
-        }
-      ],
-      buttons: [
-        { text: 'Annulla', role: 'cancel' },
-        {
-          text: 'Vota',
-          handler: (data) => {
-            const rating = Number(data.rating);
-            if (rating >= 1 && rating <= 5) {
-              this.service.rateWod(wod.key, this.user.key, rating);
-            }
-          }
-        }
-      ]
+    const modal = await this.modalCtrl.create({
+      component: WodRatingComponent,
+      componentProps: {
+        wodTitle: wod.title || (wod.wod ? wod.wod.join(', ') : 'WOD')
+      },
+      cssClass: 'rating-modal'
     });
-    await alert.present();
+    
+    await modal.present();
+    
+    const { data, role } = await modal.onWillDismiss();
+    
+    if (role === 'confirm' && data?.rating) {
+      const rating = Number(data.rating);
+      if (rating >= 1 && rating <= 5) {
+        this.service.rateWod(wod.key, this.user.key, rating);
+      }
+    }
   }
 
   @ViewChildren(ResultHandlerComponent) resultHandlers!: QueryList<ResultHandlerComponent>;
@@ -182,7 +176,7 @@ title="";
     return list;
   });
 
-  constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService, private alertCtrl: AlertController) {
+  constructor(private service: WodService, private router: Router, private resultService:ResultsService, private users:UsersService, private alertCtrl: AlertController, private modalCtrl: ModalController) {
     addIcons({ add, trash, create, clipboard, star });
   }
 

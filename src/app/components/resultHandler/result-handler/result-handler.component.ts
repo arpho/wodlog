@@ -1,6 +1,7 @@
 import { update } from '@firebase/database';
 import { get } from 'firebase/database';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { ResultFormComponent } from '../../resultForm/result-form.component';
 import {
   Component,
   Input,
@@ -36,91 +37,58 @@ import { addIcons } from 'ionicons';
 })
 export class ResultHandlerComponent implements OnInit, OnChanges {
 async updateResult() {
-console.log("update result", this.Result());
-const alert = await this.alertCtrl.create({
-  header: 'modifica risultato',
-    inputs: [
-    {
-      name: 'result',
-      type: 'text',
-      placeholder: 'risultato',
-      value: this.Result().result
+  console.log("update result", this.Result());
+  const modal = await this.modalCtrl.create({
+    component: ResultFormComponent,
+    componentProps: {
+      initialResult: this.Result().result,
+      initialDate: this.Result().date ? new Date(this.Result().date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      initialRating: this.Result().rating,
+      initialNote: this.Result().note
     },
-    {
-      name: 'date',
-      type: 'date',
-      value: new Date().toISOString().split('T')[0],
-      placeholder: 'data',
-    },
-    {
-      name: 'rating',
-      type: 'number',
-      placeholder: 'valutazione (1-5)',
-      value: this.Result().rating,
-      min: 1,
-      max: 5
-    },
-    {
-      name: 'note',
-      type: 'textarea',
-      placeholder: 'note',
-    },
-  ],
-  buttons: [
-    {
-      text: 'Annulla',
-      role: 'cancel',
-      cssClass: 'secondary',
-      handler: () => {
-        console.log('Confirm Cancel');
-      },
-    },
-    {
-      text: 'Ok',
-      handler: (data) => {
-        console.log('Confirm Ok', data);
-        console.log('result', this.Result());
-
-        data['userKey'] = this.userKey;
-        data['wodKey'] = this.wodKey;
-        const result = this.Result();
-        result.result = data.result;
-        result.date = data.date;
-        result.note = data.note;
-        if (data.rating) result.rating = Number(data.rating);
-        result.key = this.Result().key
-        this.Result.set(result);
-        console.log('result', result);
-        this.service.updateResult(result).then((res) => {
-          console.log('res', res);
-          this.toaster.create({
-            message: 'risultato aggiornato',
-            duration: 3000,
-            position: 'bottom',
-            color: 'success',
-          }).then((toast) => {
-            toast.present();
-          });
-        }).catch((err) => {
-          this.toaster.create({
-            message: 'risultato non aggiornato',
-            duration: 3000,
-            position: 'bottom',
-            color: 'danger',
-          }).then((toast) => {
-            console.log('err', err);
-            toast.present();
-          });
-        }).finally(() => {
-          this.router.navigateByUrl('/home');
-        });
-
-      },
-    },
-  ],
-});
-await alert.present();
-
+    cssClass: 'result-modal'
+  });
+  
+  await modal.present();
+  
+  const { data, role } = await modal.onWillDismiss();
+  
+  if (role === 'confirm' && data) {
+    console.log('Confirm Ok', data);
+    data['userKey'] = this.userKey;
+    data['wodKey'] = this.wodKey;
+    const result = this.Result();
+    result.result = data.result;
+    result.date = new Date(data.date).getTime();
+    result.note = data.note;
+    if (data.rating) result.rating = Number(data.rating);
+    result.key = this.Result().key
+    this.Result.set(result);
+    console.log('result', result);
+    this.service.updateResult(result).then((res) => {
+      console.log('res', res);
+      this.toaster.create({
+        message: 'risultato aggiornato',
+        duration: 3000,
+        position: 'bottom',
+        color: 'success',
+      }).then((toast) => {
+        toast.present();
+      });
+    }).catch((err) => {
+      this.toaster.create({
+        message: 'risultato non aggiornato',
+        duration: 3000,
+        position: 'bottom',
+        color: 'danger',
+      }).then((toast) => {
+        console.log('err', err);
+        toast.present();
+      });
+    }).finally(() => {
+      this.router.navigateByUrl('/home');
+    });
+  }
 }
 showResult() {
 return this.Result()? this.Result().result:"no result";
@@ -135,6 +103,7 @@ return this.Result()? this.Result().result:"no result";
   constructor(
     private service: ResultsService,
     private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
     private toaster: ToastController,
     private users: UsersService,
     private router: Router,
@@ -221,80 +190,48 @@ console.log("result", result.length);
     this.Result.set(result[0]);
   }
   async setResult() {
-    const alert = await this.alertCtrl.create({
-      header: 'Nuovo risultato',
-      message: 'Vuoi aggiungere un nuovo risultato?',
-      inputs: [
-        {
-          name: 'result',
-          type: 'text',
-          placeholder: 'risultato',
-        },
-        {
-          name: 'date',
-          type: 'date',
-          value: new Date().toISOString().split('T')[0],
-          placeholder: 'data',
-        },
-        {
-          name: 'rating',
-          type: 'number',
-          placeholder: 'valutazione (1-5)',
-          min: 1,
-          max: 5
-        },
-        {
-          name: 'note',
-          type: 'textarea',
-          placeholder: 'note',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Annulla',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          },
-        },
-        {
-          text: 'Ok',
-          handler: (data) => {
-            console.log('Confirm Ok', data);
-            data['userKey'] = this.userKey;
-            data['wodKey'] = this.wodKey;
-            if (data.rating) data.rating = Number(data.rating);
-            const result = new ResultsModel(data);
-            console.log('result', result);
-            this.service
-              .setResult(this.userKey, this.wodKey, result)
-              .then((res) => {
-                this.toaster
-                  .create({
-                    message: 'risultato aggiunto',
-                    duration: 2000,
-                  })
-                  .then((toast) => {
-                    toast.present();
-                  });
-              })
-              .catch((err) => {
-                this.toaster
-                  .create({
-                    message: 'risultato non aggiunto',
-                    duration: 2000,
-                  })
-                  .then((toast) => {
-                    toast.present();
-                  });
-              }).finally(() => {
-                this.router.navigateByUrl('/wods-list')
-              });
-          },
-        },
-      ],
+    const modal = await this.modalCtrl.create({
+      component: ResultFormComponent,
+      componentProps: {},
+      cssClass: 'result-modal'
     });
-    await alert.present();
+    
+    await modal.present();
+    
+    const { data, role } = await modal.onWillDismiss();
+    
+    if (role === 'confirm' && data) {
+      console.log('Confirm Ok', data);
+      data['userKey'] = this.userKey;
+      data['wodKey'] = this.wodKey;
+      if (data.date) data.date = new Date(data.date).getTime();
+      if (data.rating) data.rating = Number(data.rating);
+      const result = new ResultsModel(data);
+      console.log('result', result);
+      this.service
+        .setResult(this.userKey, this.wodKey, result)
+        .then((res) => {
+          this.toaster
+            .create({
+              message: 'risultato aggiunto',
+              duration: 2000,
+            })
+            .then((toast) => {
+              toast.present();
+            });
+        })
+        .catch((err) => {
+          this.toaster
+            .create({
+              message: 'risultato non aggiunto',
+              duration: 2000,
+            })
+            .then((toast) => {
+              toast.present();
+            });
+        }).finally(() => {
+          this.router.navigateByUrl('/wods-list')
+        });
+    }
   }
 }

@@ -1,0 +1,12 @@
+<div class="slider-container">
+  @for (item of items(); track item) {
+    <div class="slider-item" (click)="selectValue(item)">
+      @if (iconType() === 'star') {
+        <ion-icon name="star" [color]="getColor(item)" [class.active]="item <= value()"></ion-icon>
+      } @else if (iconType() === 'bar') {
+        <div class="rpe-bar" [ngClass]="'color-' + getColor(item)" [class.active]="item <= value()" [style.height.px]="20 + (item * 3)"></div>
+        <div class="rpe-label" [class.active]="item <= value()">{{item}}</div>
+      }
+    </div>
+  }
+</div>

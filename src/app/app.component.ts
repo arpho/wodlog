@@ -109,6 +109,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (this.swUpdate.isEnabled) {
+      // Controlla gli aggiornamenti quando l'app torna in primo piano
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          this.swUpdate.checkForUpdate();
+        }
+      });
+
       this.swUpdate.versionUpdates
         .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
         .subscribe(async () => {
