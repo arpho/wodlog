@@ -16,8 +16,7 @@ import { IonContent,
   IonIcon,
    IonBreadcrumb,
   IonThumbnail, IonImg, IonButtons,
-  IonItemSliding, IonItemOptions, IonItemOption, IonSearchbar, IonChip } from '@ionic/angular/standalone';
-import { AlertController, ModalController } from '@ionic/angular';
+  IonItemSliding, IonItemOptions, IonItemOption, IonSearchbar, IonChip, AlertController, ModalController } from '@ionic/angular/standalone';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { addIcons } from 'ionicons';
 import { add, trash, create, clipboard, star } from 'ionicons/icons';

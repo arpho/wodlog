@@ -6,7 +6,7 @@ import { UsersService } from 'src/app/services/users/users.service';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { signal } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 
 describe('ListWodPage', () => {
   let component: ListWodPage;

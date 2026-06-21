@@ -9,12 +9,14 @@ describe('PrGraphComponent', () => {
     TestBed.configureTestingModule({
       imports: [PrGraphComponent],
     }).compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(PrGraphComponent);
     component = fixture.componentInstance;
     component.prList = []; // Initialize required input
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -1,6 +1,5 @@
 import { update } from '@firebase/database';
 import { get } from 'firebase/database';
-import { AlertController, ModalController } from '@ionic/angular';
 import { ResultFormComponent } from '../../resultForm/result-form.component';
 import {
   Component,
@@ -18,7 +17,7 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  ToastController, IonButton, IonIcon } from '@ionic/angular/standalone';
+  ToastController, IonButton, IonIcon, AlertController, ModalController } from '@ionic/angular/standalone';
 import { user } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users/users.service';
