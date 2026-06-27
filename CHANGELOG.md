@@ -6,6 +6,10 @@ Tutte le novità e gli aggiornamenti del progetto WodLog.
 
 ### WOD Filtering & Search
 - **Features**: Aggiunto un sistema di filtraggio avanzato per la lista dei WOD. È ora possibile filtrare per flag (Hero, Girl, Benchmark), per data specifica e tramite una comoda barra di ricerca testuale per gli esercizi (forza e WOD).
+- **Features**: Estesa la ricerca dei WOD anche al campo "Note", aggiornando l'interfaccia di conseguenza.
+
+### Bug Fixes
+- **Fix**: Corretto il layout di `WodFormComponent` (form di creazione e modifica WOD) assicurando che i campi "nome wod" e "note" siano correttamente renderizzati in componenti `<ion-item>`.
 - **Security**: Risolta una vulnerabilità critica nelle regole di sicurezza di Firebase Realtime Database (nodo `results`) che esponeva i dati a sovrascritture accidentali o malevole.
 
 ### PWA & UX Improvements

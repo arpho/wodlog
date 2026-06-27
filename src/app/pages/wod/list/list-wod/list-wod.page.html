@@ -23,7 +23,7 @@
   </ion-header>
 
   <div class="glass-panel" style="margin: 10px; padding: 10px;">
-    <ion-searchbar (ionInput)="searchText.set($any($event).detail.value || '')" placeholder="Cerca negli esercizi (forza/wod)..."></ion-searchbar>
+    <ion-searchbar (ionInput)="searchText.set($any($event).detail.value || '')" placeholder="Cerca negli esercizi o note..."></ion-searchbar>
     <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; align-items: center;">
       <ion-chip [color]="filterHero() ? 'primary' : 'medium'" (click)="filterHero.set(!filterHero())">Hero</ion-chip>
       <ion-chip [color]="filterGirl() ? 'primary' : 'medium'" (click)="filterGirl.set(!filterGirl())">Girl</ion-chip>
