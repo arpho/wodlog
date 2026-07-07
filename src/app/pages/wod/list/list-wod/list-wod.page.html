@@ -53,6 +53,9 @@
           </div>
         </ion-col>
         <ion-col (click)="editWod(item)">{{item.title}}
+          @if(item.creatorName) {
+            <br><small style="color: var(--ion-color-medium);">di {{item.creatorName}}</small>
+          }
           <div class="thumbs">
         @if (item.benchmark) {
           <ion-thumbnail  >
@@ -88,12 +91,14 @@
         <ion-item-option color="success" (click)="triggerResultHandler(item.key); slidingItem.close()">
           <ion-icon slot="icon-only" name="clipboard"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="primary" (click)="editWod(item); slidingItem.close()">
-          <ion-icon slot="icon-only" name="create"></ion-icon>
-        </ion-item-option>
-        <ion-item-option color="danger" (click)="deleteWod(item); slidingItem.close()">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
-        </ion-item-option>
+        @if (user.role === 'editor' || (item.userKey && item.userKey === user.key)) {
+          <ion-item-option color="primary" (click)="editWod(item); slidingItem.close()">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="deleteWod(item); slidingItem.close()">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        }
       </ion-item-options>
     </ion-item-sliding>
   }

@@ -81,6 +81,9 @@ title="";
     return new Date(wod.date).toLocaleDateString();
   }
   editWod(wod: WodModel) {
+    if (this.user.role !== 'editor' && (!wod.userKey || wod.userKey !== this.user.key)) {
+      return;
+    }
     console.log('edit wod', wod);
     this.router.navigateByUrl(`/edit-wod?wodKey=${wod.key}`);
   }

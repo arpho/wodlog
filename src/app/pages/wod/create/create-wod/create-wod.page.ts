@@ -11,6 +11,8 @@ import { WodFormComponent } from '../../../../components/wodForm/wodForm/wod-for
 import { WodModel } from 'src/app/models/wod';
 import { WodService } from 'src/app/services/wod/wod.service';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users/users.service';
+import { UserModel } from 'src/app/models/userModel';
 
 @Component({
   selector: 'app-create-wod',
@@ -38,13 +40,17 @@ export class CreateWodPage implements OnInit {
     'sabato',
   ];
 
+  user!: UserModel;
+
   constructor(
     private service: WodService,
     private toaster: ToastController,
-    private router: Router
+    private router: Router,
+    private users: UsersService
   ) {}
-  ngOnInit() {
+  async ngOnInit() {
     console.log('init create wod page');
+    this.user = await this.users.getLoggedUser();
   }
   makeTitle(wod: WodModel) {
     const d = new Date(wod.date);
@@ -59,6 +65,9 @@ export class CreateWodPage implements OnInit {
     this.createWod(wod);
   }
   createWod(wod: WodModel) {
+    wod.userKey = this.user.key;
+    wod.creatorName = `${this.user.firstName} ${this.user.lastName}`.trim();
+    if (!wod.creatorName) wod.creatorName = this.user.userName;
     console.log('submitted wod', wod);
     this.service
       .createWod(wod)

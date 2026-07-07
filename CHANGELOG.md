@@ -2,6 +2,13 @@
 
 Tutte le novità e gli aggiornamenti del progetto WodLog.
 
+## Luglio 2026
+
+### WOD Ownership & Permissions
+- **Security**: Aggiornate le regole di Firebase per permettere la modifica e l'eliminazione dei WOD esclusivamente al rispettivo creatore o agli amministratori.
+- **Features**: Tracciamento dell'autore (`userKey` e `creatorName`) in fase di creazione del WOD.
+- **UX**: Nome dell'autore visibile nella lista WOD. Nascosti i pulsanti di Modifica/Elimina e bloccata l'apertura tramite tap sulla riga per gli utenti non autorizzati.
+
 ## Giugno 2026
 
 ### WOD Filtering & Search

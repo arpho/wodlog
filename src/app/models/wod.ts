@@ -10,6 +10,8 @@ export class WodModel {
   note = '';
   ratingTotal = 0;
   ratingCount = 0;
+  userKey = '';
+  creatorName = '';
   constructor(args?: {}) {
     this.loadFields(args);
   }
@@ -39,7 +41,9 @@ export class WodModel {
       girl: this.girl,
       benchmark: this.benchmark,
       ratingTotal: this.ratingTotal || 0,
-      ratingCount: this.ratingCount || 0
+      ratingCount: this.ratingCount || 0,
+      userKey: this.userKey || '',
+      creatorName: this.creatorName || ''
     };
   }
 }

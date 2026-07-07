@@ -15,7 +15,9 @@
     },
     "wods": {
       ".read": "auth != null && auth.token.enabled !== false",
-      ".write": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')"
+      "$wodId": {
+        ".write": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor' || (!data.exists() ? newData.child('userKey').val() === auth.uid : data.child('userKey').val() === auth.uid))"
+      }
     },
     "wodRatings": {
       ".read": "auth != null && auth.token.enabled !== false",
