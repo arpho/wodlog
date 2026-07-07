@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Registrati</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registrati</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <form [formGroup]="registerForm">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
+      <p class="error" *ngIf="registerForm.get('email')!.hasError('required')">Email is required</p>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
+      <p class="error" *ngIf="registerForm.get('password')!.hasError('required')">Password is required</p>
+      <p class="error" *ngIf="registerForm.get('password')!.hasError('minlength')">Password must be 8 char long</p>
+    </ion-item>
+    <ion-button type="submit" [disabled]="!registerForm.valid" (click)="register()">Registrati</ion-button>
+  </form>
+  
+  <div class="ion-padding ion-text-center">
+    <a [routerLink]="['/login']">Torna al Login</a>
+  </div>
+</ion-content>
