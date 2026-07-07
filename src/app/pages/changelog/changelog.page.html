@@ -12,6 +12,27 @@
   <div class="changelog-container">
     <ion-card class="glass-card animate-in">
       <ion-card-header>
+        <ion-card-subtitle>Luglio 2026</ion-card-subtitle>
+        <ion-card-title>WOD Ownership & Permissions</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="change-item">
+          <ion-badge color="danger">Security</ion-badge>
+          <p><strong>Regole Database Blindate</strong>: Aggiornate le regole di sicurezza di Firebase per vincolare la modifica e l'eliminazione dei WOD esclusivamente al creatore del workout o agli amministratori (Editor). I WOD passati restano sicuri e gestibili unicamente dagli admin.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p><strong>Tracciamento Autore</strong>: Aggiunta l'identificazione automatica dell'autore durante la creazione di ogni nuovo WOD.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="tertiary">UX</ion-badge>
+          <p><strong>Interfaccia Dinamica</strong>: Il nome dell'autore è ora visibile nella lista WOD. I pulsanti di Modifica ed Eliminazione (via swipe) e la navigazione al dettaglio del WOD sono inibiti automaticamente per gli utenti non autorizzati.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="glass-card animate-in" style="--animation-delay: 0.05s">
+      <ion-card-header>
         <ion-card-subtitle>Giugno 2026</ion-card-subtitle>
         <ion-card-title>WOD Filtering & Security Fix</ion-card-title>
       </ion-card-header>
