@@ -14,7 +14,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-fab  vertical="bottom" horizontal="end">
-  <ion-fab-button  size="small" color="light" (click)="createWod()"><ion-icon name="add"></ion-icon></ion-fab-button>
+  <ion-fab-button aria-label="Create WOD" size="small" color="light" (click)="createWod()"><ion-icon name="add"></ion-icon></ion-fab-button>
   </ion-fab>
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -59,21 +59,21 @@
           <div class="thumbs">
         @if (item.benchmark) {
           <ion-thumbnail  >
-            <ion-img src="assets/images/benchmark.png"/>
+            <ion-img src="assets/images/benchmark.png" alt="Benchmark WOD"/>
           </ion-thumbnail>
         }
         @if(item.girl) {
 
 
         <ion-thumbnail  >
-          <ion-img src="assets/images/girl.png"/>
+          <ion-img src="assets/images/girl.png" alt="Girl WOD"/>
         </ion-thumbnail>
       }
       @if(item.hero) {
 
 
         <ion-thumbnail  >
-          <ion-img src="assets/images/hero.png"/>
+          <ion-img src="assets/images/hero.png" alt="Hero WOD"/>
         </ion-thumbnail>
       }
           </div>
