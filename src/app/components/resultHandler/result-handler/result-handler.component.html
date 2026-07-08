@@ -1,5 +1,5 @@
 <h1 >
-  {{ showResult() }} @if (Result()?.rating) { <span style="font-size: 0.8em; color: var(--ion-color-medium); margin-left: 8px;">(RPE: {{Result().rating}}/10)</span> }
+  {{ showResult() }} @if (Result().rating) { <span style="font-size: 0.8em; color: var(--ion-color-medium); margin-left: 8px;">(RPE: {{Result().rating}}/10)</span> }
 </h1>
 @if (showButton) {
   <ion-button (click)="updateResult()" color="light" slot="end" size="small" shape="round"><ion-icon name="create-outline"></ion-icon></ion-button>
