@@ -172,7 +172,8 @@ title="";
         const inForce = w.force?.some(f => f.toLowerCase().includes(search));
         const inWod = w.wod?.some(x => x.toLowerCase().includes(search));
         const inNote = w.note?.toLowerCase().includes(search);
-        return inForce || inWod || inNote;
+        const inCreator = w.creatorName?.toLowerCase().includes(search);
+        return inForce || inWod || inNote || inCreator;
       });
     }
 

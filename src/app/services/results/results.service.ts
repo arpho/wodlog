@@ -5,6 +5,7 @@ import {
   orderByChild,
   equalTo,
   onValue,
+  get,
   push,
   update,
   query,
@@ -25,6 +26,7 @@ return update(refResults, result.serialize());
     const refResults = ref(this.db, this.url);
     console.log('setting result', prestazione);
     const newResultRef = push(refResults, prestazione.serialize());
+    prestazione.key = newResultRef.key as string;
     return update(newResultRef, prestazione.serialize());
   }
 
@@ -36,7 +38,7 @@ return update(refResults, result.serialize());
         orderByChild('userKey'),
         equalTo(userKey)
       );
-      onValue(userResultsQuery, (snapshot) => {
+      get(userResultsQuery).then((snapshot) => {
         const out: ResultsModel[] = [];
         if (snapshot.exists()) {
           snapshot.forEach((childSnapshot) => {
@@ -49,7 +51,7 @@ return update(refResults, result.serialize());
           });
         }
         resolve(out);
-      }, (error) => {
+      }).catch((error) => {
         reject(error);
       });
     });

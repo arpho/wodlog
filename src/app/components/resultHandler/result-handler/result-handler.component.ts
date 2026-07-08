@@ -124,7 +124,9 @@ return this.Result()? this.Result().result:"no result";
   }
   async ngOnChanges(changes: SimpleChanges) {
     console.log("changes", changes);
+    if (!this.userKey || !this.wodKey) return;
     const result = await this.service.getResult(this.userKey, this.wodKey);
+    console.log("result", result);
 
     if (this.userKey && this.wodKey&& this.ask4newResult && result.length == 0)
        {
@@ -220,9 +222,11 @@ console.log("result", result.length);
       if (data.rating) data.rating = Number(data.rating);
       const result = new ResultsModel(data);
       console.log('result', result);
+      
       this.service
         .setResult(this.userKey, this.wodKey, result)
         .then((res) => {
+          this.Result.set(result);
           this.toaster
             .create({
               message: 'risultato aggiunto',
