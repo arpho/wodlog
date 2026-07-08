@@ -10,7 +10,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ResultsService } from 'src/app/services/results/results.service';
-import { alert, createOutline } from 'ionicons/icons';
+import { alert, createOutline, star } from 'ionicons/icons';
+import { CommonModule } from '@angular/common';
 import { ResultsModel } from 'src/app/models/results';
 import {
   IonContent,
@@ -31,7 +32,8 @@ import { addIcons } from 'ionicons';
      IonTitle,
      IonToolbar,
       IonButton,
-      IonIcon],
+      IonIcon,
+      CommonModule],
   standalone: true,
 })
 export class ResultHandlerComponent implements OnInit, OnChanges {
@@ -108,7 +110,18 @@ return this.Result()? this.Result().result:"no result";
     private router: Router,
      private activatedRoute: ActivatedRoute
   ) {
-      addIcons({createOutline});}
+      addIcons({createOutline, star});}
+
+  rpeItems = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  getRpeColor(index: number): string {
+    if (index > (this.Result()?.rating || 0)) return 'medium';
+    const ratio = index / 10;
+    if (ratio <= 0.4) return 'success';
+    if (ratio <= 0.7) return 'primary';
+    if (ratio <= 0.9) return 'warning';
+    return 'danger';
+  }
   async ngOnChanges(changes: SimpleChanges) {
     console.log("changes", changes);
     const result = await this.service.getResult(this.userKey, this.wodKey);

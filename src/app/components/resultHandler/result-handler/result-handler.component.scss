@@ -3,3 +3,44 @@ h1 {
   font-size: 1.625rem;
   font-weight: bolder;
 }
+
+.rpe-inline {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  margin-left: 8px;
+  vertical-align: middle;
+
+  ion-icon {
+    font-size: 1em;
+  }
+
+  .rpe-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 1px;
+  }
+
+  .rpe-mini-bar {
+    display: inline-block;
+    width: 3px;
+    border-radius: 1px;
+    background: var(--ion-color-medium);
+    opacity: 0.3;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &.color-success { background: var(--ion-color-success); }
+    &.color-primary { background: var(--ion-color-primary); }
+    &.color-warning { background: var(--ion-color-warning); }
+    &.color-danger { background: var(--ion-color-danger); }
+  }
+
+  .rpe-value {
+    font-size: 0.7em;
+    color: var(--ion-color-medium);
+    margin-left: 2px;
+  }
+}

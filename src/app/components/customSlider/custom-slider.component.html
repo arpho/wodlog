@@ -1,4 +1,5 @@
 <div class="slider-container">
+
   @for (item of items(); track item) {
     <div class="slider-item" (click)="selectValue(item)">
       @if (iconType() === 'star') {
