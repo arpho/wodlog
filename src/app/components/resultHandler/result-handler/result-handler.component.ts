@@ -10,7 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ResultsService } from 'src/app/services/results/results.service';
-import { alert, createOutline, star } from 'ionicons/icons';
+import { alert, createOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ResultsModel } from 'src/app/models/results';
 import {
@@ -110,7 +110,7 @@ return this.Result()? this.Result().result:"no result";
     private router: Router,
      private activatedRoute: ActivatedRoute
   ) {
-      addIcons({createOutline, star});}
+      addIcons({createOutline});}
 
   rpeItems = Array.from({ length: 10 }, (_, i) => i + 1);
 

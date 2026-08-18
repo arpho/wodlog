@@ -1,7 +1,7 @@
 <h1 >
   {{ showResult() }} @if (Result()?.rating) {
     <span class="rpe-inline">
-      <ion-icon name="star" color="warning"></ion-icon>
+      <img [src]="'assets/images/rpe/rpe-' + Result().rating + '.png'" class="rpe-face-icon" alt="RPE" />
       <span class="rpe-bars">
         @for (bar of rpeItems; track bar) {
           <span class="rpe-mini-bar" [class.active]="bar <= (Result().rating || 0)" [ngClass]="'color-' + getRpeColor(bar)" [style.height.px]="4 + (bar * 1.5)"></span>

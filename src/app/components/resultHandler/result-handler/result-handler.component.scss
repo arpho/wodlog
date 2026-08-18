@@ -11,8 +11,12 @@ h1 {
   margin-left: 8px;
   vertical-align: middle;
 
-  ion-icon {
-    font-size: 1em;
+  .rpe-face-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-right: 2px;
   }
 
   .rpe-bars {
