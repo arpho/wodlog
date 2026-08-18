@@ -13,8 +13,9 @@ describe('SettingsPage', () => {
   let mockUsersService: any;
 
   beforeEach(async () => {
-    mockThemeService = jasmine.createSpyObj('ThemeService', ['setTheme'], {
-      currentTheme: signal('system')
+    mockThemeService = jasmine.createSpyObj('ThemeService', ['setTheme', 'setColorTheme'], {
+      currentTheme: signal('system'),
+      currentColorTheme: signal('default')
     });
     
     mockUsersService = jasmine.createSpyObj('UsersService', ['getLoggedUser']);
@@ -48,5 +49,11 @@ describe('SettingsPage', () => {
     const event = { detail: { value: 'dark' } };
     component.onThemeChange(event);
     expect(mockThemeService.setTheme).toHaveBeenCalledWith('dark');
+  });
+
+  it('should call setColorTheme on change', () => {
+    const event = { detail: { value: 'ocean' } };
+    component.onColorThemeChange(event);
+    expect(mockThemeService.setColorTheme).toHaveBeenCalledWith('ocean');
   });
 });

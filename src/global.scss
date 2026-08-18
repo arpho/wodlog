@@ -1,7 +1,53 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- */
+@import "tailwindcss";
+
+@theme {
+  /* Font */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Brand Colors — Palette Indigo/Violet */
+  --color-brand-50:  #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+  --color-brand-950: #1e1b4b;
+
+  /* Semantic — Surface (dark mode default) */
+  --color-surface-base:    #0f0f14;
+  --color-surface-raised:  #1a1a24;
+  --color-surface-overlay: #22223a;
+  --color-surface-border:  #2e2e4a;
+
+  /* Semantic — Text */
+  --color-text-primary:   #f1f0ff;
+  --color-text-secondary: #a8a4c8;
+  --color-text-muted:     #6b6890;
+  --color-text-input:     #ffffff; /* Explicit input text color */
+
+  /* Semantic — Status */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger:  #ef4444;
+  --color-info:    #06b6d4;
+
+  /* Spacing scale custom */
+  --spacing-sidebar: 17rem;
+
+  /* Border radius */
+  --radius-card: 1rem;
+  --radius-btn:  0.625rem;
+  --radius-input: 0.5rem;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px -4px rgba(99, 102, 241, 0.15), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px -8px rgba(99, 102, 241, 0.5);
+}
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
@@ -20,6 +66,360 @@
 /* Dark Palette - Manual Control via .ion-palette-dark class */
 @import '@ionic/angular/css/palettes/dark.class.css';
 
+/* Fix per input color */
+ion-input, ion-textarea, ion-searchbar, input, textarea {
+  --color: var(--color-text-input, #ffffff) !important;
+  color: var(--color-text-input, #ffffff) !important;
+}
+
+/* Glassmorphism Variables & Backgrounds */
+:root {
+  --glass-blur: blur(16px) saturate(180%);
+  /* Light mode mesh gradient */
+  --app-bg: radial-gradient(at 0% 0%, var(--color-brand-100) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, var(--color-brand-300) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 0% 100%, var(--color-brand-50) 0px, transparent 50%);
+  background-color: #f8fafc;
+  background-image: var(--app-bg);
+  background-attachment: fixed;
+  background-size: cover;
+  
+  --ion-background-color: transparent !important;
+  --ion-card-background: rgba(255, 255, 255, 0.65);
+  --ion-toolbar-background: rgba(255, 255, 255, 0.65);
+  --ion-item-background: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.4);
+}
+
+html.ion-palette-dark {
+  /* Dark mode mesh gradient */
+  --app-bg: radial-gradient(at 0% 0%, var(--color-brand-950) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, var(--color-brand-900) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, var(--color-surface-base) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, var(--color-surface-overlay) 0px, transparent 50%);
+  background-color: var(--color-surface-base);
+  background-image: var(--app-bg);
+  background-attachment: fixed;
+  background-size: cover;
+  
+  --ion-background-color: transparent !important;
+  --ion-text-color: var(--color-text-primary);
+  --ion-toolbar-background: rgba(34, 34, 58, 0.65);
+  --ion-item-background: rgba(26, 26, 36, 0.4);
+  --ion-card-background: rgba(26, 26, 36, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Glassmorphism Application */
+ion-card, ion-toolbar, ion-item, ion-popover::part(content), ion-modal::part(content) {
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+ion-card, ion-popover::part(content), ion-modal::part(content) {
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure content backgrounds don't block the app background */
+ion-content {
+  --background: transparent;
+  &::part(background) {
+    background: transparent;
+  }
+}
+
+/* ==========================================================================
+   Color Themes — Pastel Palettes
+   Each theme overrides brand colors, Ionic primary, shadows, and gradients.
+   Themes are independent of light/dark mode and work with both.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   🌊 Oceano — Soft teal/mint pastels, calm and deep
+   -------------------------------------------------------------------------- */
+html.theme-ocean {
+  --color-brand-50:  #f0fdfa;
+  --color-brand-100: #d5f5ee;
+  --color-brand-200: #ade8da;
+  --color-brand-300: #7dd4c3;
+  --color-brand-400: #50bba8;
+  --color-brand-500: #38a192;
+  --color-brand-600: #2b8175;
+  --color-brand-700: #266860;
+  --color-brand-800: #23534e;
+  --color-brand-900: #214541;
+  --color-brand-950: #0f2926;
+
+  --ion-color-primary: #38a192;
+  --ion-color-primary-rgb: 56, 161, 146;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #2b8175;
+  --ion-color-primary-tint: #50bba8;
+
+  --shadow-card: 0 4px 24px -4px rgba(56, 161, 146, 0.15), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px -8px rgba(56, 161, 146, 0.4);
+
+  /* Light mode overrides */
+  --app-bg: radial-gradient(at 0% 0%, #d5f5ee 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #7dd4c3 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #f0fdfa 0px, transparent 50%);
+  background-color: #f4fdfb;
+}
+
+html.theme-ocean.ion-palette-dark {
+  --color-surface-base:    #0b1a18;
+  --color-surface-raised:  #132a26;
+  --color-surface-overlay: #1a3632;
+  --color-surface-border:  #244a44;
+
+  --color-text-primary:   #e8faf6;
+  --color-text-secondary: #94c7be;
+  --color-text-muted:     #5d8f86;
+
+  --app-bg: radial-gradient(at 0% 0%, #0f2926 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #214541 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #0b1a18 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #1a3632 0px, transparent 50%);
+  background-color: #0b1a18;
+
+  --ion-toolbar-background: rgba(19, 42, 38, 0.65);
+  --ion-item-background: rgba(19, 42, 38, 0.4);
+  --ion-card-background: rgba(19, 42, 38, 0.65);
+  --glass-border: rgba(125, 212, 195, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   🌲 Foresta — Soft sage/green pastels, natural and sophisticated
+   -------------------------------------------------------------------------- */
+html.theme-forest {
+  --color-brand-50:  #f3f8f3;
+  --color-brand-100: #e0ede0;
+  --color-brand-200: #c3dcc3;
+  --color-brand-300: #97c297;
+  --color-brand-400: #6da56d;
+  --color-brand-500: #4d8b4d;
+  --color-brand-600: #3c6f3c;
+  --color-brand-700: #335a33;
+  --color-brand-800: #2c492c;
+  --color-brand-900: #263d26;
+  --color-brand-950: #112211;
+
+  --ion-color-primary: #4d8b4d;
+  --ion-color-primary-rgb: 77, 139, 77;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3c6f3c;
+  --ion-color-primary-tint: #6da56d;
+
+  --shadow-card: 0 4px 24px -4px rgba(77, 139, 77, 0.15), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px -8px rgba(77, 139, 77, 0.4);
+
+  /* Light mode overrides */
+  --app-bg: radial-gradient(at 0% 0%, #e0ede0 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #97c297 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #f3f8f3 0px, transparent 50%);
+  background-color: #f5f9f5;
+}
+
+html.theme-forest.ion-palette-dark {
+  --color-surface-base:    #0c130c;
+  --color-surface-raised:  #162416;
+  --color-surface-overlay: #1e301e;
+  --color-surface-border:  #2c462c;
+
+  --color-text-primary:   #eaf3ea;
+  --color-text-secondary: #9fc19f;
+  --color-text-muted:     #627e62;
+
+  --app-bg: radial-gradient(at 0% 0%, #112211 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #263d26 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #0c130c 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #1e301e 0px, transparent 50%);
+  background-color: #0c130c;
+
+  --ion-toolbar-background: rgba(22, 36, 22, 0.65);
+  --ion-item-background: rgba(22, 36, 22, 0.4);
+  --ion-card-background: rgba(22, 36, 22, 0.65);
+  --glass-border: rgba(151, 194, 151, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   🌅 Tramonto — Soft peach/amber pastels, warm and enveloping
+   -------------------------------------------------------------------------- */
+html.theme-sunset {
+  --color-brand-50:  #fef8f0;
+  --color-brand-100: #fdecd5;
+  --color-brand-200: #fad5aa;
+  --color-brand-300: #f5b974;
+  --color-brand-400: #ee9840;
+  --color-brand-500: #e8822a;
+  --color-brand-600: #d46920;
+  --color-brand-700: #b0511c;
+  --color-brand-800: #8d411e;
+  --color-brand-900: #74371b;
+  --color-brand-950: #3e1a0c;
+
+  --ion-color-primary: #e8822a;
+  --ion-color-primary-rgb: 232, 130, 42;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #d46920;
+  --ion-color-primary-tint: #ee9840;
+
+  --shadow-card: 0 4px 24px -4px rgba(232, 130, 42, 0.15), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px -8px rgba(232, 130, 42, 0.4);
+
+  /* Light mode overrides */
+  --app-bg: radial-gradient(at 0% 0%, #fdecd5 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #f5b974 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #fef8f0 0px, transparent 50%);
+  background-color: #fffaf4;
+}
+
+html.theme-sunset.ion-palette-dark {
+  --color-surface-base:    #140e08;
+  --color-surface-raised:  #241a10;
+  --color-surface-overlay: #302316;
+  --color-surface-border:  #4a3520;
+
+  --color-text-primary:   #faf3eb;
+  --color-text-secondary: #c8a882;
+  --color-text-muted:     #8a7050;
+
+  --app-bg: radial-gradient(at 0% 0%, #3e1a0c 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #74371b 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #140e08 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #302316 0px, transparent 50%);
+  background-color: #140e08;
+
+  --ion-toolbar-background: rgba(36, 26, 16, 0.65);
+  --ion-item-background: rgba(36, 26, 16, 0.4);
+  --ion-card-background: rgba(36, 26, 16, 0.65);
+  --glass-border: rgba(245, 185, 116, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   🌸 Rosa Antico — Soft dusty pink/mauve pastels, refined and delicate
+   -------------------------------------------------------------------------- */
+html.theme-rose {
+  --color-brand-50:  #fdf4f7;
+  --color-brand-100: #fce8ee;
+  --color-brand-200: #f9d0de;
+  --color-brand-300: #f4adc5;
+  --color-brand-400: #ec84a5;
+  --color-brand-500: #df6088;
+  --color-brand-600: #cb3f67;
+  --color-brand-700: #ab3052;
+  --color-brand-800: #8e2b45;
+  --color-brand-900: #78283d;
+  --color-brand-950: #441120;
+
+  --ion-color-primary: #df6088;
+  --ion-color-primary-rgb: 223, 96, 136;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #cb3f67;
+  --ion-color-primary-tint: #ec84a5;
+
+  --shadow-card: 0 4px 24px -4px rgba(223, 96, 136, 0.15), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px -8px rgba(223, 96, 136, 0.4);
+
+  /* Light mode overrides */
+  --app-bg: radial-gradient(at 0% 0%, #fce8ee 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #f4adc5 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #fdf4f7 0px, transparent 50%);
+  background-color: #fef6f8;
+}
+
+html.theme-rose.ion-palette-dark {
+  --color-surface-base:    #150b10;
+  --color-surface-raised:  #26141c;
+  --color-surface-overlay: #341c28;
+  --color-surface-border:  #4c283a;
+
+  --color-text-primary:   #faf0f4;
+  --color-text-secondary: #c8a0b0;
+  --color-text-muted:     #8a6070;
+
+  --app-bg: radial-gradient(at 0% 0%, #441120 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #78283d 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #150b10 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #341c28 0px, transparent 50%);
+  background-color: #150b10;
+
+  --ion-toolbar-background: rgba(38, 20, 28, 0.65);
+  --ion-item-background: rgba(38, 20, 28, 0.4);
+  --ion-card-background: rgba(38, 20, 28, 0.65);
+  --glass-border: rgba(244, 173, 197, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   🪨 Ardesia — Soft lavender-blue/slate pastels, minimal and modern
+   -------------------------------------------------------------------------- */
+html.theme-slate {
+  --color-brand-50:  #f5f7fb;
+  --color-brand-100: #ebeef5;
+  --color-brand-200: #d8dfeb;
+  --color-brand-300: #bbc6db;
+  --color-brand-400: #98a7c5;
+  --color-brand-500: #7d8db2;
+  --color-brand-600: #6b77a0;
+  --color-brand-700: #5c6585;
+  --color-brand-800: #4e546d;
+  --color-brand-900: #42475b;
+  --color-brand-950: #2b2d3a;
+
+  --ion-color-primary: #7d8db2;
+  --ion-color-primary-rgb: 125, 141, 178;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #6b77a0;
+  --ion-color-primary-tint: #98a7c5;
+
+  --shadow-card: 0 4px 24px -4px rgba(125, 141, 178, 0.15), 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px -8px rgba(125, 141, 178, 0.4);
+
+  /* Light mode overrides */
+  --app-bg: radial-gradient(at 0% 0%, #ebeef5 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #bbc6db 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #f5f7fb 0px, transparent 50%);
+  background-color: #f7f8fc;
+}
+
+html.theme-slate.ion-palette-dark {
+  --color-surface-base:    #0e0f14;
+  --color-surface-raised:  #191b24;
+  --color-surface-overlay: #222430;
+  --color-surface-border:  #333646;
+
+  --color-text-primary:   #eef0f6;
+  --color-text-secondary: #a0a8c0;
+  --color-text-muted:     #656b82;
+
+  --app-bg: radial-gradient(at 0% 0%, #2b2d3a 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #42475b 0px, transparent 50%),
+            radial-gradient(at 100% 100%, #0e0f14 0px, transparent 50%),
+            radial-gradient(at 0% 100%, #222430 0px, transparent 50%);
+  background-color: #0e0f14;
+
+  --ion-toolbar-background: rgba(25, 27, 36, 0.65);
+  --ion-item-background: rgba(25, 27, 36, 0.4);
+  --ion-card-background: rgba(25, 27, 36, 0.65);
+  --glass-border: rgba(187, 198, 219, 0.1);
+}
+
+/* ==========================================================================
+   Stili Specifici Personalizzati di Wodlog
+   ========================================================================== */
+
 /* Google Fonts - Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -34,25 +434,17 @@ body {
 
 ion-app {
   background: var(--ion-background-color);
-  background-image: radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.1) 0%, transparent 40%),
-                    radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.1) 0%, transparent 40%);
+  background-image: var(--app-bg);
 }
 
-.ion-palette-dark ion-app {
-  background-image: radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.2) 0%, transparent 50%),
-                    radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.2) 0%, transparent 50%);
-}
-
-/* Remove old body specific gradient classes if any */
-
-/* Glassmorphism Panel */
+/* Glassmorphism Panel aggiuntivo per retrocompatibilità */
 .glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  border: 1px solid var(--glass-border);
+  background: var(--ion-card-background) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border) !important;
   border-radius: 20px;
-  box-shadow: var(--glass-shadow);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -66,20 +458,6 @@ h1, h2, h3, h4, h5, h6 {
 ion-toolbar {
   --background: transparent;
   --border-style: none;
-}
-
-ion-content {
-  --background: transparent; /* Changed to transparent to let ion-app background show through */
-  
-  /* Ensuring the shadow DOM background is also transparent */
-  &::part(background) {
-    background: transparent;
-  }
-}
-
-.ion-palette-dark ion-content::part(background) {
-  background-image: radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.2) 0%, transparent 50%),
-                    radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.2) 0%, transparent 50%);
 }
 
 /* Custom Item Styling */
@@ -112,7 +490,6 @@ ion-label {
   margin-bottom: 4px;
   border-radius: 8px;
   
-  /* Lighter background for inputs in dark mode to improve focus and contrast */
   &.item-has-focus {
     --background: rgba(255, 255, 255, 0.08);
   }
@@ -154,3 +531,14 @@ ion-label {
   color: #ffffff !important;
 }
 
+/* Thumbnail per WOD */
+.thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  
+  ion-thumbnail {
+    --size: 32px;
+    --border-radius: 4px;
+  }
+}

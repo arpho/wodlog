@@ -15,16 +15,17 @@ import {
   IonSelectOption,
   IonIcon
 } from '@ionic/angular/standalone';
-import { ThemeService, ThemeMode } from 'src/app/services/theme/theme.service';
+import { ThemeService, ThemeMode, ColorTheme } from 'src/app/services/theme/theme.service';
 import { addIcons } from 'ionicons';
-import { colorPaletteOutline } from 'ionicons/icons';
+import { colorPaletteOutline, brushOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [UserMenuComponent, 
+  imports: [
+    UserMenuComponent, 
     IonContent,
     IonHeader,
     IonTitle,
@@ -44,15 +45,24 @@ export class SettingsPage {
   private themeService = inject(ThemeService);
 
   constructor() {
-    addIcons({ colorPaletteOutline });
+    addIcons({ colorPaletteOutline, brushOutline });
   }
 
   get currentTheme(): ThemeMode {
     return this.themeService.currentTheme();
   }
 
+  get currentColorTheme(): ColorTheme {
+    return this.themeService.currentColorTheme();
+  }
+
   onThemeChange(event: any) {
     const newTheme = event.detail.value as ThemeMode;
     this.themeService.setTheme(newTheme);
+  }
+
+  onColorThemeChange(event: any) {
+    const newColor = event.detail.value as ColorTheme;
+    this.themeService.setColorTheme(newColor);
   }
 }

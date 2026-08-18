@@ -19,7 +19,7 @@
   </ion-header>
 
   <ion-list inset="true" class="glass-panel">
-    <ion-item lines="none">
+    <ion-item lines="full">
       <ion-icon slot="start" name="color-palette-outline"></ion-icon>
       <ion-select
         label="Tema dell'applicazione"
@@ -31,6 +31,23 @@
         <ion-select-option value="system">Sistema (Automatico)</ion-select-option>
         <ion-select-option value="light">Chiaro</ion-select-option>
         <ion-select-option value="dark">Scuro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-icon slot="start" name="brush-outline"></ion-icon>
+      <ion-select
+        label="Colore di accento"
+        label-placement="stacked"
+        [value]="currentColorTheme"
+        (ionChange)="onColorThemeChange($event)"
+        interface="popover"
+      >
+        <ion-select-option value="default">Indaco (Predefinito)</ion-select-option>
+        <ion-select-option value="ocean">🌊 Oceano</ion-select-option>
+        <ion-select-option value="forest">🌲 Foresta</ion-select-option>
+        <ion-select-option value="sunset">🌅 Tramonto</ion-select-option>
+        <ion-select-option value="rose">🌸 Rosa Antico</ion-select-option>
+        <ion-select-option value="slate">🪨 Ardesia</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
