@@ -37,6 +37,12 @@
     "notifications": {
       ".read": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')",
       ".write": "auth != null && auth.token.enabled !== false && (auth.token.role === 'editor' || root.child('userProfile').child(auth.uid).child('role').val() === 'editor')"
+    },
+    "fcmTokens": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
     }
   }
 }

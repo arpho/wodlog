@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase-admin/app";
 import { getAuth, UserRecord } from "firebase-admin/auth";
 import { getDatabase } from "firebase-admin/database";
+import { getMessaging } from "firebase-admin/messaging";
 import * as functions from "firebase-functions/v1";
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
@@ -258,5 +259,107 @@ export const onWodRatingWritten = functions.database.ref('/wodRatings/{wodKey}/{
       logger.info(`Aggiornata media valutazioni per WOD ${wodKey}: total=${ratingTotal}, count=${ratingCount}`);
     } catch (error) {
       logger.error(`Errore nell'aggiornamento della media valutazioni per WOD ${wodKey}:`, error);
+    }
+  });
+
+// --------------------------------------------------
+// TRIGGER: INVIO NOTIFICHE ALLA CREAZIONE DI UN WOD
+// --------------------------------------------------
+export const onWodCreated = functions.database.ref('/wods/{wodKey}')
+  .onCreate(async (snapshot, context) => {
+    const wod = snapshot.val();
+    if (!wod) {
+      logger.info("Nessun dato WOD trovato per la chiave:", context.params.wodKey);
+      return;
+    }
+
+    const wodName = wod.name || "Nuovo WOD";
+    const wodType = wod.type ? ` [${wod.type}]` : "";
+    const title = `Nuovo WOD Aggiunto! 🏋️‍♂️`;
+    const body = `Vieni ad allenarti! È stato pubblicato: ${wodName}${wodType}`;
+
+    logger.info(`Inizio invio notifiche push per il WOD: ${wodName}`);
+
+    try {
+      const db = getDatabase();
+
+      // 1. Recuperiamo tutti gli utenti abilitati (enabled === true)
+      const userProfileSnap = await db.ref('userProfile').once('value');
+      if (!userProfileSnap.exists()) {
+        logger.info("Nessun profilo utente trovato nel database.");
+        return;
+      }
+
+      const enabledUserIds: string[] = [];
+      userProfileSnap.forEach(child => {
+        const profile = child.val();
+        if (profile && profile.enabled === true) {
+          enabledUserIds.push(child.key!);
+        }
+      });
+
+      if (enabledUserIds.length === 0) {
+        logger.info("Nessun utente abilitato a cui inviare notifiche.");
+        return;
+      }
+
+      logger.info(`Trovati ${enabledUserIds.length} utenti abilitati. Ricerca token FCM...`);
+
+      // 2. Raccogliamo tutti i token FCM registrati per gli utenti abilitati
+      const tokens: string[] = [];
+      for (const uid of enabledUserIds) {
+        const tokensSnap = await db.ref(`fcmTokens/${uid}`).once('value');
+        if (tokensSnap.exists()) {
+          tokensSnap.forEach(tokenChild => {
+            const tokenData = tokenChild.val();
+            if (tokenData && tokenData.token) {
+              tokens.push(tokenData.token);
+            }
+          });
+        }
+      }
+
+      if (tokens.length === 0) {
+        logger.info("Nessun token FCM registrato per gli utenti abilitati.");
+        return;
+      }
+
+      const uniqueTokens = Array.from(new Set(tokens));
+      logger.info(`Rilevati ${uniqueTokens.length} token FCM unici. Invio multicast...`);
+
+      // 3. Invio della notifica tramite FCM
+      const response = await getMessaging().sendEachForMulticast({
+        tokens: uniqueTokens,
+        notification: {
+          title: title,
+          body: body
+        },
+        android: {
+          notification: {
+            sound: 'default',
+            clickAction: 'FCM_PLUGIN_ACTIVITY'
+          }
+        },
+        apns: {
+          payload: {
+            aps: {
+              sound: 'default'
+            }
+          }
+        }
+      });
+
+      logger.info(`Invio notifiche completato: ${response.successCount} riuscite, ${response.failureCount} fallite.`);
+      
+      if (response.failureCount > 0) {
+        response.responses.forEach((resp, idx) => {
+          if (!resp.success) {
+            logger.warn(`Errore invio a token ${uniqueTokens[idx]}:`, resp.error);
+          }
+        });
+      }
+
+    } catch (error) {
+      logger.error("Errore generico durante l'invio delle notifiche push per il WOD:", error);
     }
   });
