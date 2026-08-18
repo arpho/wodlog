@@ -1,6 +1,4 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { FilterPipe } from './filterPipe.pipe';
 
 describe('Pipe: FilterPipee', () => {

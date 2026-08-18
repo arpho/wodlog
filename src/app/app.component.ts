@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { getAuth } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { IonApp, IonRouterOutlet, ToastController } from '@ionic/angular/standalone';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
     private themeService: ThemeService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private appRef: ApplicationRef
   ) {
     this.themeService.initializeTheme();
 
@@ -39,13 +40,10 @@ export class AppComponent implements OnInit {
       if (user) {
         console.log("user is logged", user);
 
-        // Richiedi i permessi per le notifiche all'accesso dell'utente
-        this.notificationService.requestPermission()
-          .then(granted => {
-            console.log('Stato permessi notifiche:', granted ? 'consentito' : 'non consentito');
-          })
+        // Inizializza la registrazione dei token di notifica push per l'utente loggato
+        this.notificationService.registerFCMToken(user.uid)
           .catch(err => {
-            console.error('Errore durante la richiesta di permesso notifiche:', err);
+            console.error('Errore durante la registrazione del token notifica:', err);
           });
 
         const db = getDatabase();
@@ -108,6 +106,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Sottoscrizione per forzare la change detection al completamento della navigazione (fondamentale in Zoneless)
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      setTimeout(() => this.appRef.tick(), 0);
+    });
+
     if (this.swUpdate.isEnabled) {
       // Controlla gli aggiornamenti quando l'app torna in primo piano
       document.addEventListener('visibilitychange', () => {

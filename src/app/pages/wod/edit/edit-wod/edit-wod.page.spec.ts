@@ -28,7 +28,8 @@ describe('EditWodPage', () => {
     mockUsersService = jasmine.createSpyObj('UsersService', ['getLoggedUser']);
     mockUsersService.getLoggedUser.and.returnValue(Promise.resolve({ key: 'test' }));
 
-    mockResultsService = jasmine.createSpyObj('ResultsService', ['fetchResultByWodKey']);
+    mockResultsService = jasmine.createSpyObj('ResultsService', ['fetchResultByWodKey', 'getResult']);
+    mockResultsService.getResult.and.returnValue(Promise.resolve([]));
     
     mockThemeService = jasmine.createSpyObj('ThemeService', [], {
       currentTheme: signal('system')

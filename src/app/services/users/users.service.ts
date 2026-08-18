@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, getAuth } from '@angular/fire/auth';
 import { AuthService } from '../auth/auth.service';
-import { getDatabase, get, ref, set, onValue, remove } from "firebase/database";
+import { get, ref, set, onValue, remove } from "firebase/database";
+import { Database as FireDatabase } from '@angular/fire/database';
 import { UserModel } from 'src/app/models/userModel';
 import { firstValueFrom, take, Observable } from 'rxjs';
 
@@ -9,11 +10,11 @@ import { firstValueFrom, take, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
-  db = getDatabase();
 
   constructor(
     private auth: Auth,
-    private MyAuth: AuthService
+    private MyAuth: AuthService,
+    private db: FireDatabase
   ) { }
 
   isUserAuthenticated(): Promise<boolean> {

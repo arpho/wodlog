@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  getDatabase,
   ref,
   orderByChild,
   equalTo,
@@ -11,6 +10,7 @@ import {
   query,
 } from 'firebase/database';
 import { ResultsModel } from 'src/app/models/results';
+import { Database } from '@angular/fire/database';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,8 +20,7 @@ const refResults = ref(this.db, `${this.url}/${result.key}`);
 return update(refResults, result.serialize());
   }
   url = 'results';
-  db = getDatabase();
-  constructor() {}
+  constructor(private db: Database) {}
   setResult(userKey: string, wodKey: string, prestazione: ResultsModel) {
     const refResults = ref(this.db, this.url);
     console.log('setting result', prestazione);

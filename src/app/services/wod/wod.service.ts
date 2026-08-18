@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { get, getDatabase, onValue, push, ref, remove, set, update } from '@firebase/database';
+import { get, onValue, push, ref, remove, set, update } from '@firebase/database';
+import { Database } from '@angular/fire/database';
 import { WodModel } from 'src/app/models/wod';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class WodService {
 
   url = "wods"
 
-  constructor() { }
+  constructor(private db: Database) { }
   updateWod($wod: WodModel) {
     const wodRef = ref(this.db, `${this.url}/${$wod.key}`);
     return update(wodRef, $wod.serialize());
@@ -27,7 +28,6 @@ const wod = new WodModel(snapshot.val()).setKey(key);
 return wod;
   }
 
-  db = getDatabase()
   async createWod(wod: WodModel) {
     const wodRef = ref(this.db, this.url);
 

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ResultHandlerComponent } from './result-handler.component';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -12,7 +12,7 @@ describe('ResultHandlerComponent', () => {
   let mockResultsService: any;
   let mockUsersService: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockResultsService = jasmine.createSpyObj('ResultsService', ['fetchResultByWodKey', 'getResult']);
     mockResultsService.getResult.and.returnValue(Promise.resolve([]));
     
@@ -42,7 +42,7 @@ describe('ResultHandlerComponent', () => {
     component.userKey = 'test';
     component.wodKey = 'wod';
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

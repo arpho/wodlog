@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom, isDevMode, provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
@@ -14,6 +14,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { DatePipe } from "@angular/common";
 import { provideServiceWorker } from '@angular/service-worker';
@@ -35,6 +36,7 @@ addIcons({
 });
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZonelessChangeDetection(),
     DatePipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
@@ -43,6 +45,7 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(IonicModule.forRoot()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },

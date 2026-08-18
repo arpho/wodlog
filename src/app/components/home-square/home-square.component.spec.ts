@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeSquareComponent } from './home-square.component';
 import { Router } from '@angular/router';
 
@@ -7,7 +7,7 @@ describe('HomeSquareComponent', () => {
   let fixture: ComponentFixture<HomeSquareComponent>;
   let mockRouter: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     TestBed.configureTestingModule({
@@ -20,7 +20,7 @@ describe('HomeSquareComponent', () => {
     fixture = TestBed.createComponent(HomeSquareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

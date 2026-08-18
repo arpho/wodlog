@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiesListComponent } from './activities-list.component';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -10,7 +10,7 @@ describe('ActivitiesListComponent', () => {
   let mockActivityService: any;
   let mockUsersService: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockActivityService = jasmine.createSpyObj('ActivityService', ['realtimeFetchAllActivities']);
     
     mockUsersService = jasmine.createSpyObj('UsersService', ['getLoggedUser']);
@@ -29,7 +29,7 @@ describe('ActivitiesListComponent', () => {
     component = fixture.componentInstance;
     component.userKey = 'test';
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

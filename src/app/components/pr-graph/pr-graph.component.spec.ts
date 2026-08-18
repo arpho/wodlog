@@ -1,17 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PrGraphComponent } from './pr-graph.component';
 
 describe('PrGraphComponent', () => {
   let component: PrGraphComponent;
   let fixture: ComponentFixture<PrGraphComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [PrGraphComponent],
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(PrGraphComponent);
     component = fixture.componentInstance;
     component.prList = []; // Initialize required input

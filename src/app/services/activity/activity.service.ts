@@ -1,6 +1,7 @@
 import { ActivityModel } from './../../models/activityModel';
-import { getDatabase, ref, set,push, get,onValue, remove } from 'firebase/database';
+import { ref, set,push, get,onValue, remove } from 'firebase/database';
 import { Injectable } from '@angular/core';
+import { Database } from '@angular/fire/database';
 import { user } from '@angular/fire/auth';
 
 @Injectable({
@@ -26,9 +27,8 @@ const activity = new ActivityModel(snapshot.val()).setKey(activityKey)
 console.log("just got activity",activity);
 return activity;
   }
-  db = getDatabase()
 
-  constructor() { }
+  constructor(private db: Database) { }
 
   set(userKey:string, activity:ActivityModel){
 return set(ref(this.db,`activities/${userKey}/${activity.key}`),activity.serialize())

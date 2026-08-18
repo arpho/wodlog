@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WodFormComponent } from './wod-form.component';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular/standalone';
 import { Functions } from '@angular/fire/functions';
@@ -27,7 +27,7 @@ describe('WodFormComponent', () => {
   let mockLoadingElement: any;
   let mockAlertElement: any;
 
-  beforeEach(waitForAsync(async () => {
+  beforeEach(async () => {
     mockModalCtrl = jasmine.createSpyObj('ModalController', ['create']);
     mockFunctions = jasmine.createSpyObj('Functions', ['']);
     mockLoadingElement = jasmine.createSpyObj('LoadingElement', ['present', 'dismiss']);
@@ -60,7 +60,7 @@ describe('WodFormComponent', () => {
     component = fixture.componentInstance;
     component.Wod = new WodModel();
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
