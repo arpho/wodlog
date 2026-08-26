@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import { getDatabase, ref, push, set, get } from '@firebase/database';
+import { getDatabase, ref, push, set, get } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'

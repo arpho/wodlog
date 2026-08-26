@@ -1,4 +1,4 @@
-import { update } from '@firebase/database';
+import { update } from '@angular/fire/database';
 import { UsersService } from './../../../services/users/users.service';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivityModel } from 'src/app/models/activityModel';

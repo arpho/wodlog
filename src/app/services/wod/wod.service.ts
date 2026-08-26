@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { get, onValue, push, ref, remove, set, update } from '@firebase/database';
+import { get, onValue, push, ref, remove, set, update } from '@angular/fire/database';
 import { Database } from '@angular/fire/database';
 import { WodModel } from 'src/app/models/wod';
 
@@ -30,12 +30,15 @@ return wod;
 
   async createWod(wod: WodModel) {
     const wodRef = ref(this.db, this.url);
-
-    const newWodRef = await push(wodRef);
+    const newWodRef = push(wodRef);
     wod.setKey(newWodRef.key!);
-    update(newWodRef, wod.serialize());
-
-
+    const plainwod = JSON.parse(JSON.stringify({...wod.serialize()}));
+    
+    const rootRef = ref(this.db);
+    const updates: any = {};
+    updates[`${this.url}/${wod.key}`] = plainwod;
+    
+    await update(rootRef, updates);
     return wod.key;
   }
   fetchWodsRealtime(callback: (data:{wods: WodModel[],total:number}) => void) {

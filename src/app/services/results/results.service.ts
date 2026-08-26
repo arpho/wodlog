@@ -8,7 +8,7 @@ import {
   push,
   update,
   query,
-} from 'firebase/database';
+} from '@angular/fire/database';
 import { ResultsModel } from 'src/app/models/results';
 import { Database } from '@angular/fire/database';
 @Injectable({

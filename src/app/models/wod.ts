@@ -30,10 +30,8 @@ export class WodModel {
   }
 
   serialize() {
-    return {
+    const data: any = {
       key: this.key,
-      force: this.force||[],
-      wod: this.wod||[],
       date: this.date,
       title: this.title,
       note: this.note,
@@ -45,5 +43,12 @@ export class WodModel {
       userKey: this.userKey || '',
       creatorName: this.creatorName || ''
     };
+    if (this.force && this.force.length > 0) {
+      data.force = Object.assign({}, this.force);
+    }
+    if (this.wod && this.wod.length > 0) {
+      data.wod = Object.assign({}, this.wod);
+    }
+    return data;
   }
 }

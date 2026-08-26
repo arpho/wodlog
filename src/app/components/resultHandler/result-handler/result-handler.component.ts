@@ -1,5 +1,5 @@
-import { update } from '@firebase/database';
-import { get } from 'firebase/database';
+import { update } from '@angular/fire/database';
+import { get } from '@angular/fire/database';
 import { ResultFormComponent } from '../../resultForm/result-form.component';
 import {
   Component,

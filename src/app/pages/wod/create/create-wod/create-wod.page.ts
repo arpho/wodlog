@@ -68,7 +68,6 @@ export class CreateWodPage implements OnInit {
     wod.userKey = this.user.key;
     wod.creatorName = `${this.user.firstName} ${this.user.lastName}`.trim();
     if (!wod.creatorName) wod.creatorName = this.user.userName;
-    console.log('submitted wod', wod);
     this.service
       .createWod(wod)
       .then(async (wodKey) => {
@@ -80,7 +79,7 @@ export class CreateWodPage implements OnInit {
         if (wodKey) this.router.navigateByUrl('/edit-wod?wodKey=' + wodKey);
       })
       .catch(async (err: any) => {
-        console.log('error', err);
+        console.error('error during createWod', err);
         const toast = await this.toaster.create({
           message: 'Wod not created',
           duration: 2000,

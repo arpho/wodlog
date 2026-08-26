@@ -6,7 +6,7 @@ import { IonApp, IonRouterOutlet, ToastController } from '@ionic/angular/standal
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
 import { ThemeService } from './services/theme/theme.service';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue } from '@angular/fire/database';
 import { NotificationService } from './services/notification/notification.service';
 
 @Component({

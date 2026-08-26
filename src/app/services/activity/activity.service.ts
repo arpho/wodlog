@@ -1,5 +1,5 @@
 import { ActivityModel } from './../../models/activityModel';
-import { ref, set,push, get,onValue, remove } from 'firebase/database';
+import { ref, set,push, get,onValue, remove } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
 import { Database } from '@angular/fire/database';
 import { user } from '@angular/fire/auth';
