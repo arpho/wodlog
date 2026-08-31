@@ -108,8 +108,13 @@
         </div>
 
         <div class="user-card-action">
-          <span>Gestisci Privilegi</span>
-          <ion-icon name="eye-outline"></ion-icon>
+          <div class="action-left" (click)="$event.stopPropagation(); viewUserPrivileges(athlete)">
+            <span>Gestisci Privilegi</span>
+            <ion-icon name="eye-outline"></ion-icon>
+          </div>
+          <button class="delete-icon-btn" (click)="confirmDeleteUser($event, athlete)" title="Elimina Utente">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
         </div>
       </div>
 

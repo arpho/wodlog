@@ -95,11 +95,15 @@
         </ion-card-content>
       </ion-card>
 
-      <!-- Bottone di Salvataggio -->
+      <!-- Bottoni di Azione -->
       <div class="action-container">
         <ion-button expand="block" (click)="savePrivileges()" class="save-button">
           <ion-icon name="save-outline" slot="start"></ion-icon>
           Salva Privilegi Utente
+        </ion-button>
+        <ion-button expand="block" color="danger" fill="outline" (click)="confirmDeleteUser()" class="delete-button ion-margin-top">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Elimina Utente Definitivamente
         </ion-button>
       </div>
 

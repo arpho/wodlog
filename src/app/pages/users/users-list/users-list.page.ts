@@ -1,7 +1,8 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   IonContent,
   IonHeader,
@@ -24,10 +25,14 @@ import {
   IonSelect,
   IonSelectOption,
   IonIcon,
-  IonSpinner
+  IonSpinner,
+  IonButton,
+  AlertController,
+  LoadingController,
+  ToastController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { searchOutline, peopleOutline, shieldCheckmarkOutline, alertCircleOutline, eyeOutline } from 'ionicons/icons';
+import { searchOutline, peopleOutline, shieldCheckmarkOutline, alertCircleOutline, eyeOutline, trashOutline } from 'ionicons/icons';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserModel } from 'src/app/models/userModel';
 import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.component';
@@ -62,13 +67,23 @@ import { UserMenuComponent } from 'src/app/components/userMenu/user-menu.compone
     IonSelectOption,
     IonIcon,
     IonSpinner,
+    IonButton,
     UserMenuComponent
   ]
 })
-export class UsersListPage implements OnInit {
-  usersList = signal<UserModel[]>([]);
-  isLoading = signal<boolean>(true);
+export class UsersListPage {
+  private usersService = inject(UsersService);
+  private router = inject(Router);
+  private alertCtrl = inject(AlertController);
+  private loadingCtrl = inject(LoadingController);
+  private toastCtrl = inject(ToastController);
+
+  // Pure Signal proveniente da Firebase Realtime Database
+  private usersRaw = toSignal(this.usersService.getUsersList(), { initialValue: null });
   
+  isLoading = computed(() => this.usersRaw() === null);
+  usersList = computed(() => this.usersRaw() || []);
+
   searchQuery = signal<string>('');
   roleFilter = signal<string>('all');
   enabledFilter = signal<string>('all');
@@ -93,36 +108,76 @@ export class UsersListPage implements OnInit {
     });
   });
 
-  constructor(
-    private usersService: UsersService,
-    private router: Router
-  ) {
+  constructor() {
     addIcons({
       searchOutline,
       peopleOutline,
       shieldCheckmarkOutline,
       alertCircleOutline,
-      eyeOutline
+      eyeOutline,
+      trashOutline
     });
-  }
-
-  async ngOnInit() {
-    await this.loadUsers();
-  }
-
-  async loadUsers() {
-    this.isLoading.set(true);
-    try {
-      const list = await this.usersService.getAllUsers();
-      this.usersList.set(list);
-    } catch (error) {
-      console.error('Errore nel caricamento degli utenti:', error);
-    } finally {
-      this.isLoading.set(false);
-    }
   }
 
   viewUserPrivileges(user: UserModel) {
     this.router.navigate(['/users', user.key, 'privilegies']);
+  }
+
+  async confirmDeleteUser(event: Event, athlete: UserModel) {
+    event.stopPropagation();
+
+    const alert = await this.alertCtrl.create({
+      header: 'Conferma Eliminazione',
+      message: `Sei sicuro di voler eliminare definitivamente l'atleta "${athlete.firstName} ${athlete.lastName}" (${athlete.email})? Questa azione non può essere annullata.`,
+      buttons: [
+        {
+          text: 'Annulla',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Elimina',
+          role: 'destructive',
+          cssClass: 'danger',
+          handler: () => {
+            this.deleteUser(athlete);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async deleteUser(athlete: UserModel) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Eliminazione atleta in corso...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    try {
+      await this.usersService.deleteUser(athlete.key);
+      await loading.dismiss();
+
+      const toast = await this.toastCtrl.create({
+        message: `Utente ${athlete.firstName} ${athlete.lastName} eliminato.`,
+        duration: 3000,
+        color: 'success',
+        position: 'bottom'
+      });
+      await toast.present();
+    } catch (error: any) {
+      console.error('Errore durante l\'eliminazione:', error);
+      await loading.dismiss();
+
+      const toast = await this.toastCtrl.create({
+        message: `Errore: ${error.message || 'Impossibile eliminare l\'utente.'}`,
+        duration: 4000,
+        color: 'danger',
+        position: 'bottom'
+      });
+      await toast.present();
+    }
   }
 }

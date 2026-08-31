@@ -13,8 +13,12 @@ initializeApp({
   databaseURL: "https://m1crossfit-5b2b9.firebaseio.com"
 });
 
-// Initialize the new Google Gen AI SDK
-const ai = new GoogleGenAI({}); // Automatically uses GEMINI_API_KEY from environment
+// Initialize the new Google Gen AI SDK in Vertex AI mode
+const ai = new GoogleGenAI({
+  enterprise: true,
+  project: "m1crossfit-5b2b9",
+  location: "us-central1"
+});
 
 // Funzione di utilità per ripulire il base64
 function extractBase64(base64Data: string): string {
@@ -225,6 +229,80 @@ export const setClaims = onCall(functionOptions, async (request) => {
   } catch (error: any) {
     logger.error("Errore durante l'aggiornamento dei claims:", error);
     throw new HttpsError("internal", `Errore durante la configurazione dei privilegi: ${error.message}`);
+  }
+});
+
+// --------------------------------------------------
+// CALLABLE: ELIMINAZIONE UTENTE PER UID (deleteUser)
+// --------------------------------------------------
+export const deleteUser = onCall(functionOptions, async (request) => {
+  const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
+
+  if (!isEmulator) {
+    // 1. Verifica autenticazione
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "L'utente deve essere autenticato per questa operazione.");
+    }
+
+    // 2. Verifica privilegi admin (role === 'editor') del chiamante
+    const callerUid = request.auth.uid;
+    const isCallerEditorClaim = request.auth.token && request.auth.token.role === "editor";
+    
+    let isCallerEditor = isCallerEditorClaim;
+    if (!isCallerEditor) {
+      const db = getDatabase();
+      const callerRef = db.ref(`userProfile/${callerUid}`);
+      const callerSnapshot = await callerRef.once("value");
+      const callerData = callerSnapshot.val();
+      isCallerEditor = callerData && callerData.role === "editor";
+    }
+
+    if (!isCallerEditor) {
+      throw new HttpsError("permission-denied", "Solo gli amministratori (ruolo editor) possono eliminare gli utenti.");
+    }
+
+    // 3. Prevenire auto-eliminazione
+    if (request.data && request.data.targetUid === callerUid) {
+      throw new HttpsError("invalid-argument", "Non puoi eliminare il tuo stesso account.");
+    }
+  }
+
+  const { targetUid } = request.data || {};
+  if (!targetUid) {
+    throw new HttpsError("invalid-argument", "Il parametro targetUid è obbligatorio.");
+  }
+
+  logger.info(`Avvio eliminazione utente: ${targetUid}...`);
+
+  try {
+    const db = getDatabase();
+
+    // 1. Elimina utente da Firebase Auth
+    try {
+      await getAuth().deleteUser(targetUid);
+      logger.info(`Utente ${targetUid} rimosso da Firebase Auth.`);
+    } catch (authErr: any) {
+      if (authErr.code !== "auth/user-not-found") {
+        logger.warn(`Nota: Errore nella rimozione da Auth per ${targetUid}:`, authErr);
+      }
+    }
+
+    // 2. Elimina il profilo dal Realtime Database
+    await db.ref(`userProfile/${targetUid}`).remove();
+
+    // 3. Pulisci eventuali notifiche e token FCM associati
+    await db.ref(`notifications/${targetUid}`).remove();
+    await db.ref(`fcmTokens/${targetUid}`).remove();
+
+    logger.info(`Eliminazione completata con successo per l'utente ${targetUid}`);
+
+    return {
+      success: true,
+      message: `Utente ${targetUid} eliminato con successo.`
+    };
+  } catch (error: any) {
+    logger.error("Errore durante l'eliminazione dell'utente:", error);
+    throw new HttpsError("internal", `Errore durante l'eliminazione dell'utente: ${error.message}`);
   }
 });
 

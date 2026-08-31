@@ -5,6 +5,7 @@ import { get, ref, set, onValue, remove } from '@angular/fire/database';
 import { Database as FireDatabase } from '@angular/fire/database';
 import { UserModel } from 'src/app/models/userModel';
 import { firstValueFrom, take, Observable } from 'rxjs';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class UsersService {
   constructor(
     private auth: Auth,
     private MyAuth: AuthService,
-    private db: FireDatabase
+    private db: FireDatabase,
+    private functions: Functions
   ) { }
 
   isUserAuthenticated(): Promise<boolean> {
@@ -72,6 +74,24 @@ export class UsersService {
     return out;
   }
 
+  getUsersList(): Observable<UserModel[]> {
+    return new Observable((subscriber) => {
+      const usersRef = ref(this.db, 'userProfile');
+      const unsubscribe = onValue(usersRef, (snapshot) => {
+        const out: UserModel[] = [];
+        if (snapshot.exists()) {
+          Object.entries(snapshot.val()).forEach(([key, value]) => {
+            out.push(new UserModel(value as any).setKey(key));
+          });
+        }
+        subscriber.next(out);
+      }, (error) => {
+        subscriber.error(error);
+      });
+      return () => unsubscribe();
+    });
+  }
+
   getPendingNotifications(): Observable<any[]> {
     return new Observable((subscriber) => {
       const notificationsRef = ref(this.db, 'notifications');
@@ -93,5 +113,11 @@ export class UsersService {
   dismissNotification(userKey: string): Promise<void> {
     const notificationRef = ref(this.db, `notifications/${userKey}`);
     return remove(notificationRef);
+  }
+
+  async deleteUser(targetUid: string): Promise<any> {
+    const deleteUserFn = httpsCallable(this.functions, 'deleteUser');
+    const response = await deleteUserFn({ targetUid });
+    return response.data;
   }
 }

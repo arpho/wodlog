@@ -27,10 +27,11 @@ import {
   IonCol,
   IonList,
   LoadingController,
-  ToastController
+  ToastController,
+  AlertController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { saveOutline, shieldOutline, checkmarkCircleOutline, lockOpenOutline } from 'ionicons/icons';
+import { saveOutline, shieldOutline, checkmarkCircleOutline, lockOpenOutline, trashOutline } from 'ionicons/icons';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserModel } from 'src/app/models/userModel';
 import { Functions, httpsCallable } from '@angular/fire/functions';
@@ -84,13 +85,15 @@ export class UserPrivilegesPage implements OnInit {
   private functions = inject(Functions);
   private loadingCtrl = inject(LoadingController);
   private toastCtrl = inject(ToastController);
+  private alertCtrl = inject(AlertController);
 
   constructor() {
     addIcons({
       saveOutline,
       shieldOutline,
       checkmarkCircleOutline,
-      lockOpenOutline
+      lockOpenOutline,
+      trashOutline
     });
   }
 
@@ -166,6 +169,70 @@ export class UserPrivilegesPage implements OnInit {
 
       const toast = await this.toastCtrl.create({
         message: `Errore: ${error.message || 'Impossibile salvare i privilegi.'}`,
+        duration: 4000,
+        color: 'danger',
+        position: 'bottom'
+      });
+      await toast.present();
+    }
+  }
+
+  async confirmDeleteUser() {
+    const user = this.userProfile();
+    if (!user) return;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Conferma Eliminazione',
+      message: `Sei sicuro di voler eliminare definitivamente l'utente "${user.firstName} ${user.lastName}" (${user.email})? Questa operazione rimuoverà l'account ed i dati associati e non potrà essere annullata.`,
+      buttons: [
+        {
+          text: 'Annulla',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Elimina Utente',
+          role: 'destructive',
+          cssClass: 'danger',
+          handler: () => {
+            this.deleteUser();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async deleteUser() {
+    const user = this.userProfile();
+    if (!user) return;
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Eliminazione utente in corso...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    try {
+      await this.usersService.deleteUser(user.key);
+      await loading.dismiss();
+
+      const toast = await this.toastCtrl.create({
+        message: 'Utente eliminato con successo.',
+        duration: 3000,
+        color: 'success',
+        position: 'bottom'
+      });
+      await toast.present();
+
+      this.router.navigate(['/users']);
+    } catch (error: any) {
+      console.error('Errore durante l\'eliminazione dell\'utente:', error);
+      await loading.dismiss();
+
+      const toast = await this.toastCtrl.create({
+        message: `Errore: ${error.message || 'Impossibile eliminare l\'utente.'}`,
         duration: 4000,
         color: 'danger',
         position: 'bottom'
