@@ -307,6 +307,64 @@ export const deleteUser = onCall(functionOptions, async (request) => {
 });
 
 // --------------------------------------------------
+// CALLABLE: VERIFICA RECAPTCHA V3 E REGISTRAZIONE UTENTE
+// --------------------------------------------------
+export const verifyRecaptchaAndRegister = onCall(functionOptions, async (request) => {
+  const { email, password, recaptchaToken } = request.data || {};
+
+  if (!email || !password) {
+    throw new HttpsError("invalid-argument", "Email e password sono campi obbligatori.");
+  }
+
+  const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY || "";
+
+  // Se è configurata una secret key per reCAPTCHA, la verifichiamo lato server
+  if (recaptchaSecret && recaptchaToken) {
+    logger.info(`Verifica token reCAPTCHA v3 per email: ${email}...`);
+    try {
+      const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${encodeURIComponent(recaptchaSecret)}&response=${encodeURIComponent(recaptchaToken)}`;
+      const response = await fetch(verifyUrl, { method: "POST" });
+      const recaptchaResult: any = await response.json();
+
+      logger.info("Esito verifica reCAPTCHA:", recaptchaResult);
+
+      if (!recaptchaResult.success || (recaptchaResult.score !== undefined && recaptchaResult.score < 0.5)) {
+        logger.warn(`Registrazione bloccata per sospetto bot (email: ${email}, score: ${recaptchaResult.score})`);
+        throw new HttpsError(
+          "permission-denied",
+          "Registrazione bloccata dal sistema di protezione anti-bot. Se ritieni sia un errore, riprova."
+        );
+      }
+    } catch (err: any) {
+      if (err instanceof HttpsError) throw err;
+      logger.error("Errore durante la comunicazione con l'API reCAPTCHA:", err);
+    }
+  } else if (!recaptchaToken && recaptchaSecret) {
+    throw new HttpsError("invalid-argument", "Token reCAPTCHA mancante per la verifica anti-bot.");
+  }
+
+  logger.info(`Creazione utente in Firebase Auth per email: ${email}...`);
+
+  try {
+    const userRecord = await getAuth().createUser({
+      email: email,
+      password: password
+    });
+
+    logger.info(`Utente creato con successo su Auth: ${userRecord.uid}`);
+
+    return {
+      success: true,
+      uid: userRecord.uid,
+      message: "Registrazione completata con successo."
+    };
+  } catch (error: any) {
+    logger.error("Errore nella creazione dell'utente da Cloud Function:", error);
+    throw new HttpsError("internal", error.message || "Impossibile creare l'utente.");
+  }
+});
+
+// --------------------------------------------------
 // TRIGGER: AGGIORNAMENTO MEDIA VALUTAZIONI WOD
 // --------------------------------------------------
 export const onWodRatingWritten = functions.database.ref('/wodRatings/{wodKey}/{userKey}')

@@ -13,7 +13,8 @@ export const environment = {
     messagingSenderId: "959204307943",
     appId: "1:959204307943:web:24ed9f53f6b914d0608342"
   },
-  backendUrl: 'http://localhost:3000'
+  backendUrl: 'http://localhost:3000',
+  recaptchaSiteKey: ''
 };
 
 /*
