@@ -126,7 +126,6 @@ return this.Result()? this.Result().result:"no result";
     console.log("changes", changes);
     if (!this.userKey || !this.wodKey) return;
     const result = await this.service.getResult(this.userKey, this.wodKey);
-    console.log("result", result);
 
     if (this.userKey && this.wodKey&& this.ask4newResult && result.length == 0)
        {
