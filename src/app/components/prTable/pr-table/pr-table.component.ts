@@ -131,11 +131,16 @@ const alert =  activity.unity.includes('Kg')
 alert.then(alert => alert.present())
 }
 
-  filter= (pr:ActivityModel) => true
+  filter: any = undefined;
 search($event: any) {
 console.log("search", $event.detail.value);
-this.filter = (pr:ActivityModel) => pr.descrizione.toLowerCase().includes($event.detail.value.toLowerCase())
-console.log("filtered pr", this.prList.filter(this.filter))
+const term = $event.detail.value;
+if (term && term.trim() !== '') {
+  this.filter = (pr:ActivityModel) => pr.descrizione.toLowerCase().includes(term.toLowerCase());
+} else {
+  this.filter = undefined;
+}
+console.log("filtered pr", this.prList.filter(this.filter || (() => true)))
 }
   paginationOptions:PaginationOptions = {
     page: 1,

@@ -80,7 +80,7 @@ export class PrListComponent implements OnInit, OnChanges {
   @Input() prList: PrModel[] = [];
   @Input() unity: string = ' Kg ';
   @Output() editedPrList = new EventEmitter<PrModel[]>();
-filter: (pr:PrModel) => boolean = (pr:PrModel) => true
+filter: any = undefined;
 
   makeAlert4kg(pr: PrModel, title: string) {
     console.log('make alert for Kg', pr);

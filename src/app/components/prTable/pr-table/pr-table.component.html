@@ -29,9 +29,11 @@
               <strong class="desc-text">{{pr.descrizione}}</strong>
             </ion-col>
             <ion-col>
-              <div class="best-date" style="font-weight: 500;">
-                {{pr.getMaxPr().getDate()}}
-              </div>
+              @if (pr.getMaxPr()) {
+                <div class="best-date" style="font-weight: 500;">
+                  {{pr.getMaxPr()?.getDate()}}
+                </div>
+              }
               @if (pr.getLastPr()) {
                 <div class="last-date" style="opacity: 0.65; font-size: 0.85em; margin-top: 4px;">
                   {{pr.getLastPr().getDate()}}
@@ -39,10 +41,12 @@
               }
             </ion-col>
             <ion-col>
-              <div class="best-value" style="font-weight: 600; display: flex; align-items: center;">
-                <span style="font-size: 0.9em; margin-right: 4px;" title="Migliore (PR)">🏆</span>
-                {{pr.getMaxPr().prestazione|prestazione:pr.unity}}
-              </div>
+              @if (pr.getMaxPr()) {
+                <div class="best-value" style="font-weight: 600; display: flex; align-items: center;">
+                  <span style="font-size: 0.9em; margin-right: 4px;" title="Migliore (PR)">🏆</span>
+                  {{pr.getMaxPr()?.prestazione|prestazione:pr.unity}}
+                </div>
+              }
               @if (pr.getLastPr()) {
                 <div class="last-value" style="opacity: 0.65; font-size: 0.85em; margin-top: 4px; display: flex; align-items: center;">
                   <span style="font-size: 0.9em; margin-right: 4px;" title="Ultimo Risultato">⏱️</span>

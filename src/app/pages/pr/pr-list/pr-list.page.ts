@@ -1,5 +1,5 @@
 import { UserMenuComponent } from '../../../components/userMenu/user-menu.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonNav, IonButtons,IonBackButton, IonButton,IonBreadcrumb,IonBreadcrumbs} from '@ionic/angular/standalone';
@@ -28,23 +28,22 @@ import { FilterPipe } from 'src/app/components/pipes/customFilter/filterPipe.pip
     IonButtons,
     ActivitiesListComponent]
 })
-export class PrListPage implements OnInit {
-goBack() {
-this.router.navigate(["/home"])
-}
-user: UserModel = new UserModel();
-title ="";
-component= HomePage;
+export class PrListPage {
+  private users = inject(UsersService);
+  private router = inject(Router);
 
-  constructor(
-    private users: UsersService, private router: Router
-  ) { }
+  user = signal<UserModel>(new UserModel());
+  title = signal<string>("");
+  component = HomePage;
 
-  ngOnInit() {
+  constructor() {
     this.users.getLoggedUser().then((user) => {
-      this.user = user;
-      this.title = `pr di ${user.firstName} ${user.lastName}`
+      this.user.set(user);
+      this.title.set(`pr di ${user.firstName} ${user.lastName}`);
     });
   }
 
+  goBack() {
+    this.router.navigate(["/home"]);
+  }
 }

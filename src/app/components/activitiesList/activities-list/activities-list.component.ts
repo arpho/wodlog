@@ -22,10 +22,13 @@ activities=   signal<{data:ActivityModel[],total:number}>({data:[],total:0})
 
   }
   ngOnChanges(changes: SimpleChanges): void {
-    const callback= (activities:{data:ActivityModel[],total:number}) =>{
-      console.log("got activities",activities)
-      this.activities.set(activities)}
-    this.service.realtimeFetchAllActivities(this.userKey,callback)
+    if (this.userKey) {
+      const callback= (activities:{data:ActivityModel[],total:number}) =>{
+        console.log("got activities",activities)
+        this.activities.set(activities)
+      }
+      this.service.realtimeFetchAllActivities(this.userKey,callback)
+    }
   }
 
 

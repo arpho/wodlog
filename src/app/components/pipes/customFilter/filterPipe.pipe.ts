@@ -7,9 +7,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
+    if (!value) return [];
+    if (!args) return value;
+    
     const data = [...value];
-
-    return  args && data ? data.filter(args) : value;
+    return data.filter(args);
   }
 
 }
