@@ -12,6 +12,27 @@
   <div class="changelog-container">
     <ion-card class="glass-card animate-in">
       <ion-card-header>
+        <ion-card-subtitle>Settembre 2026</ion-card-subtitle>
+        <ion-card-title>PR List Fix & Signals Migration</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="change-item">
+          <ion-badge color="success">Features</ion-badge>
+          <p><strong>Architettura Reattiva</strong>: Refactoring profondo della pagina della lista dei Massimali (PR), che ora sfrutta nativamente i <strong>Signal</strong> di Angular (v17+) per una change detection istantanea e più pulita.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="tertiary">Bug Fixes</ion-badge>
+          <p><strong>Risoluzione Crash Lista Vuota</strong>: Risolto un bug critico che impediva il caricamento della lista all'avvio nel caso in cui un esercizio non avesse alcuno storico di risultati (PR) registrato.</p>
+        </div>
+        <div class="change-item">
+          <ion-badge color="warning">Performance</ion-badge>
+          <p><strong>Ottimizzazione Motore Ricerca & Filtri</strong>: Il filtro sulla lista dei PR si attiva ora in modo intelligente solo al momento dell'effettiva digitazione. Abbiamo inoltre eliminato i pesanti ricalcoli (in-place array sorting) durante la fase di render, bloccando del tutto i picchi anomali della CPU.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="glass-card animate-in" style="--animation-delay: 0.05s">
+      <ion-card-header>
         <ion-card-subtitle>Luglio 2026</ion-card-subtitle>
         <ion-card-title>WOD Ownership & Permissions</ion-card-title>
       </ion-card-header>

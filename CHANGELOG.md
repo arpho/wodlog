@@ -2,6 +2,14 @@
 
 Tutte le novità e gli aggiornamenti del progetto WodLog.
 
+## Settembre 2026
+
+### PR List Fix & Signals Migration
+- **Features (Architettura Reattiva)**: Refactoring profondo della pagina della lista dei Massimali (PR), che ora sfrutta nativamente i Signal di Angular (v17+) per una change detection istantanea e pulita, in sostituzione al vecchio approccio ibrido con ChangeDetectorRef.
+- **Bug Fixes (Risoluzione Crash)**: Risolto un bug critico che bloccava il caricamento della lista dei massimali all'avvio, in particolare per quegli esercizi che non avevano ancora alcuno storico di risultati (PR).
+- **Performance (Ottimizzazione Ricerca)**: Il filtro sulla lista dei PR si attiva ora solo al momento dell'effettiva digitazione. Eliminati i pesanti ricalcoli in-place durante la fase di rendering, risolvendo definitivamente i picchi anomali della CPU che bloccavano l'app.
+- **Fix (Subscriptions)**: Corretto un difetto di subscription multipla su Firebase per i listener real-time delle attività, evitando memory leak e scritture incoerenti.
+
 ## Luglio 2026
 
 ### WOD Ownership & Permissions
