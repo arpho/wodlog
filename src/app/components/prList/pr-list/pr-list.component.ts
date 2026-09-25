@@ -128,7 +128,11 @@ filter: any = undefined;
             pr.unity = ' Kg ';
             pr.date = new Date(data.data).getTime();
             console.log('edited list ', this.prList);
-            this.prList = [...this.prList, pr];
+            if (!this.prList.includes(pr)) {
+              this.prList = [...this.prList, pr];
+            } else {
+              this.prList = [...this.prList];
+            }
             this.$prList.set(this.prList);
             this.editedPrList.emit(this.prList);
           },
@@ -189,7 +193,11 @@ filter: any = undefined;
             pr.unity = ' sec ';
             pr.date = new Date(data.data).getTime();
             console.log('edited list ', this.prList);
-            this.prList = [...this.prList, pr];
+            if (!this.prList.includes(pr)) {
+              this.prList = [...this.prList, pr];
+            } else {
+              this.prList = [...this.prList];
+            }
             this.$prList.set(this.prList);
             this.editedPrList.emit(this.prList);
           },
