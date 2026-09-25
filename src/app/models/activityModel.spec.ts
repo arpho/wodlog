@@ -98,8 +98,9 @@ it('should load data from server',()=>{
   )
 
   expect(test.prList.length).toEqual(5);
- expect(test.getMaxPr().prestazione).toEqual(157.5);
-})
+ expect(test.getMaxPr()!.prestazione).toEqual(157.5);
+}
+)
 
 
 it('should find the max pr',()=>{
@@ -127,7 +128,7 @@ it('should find the max pr',()=>{
       ]
   })
   expect(test.getMaxPr()).toBeTruthy();
-  expect(test.getMaxPr().prestazione).toEqual(65);
+  expect(test.getMaxPr()!.prestazione).toEqual(65);
 const test4sec = new ActivityModel(
   {
     "date": "2019-04-23T22:00:00.000Z",
@@ -152,8 +153,8 @@ const test4sec = new ActivityModel(
     ]
 })
 expect(test4sec.getMaxPr()).toBeTruthy();
-expect(test4sec.getMaxPr().prestazione).toEqual(60);
-expect(test4sec.getMaxPr().date).toEqual(new Date("2019-04-24T22:00:00.000Z").getTime());
+expect(test4sec.getMaxPr()!.prestazione).toEqual(60);
+expect(test4sec.getMaxPr()!.date).toEqual(new Date("2019-04-24T22:00:00.000Z").getTime());
 
 });
 });

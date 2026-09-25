@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Dark Palette - Manual Control via .ion-palette-dark class */
+@import '@ionic/angular/css/palettes/dark.class.css';
+
+/* Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @theme {
   /* Font */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -49,22 +69,7 @@
   --shadow-glow: 0 0 32px -8px rgba(99, 102, 241, 0.5);
 }
 
-/* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
-
-/* Dark Palette - Manual Control via .ion-palette-dark class */
-@import '@ionic/angular/css/palettes/dark.class.css';
 
 /* Fix per input color */
 ion-input, ion-textarea, ion-searchbar, input, textarea {
@@ -420,8 +425,7 @@ html.theme-slate.ion-palette-dark {
    Stili Specifici Personalizzati di Wodlog
    ========================================================================== */
 
-/* Google Fonts - Inter */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 
 :root {
   --ion-font-family: 'Inter', sans-serif;
