@@ -25,5 +25,11 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-activities-list [userKey]="user().key"></app-activities-list>
+  @if (loading()) {
+    <div class="loader-container">
+      <span class="loader"></span>
+    </div>
+  } @else {
+    <app-activities-list [userKey]="user().key"></app-activities-list>
+  }
 </ion-content>

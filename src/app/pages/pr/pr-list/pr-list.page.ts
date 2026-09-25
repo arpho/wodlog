@@ -35,11 +35,13 @@ export class PrListPage {
   user = signal<UserModel>(new UserModel());
   title = signal<string>("");
   component = HomePage;
+  loading = signal<boolean>(true);
 
   constructor() {
     this.users.getLoggedUser().then((user) => {
       this.user.set(user);
       this.title.set(`pr di ${user.firstName} ${user.lastName}`);
+      this.loading.set(false);
     });
   }
 
